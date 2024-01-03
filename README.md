@@ -2,7 +2,7 @@
   <img src="assets/images/imagotype_dark.svg">
 </p>
 
-An accessible e-learnign app for visually impaired people
+<p align="center">An accessible e-learnign app for visually impaired people</p>
 
 ## Getting Started
 
