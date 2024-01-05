@@ -56,5 +56,9 @@ class AppTheme {
       elevation: 3,
       shadowColor: Colors.black,
     ),
+    cardTheme: const CardTheme(
+      elevation: 13,
+      shadowColor: Colors.black,
+    ),
   );
 }

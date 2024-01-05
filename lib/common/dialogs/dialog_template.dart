@@ -23,22 +23,19 @@ extension Present<T> on DialogTemplate<T> {
       transitionBuilder: (context, a1, a2, child) {
         return ScaleTransition(
           scale: Tween<double>(begin: .5, end: 1).animate(a1),
-          child: FadeTransition(
-            opacity: Tween<double>(begin: .5, end: 1).animate(a1),
-            child: AlertDialog(
-              contentTextStyle: Theme.of(context).textTheme.bodyLarge,
-              content: body,
-              actionsAlignment: MainAxisAlignment.center,
-              elevation: 5,
-              actions: buttons.entries.map((entry) {
-                return ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(entry.value);
-                  },
-                  child: Text(entry.key),
-                );
-              }).toList(),
-            ),
+          child: AlertDialog(
+            contentTextStyle: Theme.of(context).textTheme.bodyLarge,
+            content: body,
+            actionsAlignment: MainAxisAlignment.center,
+            elevation: 5,
+            actions: buttons.entries.map((entry) {
+              return ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(entry.value);
+                },
+                child: Text(entry.key),
+              );
+            }).toList(),
           ),
         );
       },
