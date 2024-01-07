@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/data/user_info_provider.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:luciapp/features/auth/presentation/state/providers/photo_url_provider.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -10,8 +10,8 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userId = ref.read(authControllerProvider).userId;
-    print(userId);
     final user = ref.watch(userInfoModelProvider(userId ?? ''));
+
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
       body: Column(
@@ -24,6 +24,10 @@ class HomePage extends HookConsumerWidget {
                   Text(data.userId),
                   Text(data.age.toString()),
                   Text(data.gender.toString()),
+                  CircleAvatar(
+                    backgroundImage:
+                        Image.network(ref.read(photoUrlProvider) ?? "").image,
+                  ),
                 ],
               );
             },

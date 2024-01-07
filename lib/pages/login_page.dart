@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 
 class LoginPage extends ConsumerWidget {

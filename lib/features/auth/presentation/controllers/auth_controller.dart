@@ -1,6 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/application/auth_service.dart';
-import 'package:luciapp/features/auth/data/auth_repository.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
@@ -22,8 +21,6 @@ class AuthController extends StateNotifier<AuthState> {
     //   );
     // }
   }
-
-  // pending
 
   Future<void> logOut() async {
     state = state.copyWithIsLoading(true);

@@ -25,6 +25,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     final nameController = useTextEditingController();
     final ageController = useTextEditingController();
 
+    nameController.text = username;
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -151,7 +153,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                     // llamar a controller
 
-                    final saved = await ref
+                    await ref
                         .read(authControllerProvider.notifier)
                         .register(user);
                   },

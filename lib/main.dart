@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/common/loading/loading_screen.dart';
+import 'package:luciapp/common/providers/is_loading_provider.dart';
 import 'package:luciapp/common/theme/app_theme.dart';
 import 'package:luciapp/features/auth/data/auth_repository.dart';
 import 'package:luciapp/features/auth/data/firebase_users_repository.dart';
@@ -39,6 +41,17 @@ class MyApp extends StatelessWidget {
         child: Consumer(
           child: const LoginPage(),
           builder: (context, ref, child) {
+            ref.listen<bool>(
+              isLoadingProvider,
+              (_, isLoading) {
+                if (isLoading) {
+                  LoadingScreen.instance().show(context: context);
+                } else {
+                  LoadingScreen.instance().hide();
+                }
+              },
+            );
+
             final AuthResult? authResult =
                 ref.watch(authControllerProvider).result;
             debugPrint(authResult.toString());
@@ -84,12 +97,12 @@ class AuxHomePage extends ConsumerWidget {
 }
 
 class OutlinedTextField extends StatelessWidget {
-  String? initialValue;
-  String label;
-  bool isNumberField;
-  TextEditingController controller;
+  final String? initialValue;
+  final String label;
+  final bool isNumberField;
+  final TextEditingController controller;
 
-  OutlinedTextField({
+  const OutlinedTextField({
     super.key,
     this.initialValue,
     required this.label,

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/data/auth_repository.dart';
 import 'package:luciapp/features/auth/data/users_repository.dart';
