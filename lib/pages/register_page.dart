@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/features/auth/domain/enums/gender.dart';
+import 'package:luciapp/features/auth/domain/models/user.dart';
+import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/main.dart';
 
-const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+class RegisterPage extends StatefulHookConsumerWidget {
+  const RegisterPage({super.key});
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends ConsumerState<RegisterPage> {
+  Gender? _selectedGender;
 
   @override
   Widget build(BuildContext context) {
+// solo providers especificos
+    final username = ref.read(authRepositoryProvider).displayName;
+    final userId = ref.read(authRepositoryProvider).userId;
+    final nameController = useTextEditingController();
+    final ageController = useTextEditingController();
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -54,6 +71,7 @@ class MyWidget extends StatelessWidget {
                 ),
                 OutlinedTextField(
                   label: "Nombre",
+                  controller: nameController,
                 ),
                 const SizedBox(
                   height: 15,
@@ -67,13 +85,13 @@ class MyWidget extends StatelessWidget {
                       child: OutlinedTextField(
                         label: "Edad",
                         isNumberField: true,
+                        controller: ageController,
                       ),
                     ),
                     const SizedBox(
                       width: 15,
                     ),
-                    DropdownMenu<String>(
-                      initialSelection: list.first,
+                    DropdownMenu<Gender>(
                       inputDecorationTheme: InputDecorationTheme(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -101,17 +119,21 @@ class MyWidget extends StatelessWidget {
                         ),
                       ),
                       label: const Text("Género"),
-                      onSelected: (String? value) {
+                      onSelected: (Gender? value) {
                         // This is called when the user selects an item.
-                        // setState(() {
-                        //   dropdownValue = value!;
-                        // });
+                        setState(() {
+                          _selectedGender = value;
+                        });
                       },
                       dropdownMenuEntries:
-                          list.map<DropdownMenuEntry<String>>((String value) {
-                        return DropdownMenuEntry<String>(
-                            value: value, label: value);
-                      }).toList(),
+                          Gender.values.map<DropdownMenuEntry<Gender>>(
+                        (Gender value) {
+                          return DropdownMenuEntry<Gender>(
+                            value: value,
+                            label: value.toString(),
+                          );
+                        },
+                      ).toList(),
                     ),
                   ],
                 ),
@@ -119,9 +141,28 @@ class MyWidget extends StatelessWidget {
                   height: 35,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Hello"),
+                  onPressed: () async {
+                    final User user = User(
+                      name: nameController.text,
+                      age: int.parse(ageController.text),
+                      gender: _selectedGender ?? Gender.male,
+                      userId: userId ?? "no",
+                    );
+
+                    // llamar a controller
+
+                    final saved = await ref
+                        .read(authControllerProvider.notifier)
+                        .register(user);
+                  },
+                  child: const Text("Register"),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(authControllerProvider.notifier).logOut();
+                  },
+                  child: const Text("Salir"),
+                )
               ],
             ),
           ),

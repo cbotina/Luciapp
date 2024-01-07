@@ -6,7 +6,7 @@ import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 
 @immutable
-class User extends MapView<String, String?> {
+class User extends MapView<String, dynamic> {
   final UserId userId;
   final String name;
   final Gender gender;
@@ -17,14 +17,22 @@ class User extends MapView<String, String?> {
     required this.name,
     required this.gender,
     required this.age,
-  }) : super({});
+  }) : super(
+          {
+            FirebaseFieldName.username: name,
+            FirebaseFieldName.userId: userId,
+            FirebaseFieldName.age: age,
+            FirebaseFieldName.gender: gender.toString(),
+          },
+        );
 
   User.fromJson(Map<String, dynamic> json, {required UserId userId})
       : this(
-            userId: userId,
-            name: json[FirebaseFieldName.username] ?? '',
-            gender: json[FirebaseFieldName.gender],
-            age: json[FirebaseFieldName.age]);
+          userId: userId,
+          name: json[FirebaseFieldName.username] ?? '',
+          gender: json[FirebaseFieldName.gender].toString().toGender(),
+          age: json[FirebaseFieldName.age] ?? 0,
+        );
 
   @override
   bool operator ==(Object other) =>

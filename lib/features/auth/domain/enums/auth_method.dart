@@ -1,0 +1,4 @@
+enum AuthMethod {
+  facebook,
+  google,
+}
