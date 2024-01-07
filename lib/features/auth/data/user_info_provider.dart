@@ -18,7 +18,6 @@ final userInfoModelProvider = StreamProvider.family.autoDispose<User, UserId>(
         .snapshots()
         .listen((snapshot) {
       final doc = snapshot.docs.first;
-      print(doc);
       final json = doc.data();
 
       final userInfoModel = User.fromJson(json, userId: userId);

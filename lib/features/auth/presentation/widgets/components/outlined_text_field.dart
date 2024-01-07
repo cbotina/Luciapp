@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class OutlinedTextField extends StatelessWidget {
+  final String? initialValue;
+  final String label;
+  final bool isNumberField;
+  final TextEditingController? controller;
+
+  const OutlinedTextField({
+    super.key,
+    this.initialValue,
+    required this.label,
+    this.controller,
+    this.isNumberField = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      initialValue: initialValue,
+      style: Theme.of(context).textTheme.bodyMedium,
+      decoration: InputDecoration(
+        label: Text(label),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+      ),
+      inputFormatters: isNumberField
+          ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))]
+          : null,
+      keyboardType: isNumberField ? TextInputType.number : TextInputType.text,
+      onTapOutside: (e) {
+        FocusScope.of(context).unfocus();
+      },
+    );
+  }
+}

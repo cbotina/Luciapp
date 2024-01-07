@@ -41,6 +41,7 @@ dependencies:
   flutter_facebook_auth: ^6.0.3
   google_sign_in: ^6.2.1
   flutter_hooks: ^0.20.4
+  iconoir_flutter: ^7.3.0
 
 dev_dependencies:
   flutter_test:

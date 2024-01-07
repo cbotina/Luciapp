@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:luciapp/features/auth/presentation/widgets/components/outlined_text_field.dart';
 import 'package:luciapp/main.dart';
 
 class RegisterPage extends StatefulHookConsumerWidget {

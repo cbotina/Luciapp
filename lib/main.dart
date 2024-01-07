@@ -11,6 +11,7 @@ import 'package:luciapp/features/auth/data/users_repository.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/firebase_options.dart';
+import 'package:luciapp/pages/auth_page.dart';
 import 'package:luciapp/pages/home_page.dart';
 import 'package:luciapp/pages/login_page.dart';
 import 'package:luciapp/pages/register_page.dart';
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
         child: Consumer(
           child: const LoginPage(),
           builder: (context, ref, child) {
+            return const AuthPage();
+
             ref.listen<bool>(
               isLoadingProvider,
               (_, isLoading) {
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
 
             final AuthResult? authResult =
                 ref.watch(authControllerProvider).result;
-            debugPrint(authResult.toString());
+
             if (authResult == null) {
               return const LoginPage();
             } else {
@@ -63,7 +66,6 @@ class MyApp extends StatelessWidget {
                   return const HomePage();
 
                 case AuthResult.aborted:
-                  return const LoginPage();
                 case AuthResult.failure:
                   return const LoginPage();
 
@@ -92,51 +94,6 @@ class AuxHomePage extends ConsumerWidget {
           child: const Text("Logout"),
         ),
       ),
-    );
-  }
-}
-
-class OutlinedTextField extends StatelessWidget {
-  final String? initialValue;
-  final String label;
-  final bool isNumberField;
-  final TextEditingController controller;
-
-  const OutlinedTextField({
-    super.key,
-    this.initialValue,
-    required this.label,
-    required this.controller,
-    this.isNumberField = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      initialValue: initialValue,
-      decoration: InputDecoration(
-        label: Text(label),
-        labelStyle: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-      ),
-      inputFormatters: isNumberField
-          ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))]
-          : null,
-      keyboardType: isNumberField ? TextInputType.number : TextInputType.text,
     );
   }
 }

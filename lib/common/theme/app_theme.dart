@@ -1,37 +1,56 @@
 import 'package:flutter/material.dart';
 
+const _lightColorScheme = ColorScheme(
+  brightness: Brightness.light,
+
+  primary: Color(0xff4074cf),
+  onPrimary: Colors.white,
+
+  secondary: Color(0xffffac0e), // ribbon
+  onSecondary: Color(0xff0e0e0e),
+
+  tertiary: Colors.teal,
+  onTertiary: Colors.white,
+
+  error: Color(0xffe6202d),
+  onError: Colors.white,
+
+  primaryContainer: Colors.white,
+  onPrimaryContainer: Color(0xff0e0e0e),
+
+  surface: Colors.white,
+  onSurface: Color(0xff0e0e0e),
+
+  background: Colors.white, // dialog background
+  onBackground: Color(0xff0e0e0e),
+
+  surfaceVariant: Color.fromARGB(255, 224, 224, 224),
+);
+
 class AppTheme {
   static final lightTheme = ThemeData(
     fontFamily: 'Nunito',
-    colorScheme: ColorScheme(
-      brightness: Brightness.light,
-
-      primary: const Color(0xff4074cf),
-      onPrimary: Colors.white,
-
-      secondary: const Color(0xffffac0e), // ribbon
-      onSecondary: const Color(0xff0e0e0e),
-
-      tertiary: Colors.teal,
-      onTertiary: Colors.white,
-
-      error: const Color(0xffe6202d),
-      onError: Colors.white,
-
-      primaryContainer: Colors.white,
-      onPrimaryContainer: const Color(0xff0e0e0e),
-
-      surface: Colors.white,
-      onSurface: const Color(0xff0e0e0e),
-
-      background: Colors.white, // dialog background
-      onBackground: const Color(0xff0e0e0e),
-
-      surfaceVariant: Colors.grey.shade300,
-    ),
-    elevatedButtonTheme: const ElevatedButtonThemeData(
+    colorScheme: _lightColorScheme,
+    elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        elevation: MaterialStatePropertyAll(3),
+        elevation: const MaterialStatePropertyAll(3),
+        overlayColor: const MaterialStatePropertyAll(
+          Colors.blueAccent,
+        ),
+        backgroundColor: MaterialStatePropertyAll(
+          _lightColorScheme.primary,
+        ),
+        foregroundColor: MaterialStatePropertyAll(
+          _lightColorScheme.onPrimary,
+        ),
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
       ),
     ),
     scaffoldBackgroundColor: const Color(0xffF2F5FC),
@@ -56,9 +75,12 @@ class AppTheme {
       elevation: 3,
       shadowColor: Colors.black,
     ),
-    cardTheme: const CardTheme(
+    cardTheme: CardTheme(
       elevation: 13,
       shadowColor: Colors.black,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
     ),
   );
 }

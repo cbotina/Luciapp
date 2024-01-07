@@ -35,10 +35,11 @@ class HomePage extends HookConsumerWidget {
             loading: () => const CircularProgressIndicator(),
           ),
           ElevatedButton(
-              onPressed: () {
-                ref.read(authControllerProvider.notifier).logOut();
-              },
-              child: const Text("Logout"))
+            onPressed: () {
+              ref.read(authControllerProvider.notifier).logOut();
+            },
+            child: const Text("Logout"),
+          ),
         ],
       ),
     );
