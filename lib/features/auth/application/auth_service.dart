@@ -16,19 +16,6 @@ class AuthService {
     required this.usersRepository,
   });
 
-  Future<bool> isAlreadyLoggedInAndInDb() async {
-    final isFederatedLoggedIn = authRepository.isAlreadyLoggedIn;
-    final UserId? userId = authRepository.userId;
-
-    if (isFederatedLoggedIn && userId != null) {
-      final user = await usersRepository.findUser(userId);
-      if (user != null) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   Future<AuthResult> login(AuthMethod method) async {
     late AuthResult authResult;
 
@@ -57,6 +44,14 @@ class AuthService {
   Future<bool> register(User user) async {
     final bool savedSuccessfully = await usersRepository.saveUser(user);
     return savedSuccessfully;
+  }
+
+  String? getUserId() {
+    return authRepository.userId;
+  }
+
+  Future<void> logOut() async {
+    return await authRepository.logOut();
   }
 }
 
