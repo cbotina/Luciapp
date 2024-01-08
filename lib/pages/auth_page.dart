@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/domain/enums/gender.dart';
-import 'package:luciapp/features/auth/presentation/widgets/components/enum_dropdown_menu.dart';
-import 'package:luciapp/features/auth/presentation/widgets/components/outlined_text_field.dart';
-import 'package:luciapp/features/auth/presentation/widgets/components/text_divider.dart';
+import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
+import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:luciapp/features/auth/presentation/widgets/login_buttons_widget.dart';
+import 'package:luciapp/features/auth/presentation/widgets/register_form_widget.dart';
 
-class AuthPage extends ConsumerWidget {
+class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -36,38 +36,18 @@ class AuthPage extends ConsumerWidget {
                   height: 90,
                   fit: BoxFit.fitHeight,
                 ),
-                const SizedBox(height: 30),
                 // abstract
-                const TextDivider(' Ingresa tus datos '),
-                const SizedBox(
-                  height: 30,
+                Consumer(
+                  builder: (context, ref, child) {
+                    final AuthResult? authResult =
+                        ref.watch(authControllerProvider).result;
+                    if (authResult == AuthResult.registering) {
+                      return const RegisterForm();
+                    } else {
+                      return const LoginButtons();
+                    }
+                  },
                 ),
-                Wrap(
-                  runSpacing: 15,
-                  children: [
-                    const OutlinedTextField(
-                      label: 'Nombre',
-                      controller: null,
-                    ),
-                    const OutlinedTextField(
-                      label: 'Edad',
-                      isNumberField: true,
-                      controller: null,
-                    ),
-                    EnumDropdownMenu<Gender>(
-                      label: 'Género',
-                      onSelected: (value) {},
-                      values: Gender.values,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 45,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Crear Cuenta"),
-                )
               ],
             ),
           ),

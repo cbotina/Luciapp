@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/loading/loading_screen.dart';
 import 'package:luciapp/common/providers/is_loading_provider.dart';
@@ -14,7 +13,6 @@ import 'package:luciapp/firebase_options.dart';
 import 'package:luciapp/pages/auth_page.dart';
 import 'package:luciapp/pages/home_page.dart';
 import 'package:luciapp/pages/login_page.dart';
-import 'package:luciapp/pages/register_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,8 +40,6 @@ class MyApp extends StatelessWidget {
         child: Consumer(
           child: const LoginPage(),
           builder: (context, ref, child) {
-            return const AuthPage();
-
             ref.listen<bool>(
               isLoadingProvider,
               (_, isLoading) {
@@ -59,18 +55,13 @@ class MyApp extends StatelessWidget {
                 ref.watch(authControllerProvider).result;
 
             if (authResult == null) {
-              return const LoginPage();
+              return const AuthPage();
             } else {
               switch (authResult) {
                 case AuthResult.success:
                   return const HomePage();
-
-                case AuthResult.aborted:
-                case AuthResult.failure:
-                  return const LoginPage();
-
-                case AuthResult.registering:
-                  return const RegisterPage();
+                default:
+                  return const AuthPage();
               }
             }
           },

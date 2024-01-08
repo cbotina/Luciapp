@@ -31,6 +31,12 @@ class AppTheme {
   static final lightTheme = ThemeData(
     fontFamily: 'Nunito',
     colorScheme: _lightColorScheme,
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.bold,
+      ),
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         elevation: const MaterialStatePropertyAll(3),
