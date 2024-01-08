@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/images/imagotype_dark.svg">
+  <img src="assets/svg/imagotype_dark.svg">
 </p>
 
 <p align="center">An accessible e-learnign app for visually impaired people</p>
