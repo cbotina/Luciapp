@@ -1,18 +1,22 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/common/keys/widget_keys.dart';
 import 'package:luciapp/common/loading/loading_screen.dart';
 import 'package:luciapp/common/providers/is_loading_provider.dart';
 import 'package:luciapp/common/theme/app_theme.dart';
 import 'package:luciapp/features/auth/data/auth_repository.dart';
+import 'package:luciapp/features/auth/data/firebase_auth_repository.dart';
 import 'package:luciapp/features/auth/data/firebase_users_repository.dart';
+import 'package:luciapp/features/auth/data/providers/auth_result_provider.dart';
 import 'package:luciapp/features/auth/data/users_repository.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
-import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/firebase_options.dart';
 import 'package:luciapp/pages/auth_page.dart';
 import 'package:luciapp/pages/home_page.dart';
 import 'package:luciapp/pages/login_page.dart';
+
+enum AuthServiceType { firebase, mock }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +27,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AuthServiceType initialAuthServiceType;
+  const MyApp({
+    super.key,
+    this.initialAuthServiceType = AuthServiceType.firebase,
+  });
 
   // This widget is the root of your application.
   @override
@@ -51,15 +59,16 @@ class MyApp extends StatelessWidget {
               },
             );
 
-            final AuthResult? authResult =
-                ref.watch(authControllerProvider).result;
+            final AuthResult? authResult = ref.watch(authResultProvider);
 
             if (authResult == null) {
               return const AuthPage();
             } else {
               switch (authResult) {
                 case AuthResult.success:
-                  return const HomePage();
+                  return const HomePage(
+                    key: ValueKey(Keys.homePage),
+                  );
                 default:
                   return const AuthPage();
               }
@@ -71,28 +80,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AuxHomePage extends ConsumerWidget {
-  const AuxHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            ref.read(authControllerProvider.notifier).logOut();
-          },
-          child: const Text("Logout"),
-        ),
-      ),
-    );
-  }
-}
-
 // Repositories
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return const AuthRepository();
+  return const FirebaseAuthRepository();
 });
 
 final usersRepositoryProvider = Provider<UsersRepository>((ref) {

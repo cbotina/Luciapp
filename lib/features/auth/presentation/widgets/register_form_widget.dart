@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/common/keys/widget_keys.dart';
+import 'package:luciapp/features/auth/data/providers/user_display_name_provider.dart';
+import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/enum_dropdown_menu.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/outlined_text_field.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/text_divider.dart';
-import 'package:luciapp/main.dart';
 
 class RegisterForm extends StatefulHookConsumerWidget {
-  const RegisterForm({super.key});
+  const RegisterForm({super.key = const ValueKey(Keys.registerForm)});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _RegisterFormState();
@@ -31,7 +33,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
   void initState() {
     _ageController = TextEditingController()..addListener(validateFields);
     _nameController = TextEditingController()..addListener(validateFields);
-    _nameController.text = ref.read(authRepositoryProvider).displayName;
+    _nameController.text = ref.read(userDisplayNameProvider) ?? "";
     super.initState();
   }
 
@@ -44,9 +46,11 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = ref.read(authRepositoryProvider).userId;
+    final userId = ref.read(userIdProvider);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 30),
         const TextDivider(' Ingresa tus datos '),
@@ -94,6 +98,11 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                 }
               : null,
           child: const Text("Crear Cuenta"),
+        ),
+        const SizedBox(height: 15),
+        TextButton(
+          onPressed: ref.read(authControllerProvider.notifier).logOut,
+          child: const Text("Salir"),
         ),
       ],
     );

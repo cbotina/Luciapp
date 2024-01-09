@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/common/keys/widget_keys.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/facebook_button.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/google_button.dart';
@@ -24,6 +25,7 @@ class LoginButtons extends ConsumerWidget {
           height: 10,
         ),
         FacebookButton(
+          key: const ValueKey(Keys.facebookButton),
           onPressed:
               ref.read(authControllerProvider.notifier).loginWithFacebook,
         ),

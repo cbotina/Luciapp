@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:luciapp/features/auth/application/auth_service.dart';
-import 'package:luciapp/features/auth/data/auth_repository.dart';
+import 'package:luciapp/features/auth/data/firebase_auth_repository.dart';
 import 'package:luciapp/features/auth/data/users_repository.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
@@ -8,7 +8,7 @@ import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockAuthRepository extends Mock implements AuthRepository {}
+class MockAuthRepository extends Mock implements FirebaseAuthRepository {}
 
 class MockUsersRepository extends Mock implements UsersRepository {}
 

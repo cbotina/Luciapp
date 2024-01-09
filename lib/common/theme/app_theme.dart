@@ -16,10 +16,11 @@ const _lightColorScheme = ColorScheme(
   onError: Colors.white,
 
   primaryContainer: Colors.white,
-  onPrimaryContainer: Color(0xff0e0e0e),
+  onPrimaryContainer: Color.fromARGB(255, 97, 97, 97),
+  onSecondaryContainer: Color.fromARGB(255, 169, 169, 169), // gris
 
   surface: Colors.white,
-  onSurface: Color(0xff0e0e0e),
+  onSurface: Color(0xff0e0e0e), // en containers
 
   background: Colors.white, // dialog background
   onBackground: Color(0xff0e0e0e),
@@ -49,6 +50,24 @@ class AppTheme {
         foregroundColor: MaterialStatePropertyAll(
           _lightColorScheme.onPrimary,
         ),
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        elevation: const MaterialStatePropertyAll(0),
+        backgroundColor: MaterialStatePropertyAll(
+          Colors.blue.shade100,
+        ),
+        foregroundColor: MaterialStatePropertyAll(_lightColorScheme.primary),
+        overlayColor: const MaterialStatePropertyAll(Colors.white),
         padding: const MaterialStatePropertyAll(
           EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         ),

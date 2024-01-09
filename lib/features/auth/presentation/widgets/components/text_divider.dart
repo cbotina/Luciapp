@@ -13,18 +13,18 @@ class TextDivider extends StatelessWidget {
       children: [
         Expanded(
           child: Divider(
-            color: Colors.grey.shade700,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
         Text(
           text,
           style: TextStyle(
-            color: Colors.grey.shade700,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
         Expanded(
           child: Divider(
-            color: Colors.grey.shade700,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
       ],
