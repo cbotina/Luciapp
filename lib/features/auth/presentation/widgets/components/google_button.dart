@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:luciapp/common/keys/widget_keys.dart';
 
 class GoogleButton extends StatelessWidget {
   final VoidCallback onPressed;
   const GoogleButton({
-    super.key,
+    super.key = const ValueKey(Keys.googleButton),
     required this.onPressed,
   });
 
