@@ -4,7 +4,7 @@ import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 
 @immutable
 class AuthState {
-  final AuthResult? result;
+  final AuthResult result;
   final bool isLoading;
   final UserId? userId;
 
@@ -15,7 +15,7 @@ class AuthState {
   });
 
   const AuthState.unknown()
-      : result = null,
+      : result = AuthResult.none,
         isLoading = false,
         userId = null;
 

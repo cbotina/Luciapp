@@ -1,16 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/data/providers/fetch_user.dart';
-import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
+import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
+import 'package:luciapp/features/auth/data/providers/user_model_provider.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/profile_photo.dart';
 
 class UserContainer extends ConsumerWidget {
-  final UserId? userId;
-  const UserContainer({super.key, required this.userId});
+  const UserContainer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fetchUser = ref.watch(fetchUserProvider(userId ?? ''));
+    final userId = ref.read(userIdProvider);
+    final fetchUser = ref.watch(userModelProvider(userId ?? ''));
+
     return fetchUser.when(
       data: (user) {
         if (user != null) {

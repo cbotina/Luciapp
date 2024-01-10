@@ -77,7 +77,7 @@ class LoadingScreen {
                                 snapshot.requireData,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyMedium
+                                    .bodyLarge
                                     ?.copyWith(color: Colors.black),
                               );
                             } else {

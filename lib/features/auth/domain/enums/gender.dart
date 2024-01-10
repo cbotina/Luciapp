@@ -13,12 +13,14 @@ enum Gender {
   });
 
   @override
-  String toString() {
+  GenderString toString() {
     return name;
   }
 }
 
-extension ToIcon on String {
+typedef GenderString = String;
+
+extension ToIcon on GenderString {
   Widget? toIcon() {
     switch (this) {
       case "Masculino":
@@ -33,7 +35,7 @@ extension ToIcon on String {
   }
 }
 
-extension ToGender on String {
+extension ToGender on GenderString {
   Gender toGender() {
     switch (this) {
       case "Gender.male":

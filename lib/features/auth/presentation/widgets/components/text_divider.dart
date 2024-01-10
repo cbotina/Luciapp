@@ -9,23 +9,21 @@ class TextDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final foregroundColor = Theme.of(context).colorScheme.onPrimaryContainer;
     return Row(
       children: [
         Expanded(
-          child: Divider(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
+          child: Divider(color: foregroundColor),
         ),
         Text(
           text,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge!
+              .copyWith(color: foregroundColor),
         ),
         Expanded(
-          child: Divider(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
+          child: Divider(color: foregroundColor),
         ),
       ],
     );

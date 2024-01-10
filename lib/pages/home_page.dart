@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:luciapp/common/keys/widget_keys.dart';
+import 'package:luciapp/features/auth/presentation/widgets/components/app_logotype.dart';
+import 'package:luciapp/features/auth/presentation/widgets/components/buttons/logout_button.dart';
+import 'package:luciapp/features/auth/presentation/widgets/components/buttons/switch_theme_button.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/user_container.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+  const HomePage({super.key = const ValueKey(Keys.homePage)});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.read(authControllerProvider).userId;
-
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          'assets/images/imagotype_light.png',
-          height: 30,
-        ),
+        title: const AppLogotype(),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: ref.read(authControllerProvider.notifier).logOut,
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.sunny),
-            onPressed: () {},
-          ),
-        ],
+        leading: const LogoutButton(),
+        actions: const [SwitchThemeButton()],
       ),
       body: ListView(
-        children: [
-          UserContainer(userId: userId),
+        children: const [
+          UserContainer(),
         ],
       ),
     );

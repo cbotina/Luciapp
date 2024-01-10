@@ -4,7 +4,7 @@ import 'package:luciapp/common/keys/widget_keys.dart';
 class GoogleButton extends StatelessWidget {
   final VoidCallback onPressed;
   const GoogleButton({
-    super.key = const ValueKey(Keys.googleButton),
+    super.key = Keys.googleButton,
     required this.onPressed,
   });
 
@@ -41,7 +41,7 @@ class GoogleButton extends StatelessWidget {
             Expanded(
               child: Text(
                 "Continuar con Google",
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
             ),

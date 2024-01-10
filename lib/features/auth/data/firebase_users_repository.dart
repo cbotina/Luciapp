@@ -8,6 +8,8 @@ import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseUserRepository implements UsersRepository {
+  const FirebaseUserRepository();
+
   @override
   Future<User?> findUser(UserId userId) async {
     final user = await FirebaseFirestore.instance

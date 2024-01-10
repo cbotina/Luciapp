@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:luciapp/common/keys/widget_keys.dart';
 
 class FacebookButton extends StatelessWidget {
   final VoidCallback onPressed;
   const FacebookButton({
-    super.key,
+    super.key = Keys.facebookButton,
     required this.onPressed,
   });
 
@@ -42,7 +43,7 @@ class FacebookButton extends StatelessWidget {
                 "Continuar con Facebook",
                 style: Theme.of(context)
                     .textTheme
-                    .bodySmall!
+                    .bodyLarge!
                     .copyWith(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
