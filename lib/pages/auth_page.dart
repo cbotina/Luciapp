@@ -6,7 +6,7 @@ import 'package:luciapp/features/auth/presentation/widgets/login_buttons_widget.
 import 'package:luciapp/features/auth/presentation/widgets/register_form_widget.dart';
 
 class AuthPage extends StatelessWidget {
-  const AuthPage({super.key = const ValueKey(Keys.authPage)});
+  const AuthPage({super.key = Keys.authPage});
 
   @override
   Widget build(BuildContext context) {

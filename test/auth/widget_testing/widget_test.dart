@@ -20,9 +20,9 @@ void main() {
   });
 
   group(
-    "AuthResult",
+    "(Integration Test)",
     () {
-      testWidgets('When user is not authenticated',
+      testWidgets('[CP-024] When user is not authenticated',
           (WidgetTester tester) async {
         await tester.pumpWidget(
           ProviderScope(
@@ -34,12 +34,13 @@ void main() {
           ),
         );
 
-        final authPage = find.byKey(const ValueKey(Keys.authPage));
+        final authPage = find.byKey(Keys.authPage);
 
         expect(authPage, findsOne);
       });
 
-      testWidgets('When user is authenticated', (WidgetTester tester) async {
+      testWidgets('[CP-025] When user is authenticated',
+          (WidgetTester tester) async {
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
@@ -51,12 +52,12 @@ void main() {
           ),
         );
 
-        final homePage = find.byKey(const ValueKey(Keys.homePage));
+        final homePage = find.byKey(Keys.homePage);
 
         expect(homePage, findsOne);
       });
 
-      testWidgets('When user is authenticated but not registered',
+      testWidgets('[CP-026] When user is authenticated but not registered',
           (WidgetTester tester) async {
         await tester.pumpWidget(
           ProviderScope(
@@ -70,11 +71,55 @@ void main() {
           ),
         );
 
-        final authPage = find.byKey(const ValueKey(Keys.authPage));
-        final registerForm = find.byKey(const ValueKey(Keys.registerForm));
+        final authPage = find.byKey(Keys.authPage);
+        final registerForm = find.byKey(Keys.registerForm);
 
         expect(authPage, findsOne);
         expect(registerForm, findsOne);
+      });
+
+      testWidgets('[CP-027] When user is authenticated but not registered',
+          (WidgetTester tester) async {
+        final SemanticsHandle handle = tester.ensureSemantics();
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              authRepositoryProvider.overrideWith((ref) => authRepository),
+              authResultProvider.overrideWith((ref) => AuthResult.registering),
+              userDisplayNameProvider.overrideWith((ref) => null),
+              isLoadingProvider.overrideWith((ref) => true),
+            ],
+            child: const MyApp(),
+          ),
+        );
+
+        final authPage = find.byKey(Keys.authPage);
+        final registerForm = find.byKey(Keys.registerForm);
+        final registerButton = find.byKey(Keys.registerButton);
+
+        expect(authPage, findsOne);
+        expect(registerForm, findsOne);
+
+        await tester.tap(registerButton);
+        await tester.pump(const Duration(seconds: 1));
+        expect(find.text("Debes ingresar tu edad"), findsAny);
+        expect(find.text("Debes seleccionar un genero"), findsAny);
+        expect(find.text("Debes ingresar tu nombre"), findsAny);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+
+// Checks that tappable nodes have a minimum size of 44 by 44 pixels
+// for iOS.
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+
+// Checks that touch targets with a tap or long press action are labeled.
+        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+
+// Checks whether semantic nodes meet the minimum text contrast levels.
+// The recommended text contrast is 3:1 for larger text
+// (18 point and above regular).
+        await expectLater(tester, meetsGuideline(textContrastGuideline));
+
+        handle.dispose();
       });
     },
   );

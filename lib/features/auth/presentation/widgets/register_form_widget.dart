@@ -14,7 +14,7 @@ import 'package:luciapp/features/auth/presentation/widgets/validators/gender_val
 import 'package:luciapp/features/auth/presentation/widgets/validators/name_validator.dart';
 
 class RegisterForm extends StatefulHookConsumerWidget {
-  const RegisterForm({super.key = const ValueKey(Keys.registerForm)});
+  const RegisterForm({super.key = Keys.registerForm});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _RegisterFormState();
@@ -59,6 +59,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             runSpacing: 15,
             children: [
               OutlinedTextFormField(
+                key: Keys.ageTextFormField,
                 label: 'Nombre',
                 controller: _nameController,
                 validator: nameValidator,
@@ -85,6 +86,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             height: 45,
           ),
           ElevatedButton(
+            key: Keys.registerButton,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 final User user = User(

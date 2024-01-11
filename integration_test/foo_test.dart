@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,14 +18,14 @@ class MockAuthRepository extends Mock implements AuthRepository {}
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   final authRepository = MockAuthRepository();
-  testWidgets('tap on the floating action button, verify counter',
-      (tester) async {
-    // Load app widget.
+
+  testWidgets('When user is authenticated but not registered',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           authRepositoryProvider.overrideWith((ref) => authRepository),
-          authResultProvider.overrideWith((ref) => AuthResult.failure),
+          authResultProvider.overrideWith((ref) => AuthResult.registering),
           userDisplayNameProvider.overrideWith((ref) => 'hola'),
           isLoadingProvider.overrideWith((ref) => true),
         ],
@@ -31,10 +33,42 @@ void main() {
       ),
     );
 
-    final googleButton = find.byKey(const ValueKey(Keys.googleButton));
+    final authPage = find.byKey(Keys.authPage);
+    final registerForm = find.byKey(Keys.registerForm);
+    final registerButton = find.byKey(Keys.registerButton);
+    final ageTextField = find.byKey(Keys.ageTextFormField);
 
-    await tester.tap(googleButton);
+    expect(authPage, findsOne);
+    expect(registerForm, findsOne);
 
-    expect(find.text('0'), findsNothing);
+    await tester.tap(registerButton);
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text("Debes ingresar tu edad"), findsAny);
+
+    await tester.enterText(ageTextField, '21');
+    await tester.tap(registerButton);
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text("Debes ingresar tu edad"), findsNothing);
   });
+  // testWidgets('tap on the floating action button, verify counter',
+  //     (tester) async {
+  //   // Load app widget.
+  //   await tester.pumpWidget(
+  //     ProviderScope(
+  //       overrides: [
+  //         authRepositoryProvider.overrideWith((ref) => authRepository),
+  //         authResultProvider.overrideWith((ref) => AuthResult.failure),
+  //         userDisplayNameProvider.overrideWith((ref) => 'hola'),
+  //         isLoadingProvider.overrideWith((ref) => true),
+  //       ],
+  //       child: const MyApp(),
+  //     ),
+  //   );
+
+  //   final googleButton = find.byKey(const ValueKey(Keys.googleButton));
+
+  //   await tester.tap(googleButton);
+
+  //   expect(find.text('0'), findsNothing);
+  // });
 }
