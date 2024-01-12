@@ -1,15 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AppLogotype extends StatefulWidget {
+class AppLogotype extends ConsumerWidget {
   const AppLogotype({super.key});
 
   @override
-  State<AppLogotype> createState() => _AppLogotypeState();
-}
-
-class _AppLogotypeState extends State<AppLogotype> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Image.asset(
       'assets/images/imagotype_light.png',
       height: 30,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/data/providers/photo_url_provider.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
+import 'package:luciapp/features/auth/data/providers/photo_url_provider.dart';
 
 class ProfilePhoto extends ConsumerWidget {
   final UserId? userId;

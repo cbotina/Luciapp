@@ -1,11 +1,11 @@
+import 'package:luciapp/main.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/data/auth_repository.dart';
-import 'package:luciapp/features/auth/data/users_repository.dart';
-import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
-import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
-import 'package:luciapp/main.dart';
+import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
+import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
+import 'package:luciapp/features/auth/data/abstract_repositories/auth_repository.dart';
+import 'package:luciapp/features/auth/data/abstract_repositories/users_repository.dart';
 
 class AuthService {
   final AuthRepository authRepository;

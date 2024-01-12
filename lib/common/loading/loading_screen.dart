@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:luciapp/common/constants/strings.dart';
 import 'package:luciapp/common/loading/loading_screen_controller.dart';
 
 class LoadingScreen {
@@ -11,7 +12,7 @@ class LoadingScreen {
 
   void show({
     required BuildContext context,
-    String text = 'Cargando...',
+    String text = Strings.loading,
   }) {
     if (_controller?.update(text) ?? false) {
       return;

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show immutable;
-import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
+import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 
 @immutable
 class AuthState {

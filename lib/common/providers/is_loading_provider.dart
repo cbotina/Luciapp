@@ -3,6 +3,5 @@ import 'package:luciapp/features/auth/presentation/controllers/auth_controller.d
 
 final isLoadingProvider = Provider<bool>((ref) {
   final authState = ref.watch(authControllerProvider);
-
   return authState.isLoading;
 });

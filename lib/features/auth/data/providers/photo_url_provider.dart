@@ -1,8 +1,7 @@
 import 'dart:async';
-
+import 'package:luciapp/main.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
-import 'package:luciapp/main.dart';
 
 final fetchPhotoUrlProvider =
     StreamProvider.family.autoDispose<String?, UserId>(

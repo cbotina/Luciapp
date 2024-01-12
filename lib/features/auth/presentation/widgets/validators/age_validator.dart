@@ -1,10 +1,12 @@
+import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
+
 String? Function(String?) ageValidator = (String? value) {
   if (value == null || value == '') {
-    return "Debes ingresar tu edad";
+    return Strings.ageIsRequired;
   }
 
   if (int.tryParse(value) == null) {
-    return "Ingresa tu edad en numeros";
+    return Strings.ageMustBeANumber;
   }
   return null;
 };

@@ -1,12 +1,13 @@
-import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
-import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
-import 'package:luciapp/features/auth/domain/enums/gender.dart';
-import 'package:luciapp/features/auth/domain/models/user.dart';
-import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:luciapp/features/auth/presentation/state/auth_state.dart';
+import '../constants/strings.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:flutter_test/flutter_test.dart';
 import '../mocks/mock_auth_service.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:luciapp/features/auth/domain/models/user.dart';
+import 'package:luciapp/features/auth/domain/enums/gender.dart';
+import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
+import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
+import 'package:luciapp/features/auth/presentation/state/auth_state.dart';
+import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 
 void main() {
   late MockAuthService mockAuthService;
@@ -14,8 +15,8 @@ void main() {
   setUp(() {
     mockAuthService = MockAuthService();
   });
-  group('(AuthController)', () {
-    test("[CP-001] Successfull Google login", () async {
+  group(TestNames.unitTest, () {
+    test(TestNames.cp001, () async {
       when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.success));
 
@@ -39,7 +40,7 @@ void main() {
       );
     });
 
-    test("[CP-002] Failed Google login", () async {
+    test(TestNames.cp002, () async {
       when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.failure));
 
@@ -63,7 +64,7 @@ void main() {
       );
     });
 
-    test("[CP-003] Aborted Google login", () async {
+    test(TestNames.cp003, () async {
       when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.aborted));
 
@@ -87,7 +88,7 @@ void main() {
       );
     });
 
-    test("[CP-004] Redirect to Register from Google", () async {
+    test(TestNames.cp004, () async {
       when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.registering));
 
@@ -110,7 +111,8 @@ void main() {
         ),
       );
     });
-    test("[CP-005] Successfull Facebook login", () async {
+
+    test(TestNames.cp005, () async {
       when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.success));
 
@@ -134,7 +136,7 @@ void main() {
       );
     });
 
-    test("[CP-006] Failed Facebook login", () async {
+    test(TestNames.cp006, () async {
       when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.failure));
 
@@ -158,7 +160,7 @@ void main() {
       );
     });
 
-    test("[CP-007] Aborted Facebook login", () async {
+    test(TestNames.cp007, () async {
       when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.aborted));
 
@@ -182,7 +184,7 @@ void main() {
       );
     });
 
-    test("[CP-008] Redirect to Register from Facebook", () async {
+    test(TestNames.cp008, () async {
       when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.registering));
 
@@ -206,14 +208,14 @@ void main() {
       );
     });
 
-    test("[CP-009] Sucessfull logout", () async {
+    test(TestNames.cp009, () async {
       when(mockAuthService.logOut).thenAnswer((_) => Future.value());
       final controller = AuthController(authService: mockAuthService);
       await controller.logOut();
       expect(controller.state, const AuthState.unknown());
     });
 
-    test("[CP-010] Successfull register", () async {
+    test(TestNames.cp010, () async {
       final User user = User(
         userId: '1234',
         age: 21,
@@ -242,7 +244,7 @@ void main() {
       );
     });
 
-    test("[CP-011] Failed register", () async {
+    test(TestNames.cp011, () async {
       final User user = User(
         userId: '1234',
         age: 21,

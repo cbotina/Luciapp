@@ -1,11 +1,10 @@
 import 'dart:async';
-
-import 'package:luciapp/features/auth/data/constants/firebase_collection_name.dart';
-import 'package:luciapp/features/auth/data/constants/firebase_field_name.dart';
-import 'package:luciapp/features/auth/data/users_repository.dart';
-import 'package:luciapp/features/auth/domain/models/user.dart';
-import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:luciapp/features/auth/domain/models/user.dart';
+import 'package:luciapp/common/constants/firebase_field_name.dart';
+import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
+import 'package:luciapp/common/constants/firebase_collection_name.dart';
+import 'package:luciapp/features/auth/data/abstract_repositories/users_repository.dart';
 
 class FirebaseUserRepository implements UsersRepository {
   const FirebaseUserRepository();

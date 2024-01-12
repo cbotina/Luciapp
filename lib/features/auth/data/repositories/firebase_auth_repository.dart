@@ -1,13 +1,11 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:luciapp/features/auth/data/auth_repository.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/auth/data/constants/constants.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
-
-import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
+import 'package:luciapp/features/auth/data/abstract_repositories/auth_repository.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
   const FirebaseAuthRepository();

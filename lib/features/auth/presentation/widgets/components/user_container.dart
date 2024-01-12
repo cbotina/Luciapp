@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
 import 'package:luciapp/features/auth/data/providers/user_model_provider.dart';
-import 'package:luciapp/features/auth/domain/enums/gender.dart';
-import 'package:luciapp/features/auth/presentation/widgets/components/profile_photo.dart';
 import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
+import 'package:luciapp/features/auth/presentation/widgets/components/profile_photo.dart';
 
 class UserContainer extends ConsumerWidget {
   const UserContainer({super.key});

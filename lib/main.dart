@@ -5,14 +5,14 @@ import 'package:luciapp/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/theme/app_theme.dart';
+import 'package:luciapp/common/constants/strings.dart';
 import 'package:luciapp/common/loading/loading_screen.dart';
-import 'package:luciapp/features/auth/data/auth_repository.dart';
-import 'package:luciapp/features/auth/data/users_repository.dart';
 import 'package:luciapp/common/providers/is_loading_provider.dart';
-import 'package:luciapp/features/auth/data/firebase_auth_repository.dart';
-import 'package:luciapp/features/auth/data/firebase_users_repository.dart';
 import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
-import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
+import 'package:luciapp/features/auth/data/repositories/firebase_auth_repository.dart';
+import 'package:luciapp/features/auth/data/abstract_repositories/auth_repository.dart';
+import 'package:luciapp/features/auth/data/abstract_repositories/users_repository.dart';
+import 'package:luciapp/features/auth/data/repositories/firebase_users_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

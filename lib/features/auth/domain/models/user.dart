@@ -1,8 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:luciapp/features/auth/data/constants/firebase_field_name.dart';
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
+import 'package:luciapp/common/constants/firebase_field_name.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 
 @immutable

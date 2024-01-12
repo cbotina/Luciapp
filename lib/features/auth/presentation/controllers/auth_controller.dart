@@ -1,15 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/features/auth/domain/models/user.dart';
+import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
-import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/features/auth/presentation/state/auth_state.dart';
-import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
-
-/// A class that is concerned about:
-/// - Mediate between widgets and `AuthService`
-/// - Manage `AuthState` changes
-/// - Provide funcitons to perform operations
 
 class AuthController extends StateNotifier<AuthState> {
   final AuthService authService;
