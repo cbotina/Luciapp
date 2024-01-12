@@ -9,6 +9,7 @@ import 'package:luciapp/features/auth/presentation/controllers/auth_controller.d
 import 'package:luciapp/features/auth/presentation/widgets/components/form_fields/enum_dropdown_form_field.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/form_fields/outlined_text_form_field.dart';
 import 'package:luciapp/common/components/text_divider.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
 import 'package:luciapp/features/auth/presentation/widgets/validators/age_validator.dart';
 import 'package:luciapp/features/auth/presentation/widgets/validators/gender_validator.dart';
 import 'package:luciapp/features/auth/presentation/widgets/validators/name_validator.dart';
@@ -53,27 +54,27 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 30),
-          const TextDivider(' Ingresa tus datos '),
+          const TextDivider(Strings.enterYourInfo),
           const SizedBox(height: 30),
           Wrap(
             runSpacing: 15,
             children: [
               OutlinedTextFormField(
                 key: Keys.nameTextFormField,
-                label: 'Nombre',
+                label: Strings.nameLabel,
                 controller: _nameController,
                 validator: nameValidator,
               ),
               OutlinedTextFormField(
                 key: Keys.ageTextFormField,
-                label: 'Edad',
+                label: Strings.ageLabel,
                 isNumberField: true,
                 controller: _ageController,
                 validator: ageValidator,
               ),
               EnumDropdownButtonFormField<Gender>(
                 key: Keys.genderDropdownButton,
-                label: 'Género',
+                label: Strings.genderLabel,
                 values: Gender.values,
                 validator: genderValidator,
                 onSelected: (value) {
@@ -101,12 +102,12 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                 await ref.read(authControllerProvider.notifier).register(user);
               }
             },
-            child: const Text("Crear Cuenta"),
+            child: const Text(Strings.createAccount),
           ),
           const SizedBox(height: 15),
           TextButton(
             onPressed: ref.read(authControllerProvider.notifier).logOut,
-            child: const Text("Salir"),
+            child: const Text(Strings.exit),
           ),
         ],
       ),

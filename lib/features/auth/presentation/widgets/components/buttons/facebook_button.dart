@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/keys/widget_keys.dart';
+import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
 
-class FacebookButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  const FacebookButton({
-    super.key = Keys.facebookButton,
-    required this.onPressed,
-  });
+class FacebookButton extends ConsumerWidget {
+  const FacebookButton({super.key = Keys.facebookButton});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       splashColor: Colors.blue.shade100,
-      onTap: onPressed,
+      onTap: ref.read(authControllerProvider.notifier).loginWithFacebook,
       child: Ink(
         decoration: BoxDecoration(
           color: const Color(0xff486CB4),
@@ -40,7 +39,7 @@ class FacebookButton extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                "Continuar con Facebook",
+                Strings.continueWithFacebook,
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!

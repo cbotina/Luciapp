@@ -34,6 +34,7 @@ class AuthPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // todo: extract to common
                     Image.asset(
                       'assets/images/imagotype_slogan_light.png',
                       height: 90,

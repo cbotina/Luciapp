@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/keys/widget_keys.dart';
+import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
 
-class GoogleButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  const GoogleButton({
-    super.key = Keys.googleButton,
-    required this.onPressed,
-  });
+class GoogleButton extends ConsumerWidget {
+  const GoogleButton({super.key = Keys.googleButton});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       splashColor: Colors.blue.shade100,
-      onTap: onPressed,
+      onTap: ref.read(authControllerProvider.notifier).loginWithGoogle,
       child: Ink(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -40,7 +39,7 @@ class GoogleButton extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                "Continuar con Google",
+                Strings.continueWithGoogle,
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

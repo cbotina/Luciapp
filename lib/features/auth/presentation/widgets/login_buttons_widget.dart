@@ -4,29 +4,23 @@ import 'package:luciapp/features/auth/presentation/controllers/auth_controller.d
 import 'package:luciapp/features/auth/presentation/widgets/components/buttons/facebook_button.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/buttons/google_button.dart';
 import 'package:luciapp/common/components/text_divider.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
 
-class LoginButtons extends ConsumerWidget {
+class LoginButtons extends StatelessWidget {
   const LoginButtons({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
+  Widget build(BuildContext context) {
+    return const Column(
       children: [
-        const SizedBox(height: 30),
-        const TextDivider(' Te damos la bienvenida '),
-        const SizedBox(height: 30),
-        GoogleButton(
-          onPressed: ref.read(authControllerProvider.notifier).loginWithGoogle,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        FacebookButton(
-          onPressed:
-              ref.read(authControllerProvider.notifier).loginWithFacebook,
-        ),
+        SizedBox(height: 30),
+        TextDivider(Strings.welcome),
+        SizedBox(height: 30),
+        GoogleButton(),
+        SizedBox(height: 10),
+        FacebookButton(),
       ],
     );
   }
