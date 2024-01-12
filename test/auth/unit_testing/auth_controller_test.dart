@@ -9,25 +9,25 @@ import 'package:flutter_test/flutter_test.dart';
 import '../mocks/mock_auth_service.dart';
 
 void main() {
-  late MockAuthService authService;
+  late MockAuthService mockAuthService;
 
   setUp(() {
-    authService = MockAuthService();
+    mockAuthService = MockAuthService();
   });
   group('(AuthController)', () {
     test("[CP-001] Successfull Google login", () async {
-      when(() => authService.login(AuthMethod.google))
+      when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.success));
 
-      when(authService.getUserId).thenAnswer((_) => '1234');
+      when(mockAuthService.getUserId).thenAnswer((_) => '1234');
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithGoogle();
 
-      verify(() => authService.login(AuthMethod.google)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.google)).called(1);
 
       expect(
         controller.state,
@@ -40,18 +40,18 @@ void main() {
     });
 
     test("[CP-002] Failed Google login", () async {
-      when(() => authService.login(AuthMethod.google))
+      when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.failure));
 
-      when(authService.getUserId).thenAnswer((_) => null);
+      when(mockAuthService.getUserId).thenAnswer((_) => null);
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithGoogle();
 
-      verify(() => authService.login(AuthMethod.google)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.google)).called(1);
 
       expect(
         controller.state,
@@ -64,18 +64,18 @@ void main() {
     });
 
     test("[CP-003] Aborted Google login", () async {
-      when(() => authService.login(AuthMethod.google))
+      when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.aborted));
 
-      when(authService.getUserId).thenAnswer((_) => null);
+      when(mockAuthService.getUserId).thenAnswer((_) => null);
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithGoogle();
 
-      verify(() => authService.login(AuthMethod.google)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.google)).called(1);
 
       expect(
         controller.state,
@@ -88,18 +88,18 @@ void main() {
     });
 
     test("[CP-004] Redirect to Register from Google", () async {
-      when(() => authService.login(AuthMethod.google))
+      when(() => mockAuthService.login(AuthMethod.google))
           .thenAnswer((_) => Future.value(AuthResult.registering));
 
-      when(authService.getUserId).thenAnswer((_) => '1234');
+      when(mockAuthService.getUserId).thenAnswer((_) => '1234');
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithGoogle();
 
-      verify(() => authService.login(AuthMethod.google)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.google)).called(1);
 
       expect(
         controller.state,
@@ -111,18 +111,18 @@ void main() {
       );
     });
     test("[CP-005] Successfull Facebook login", () async {
-      when(() => authService.login(AuthMethod.facebook))
+      when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.success));
 
-      when(authService.getUserId).thenAnswer((_) => '1234');
+      when(mockAuthService.getUserId).thenAnswer((_) => '1234');
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithFacebook();
 
-      verify(() => authService.login(AuthMethod.facebook)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.facebook)).called(1);
 
       expect(
         controller.state,
@@ -135,18 +135,18 @@ void main() {
     });
 
     test("[CP-006] Failed Facebook login", () async {
-      when(() => authService.login(AuthMethod.facebook))
+      when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.failure));
 
-      when(authService.getUserId).thenAnswer((_) => null);
+      when(mockAuthService.getUserId).thenAnswer((_) => null);
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithFacebook();
 
-      verify(() => authService.login(AuthMethod.facebook)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.facebook)).called(1);
 
       expect(
         controller.state,
@@ -159,18 +159,18 @@ void main() {
     });
 
     test("[CP-007] Aborted Facebook login", () async {
-      when(() => authService.login(AuthMethod.facebook))
+      when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.aborted));
 
-      when(authService.getUserId).thenAnswer((_) => null);
+      when(mockAuthService.getUserId).thenAnswer((_) => null);
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithFacebook();
 
-      verify(() => authService.login(AuthMethod.facebook)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.facebook)).called(1);
 
       expect(
         controller.state,
@@ -183,18 +183,18 @@ void main() {
     });
 
     test("[CP-008] Redirect to Register from Facebook", () async {
-      when(() => authService.login(AuthMethod.facebook))
+      when(() => mockAuthService.login(AuthMethod.facebook))
           .thenAnswer((_) => Future.value(AuthResult.registering));
 
-      when(authService.getUserId).thenAnswer((_) => '1234');
+      when(mockAuthService.getUserId).thenAnswer((_) => '1234');
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       expect(controller.state, const AuthState.unknown());
 
       await controller.loginWithFacebook();
 
-      verify(() => authService.login(AuthMethod.facebook)).called(1);
+      verify(() => mockAuthService.login(AuthMethod.facebook)).called(1);
 
       expect(
         controller.state,
@@ -207,8 +207,8 @@ void main() {
     });
 
     test("[CP-009] Sucessfull logout", () async {
-      when(authService.logOut).thenAnswer((_) => Future.value());
-      final controller = AuthController(authService: authService);
+      when(mockAuthService.logOut).thenAnswer((_) => Future.value());
+      final controller = AuthController(authService: mockAuthService);
       await controller.logOut();
       expect(controller.state, const AuthState.unknown());
     });
@@ -221,16 +221,16 @@ void main() {
         name: "Alice",
       );
 
-      when(() => authService.register(user))
+      when(() => mockAuthService.register(user))
           .thenAnswer((_) => Future.value(true));
 
-      when(authService.getUserId).thenAnswer((_) => '1234');
+      when(mockAuthService.getUserId).thenAnswer((_) => '1234');
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       await controller.register(user);
 
-      verify(() => authService.register(user)).called(1);
+      verify(() => mockAuthService.register(user)).called(1);
 
       expect(
         controller.state,
@@ -250,16 +250,16 @@ void main() {
         name: "Alice",
       );
 
-      when(() => authService.register(user))
+      when(() => mockAuthService.register(user))
           .thenAnswer((_) => Future.value(false));
 
-      when(authService.getUserId).thenAnswer((_) => null);
+      when(mockAuthService.getUserId).thenAnswer((_) => null);
 
-      final controller = AuthController(authService: authService);
+      final controller = AuthController(authService: mockAuthService);
 
       await controller.register(user);
 
-      verify(() => authService.register(user)).called(1);
+      verify(() => mockAuthService.register(user)).called(1);
 
       expect(
         controller.state,

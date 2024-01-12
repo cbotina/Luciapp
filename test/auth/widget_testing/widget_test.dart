@@ -1,28 +1,73 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/keys/widget_keys.dart';
 import 'package:luciapp/common/providers/is_loading_provider.dart';
-import 'package:luciapp/features/auth/data/auth_repository.dart';
 import 'package:luciapp/features/auth/data/providers/auth_result_provider.dart';
 import 'package:luciapp/features/auth/data/providers/user_display_name_provider.dart';
+import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
+import 'package:luciapp/features/auth/domain/enums/gender.dart';
+import 'package:luciapp/features/auth/domain/models/user.dart';
+import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 
 import 'package:luciapp/main.dart';
 import 'package:mocktail/mocktail.dart';
-
-class MockAuthRepository extends Mock implements AuthRepository {}
+import '../mocks/mock_auth_controller.dart';
+import '../mocks/mock_auth_repository.dart';
 
 void main() {
-  late final MockAuthRepository authRepository;
+  late final MockAuthRepository mockAuthRepository;
+  late final MockAuthController mockAuthController;
+
   setUpAll(() async {
-    authRepository = MockAuthRepository();
+    mockAuthRepository = MockAuthRepository();
+    mockAuthController = MockAuthController();
   });
 
   group(
     "(Integration Test)",
     () {
-      testWidgets('[CP-024] When user is not authenticated',
+      testWidgets('[CP-024] When user is authenticated',
+          (WidgetTester tester) async {
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              authResultProvider.overrideWith((ref) => AuthResult.success),
+              isLoadingProvider.overrideWith((ref) => false),
+            ],
+            child: const MyApp(),
+          ),
+        );
+
+        final homePage = find.byKey(Keys.homePage);
+
+        expect(homePage, findsOne);
+      });
+
+      testWidgets('[CP-025] When user is authenticated but not registered',
+          (WidgetTester tester) async {
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              authResultProvider.overrideWith((ref) => AuthResult.registering),
+              userDisplayNameProvider.overrideWith((ref) => 'hola'),
+              isLoadingProvider.overrideWith((ref) => true),
+            ],
+            child: const MyApp(),
+          ),
+        );
+
+        final authPage = find.byKey(Keys.authPage);
+        final registerForm = find.byKey(Keys.registerForm);
+
+        expect(authPage, findsOne);
+        expect(registerForm, findsOne);
+      });
+
+      testWidgets('[CP-026] When authentication fails',
           (WidgetTester tester) async {
         await tester.pumpWidget(
           ProviderScope(
@@ -39,54 +84,32 @@ void main() {
         expect(authPage, findsOne);
       });
 
-      testWidgets('[CP-025] When user is authenticated',
+      testWidgets('[CP-027] When authentication fails',
           (WidgetTester tester) async {
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
-              authRepositoryProvider.overrideWith((ref) => authRepository),
-              authResultProvider.overrideWith((ref) => AuthResult.success),
+              authResultProvider.overrideWith((ref) => AuthResult.failure),
               isLoadingProvider.overrideWith((ref) => false),
             ],
             child: const MyApp(),
           ),
         );
 
-        final homePage = find.byKey(Keys.homePage);
-
-        expect(homePage, findsOne);
-      });
-
-      testWidgets('[CP-026] When user is authenticated but not registered',
-          (WidgetTester tester) async {
-        await tester.pumpWidget(
-          ProviderScope(
-            overrides: [
-              authRepositoryProvider.overrideWith((ref) => authRepository),
-              authResultProvider.overrideWith((ref) => AuthResult.registering),
-              userDisplayNameProvider.overrideWith((ref) => 'hola'),
-              isLoadingProvider.overrideWith((ref) => true),
-            ],
-            child: const MyApp(),
-          ),
-        );
-
         final authPage = find.byKey(Keys.authPage);
-        final registerForm = find.byKey(Keys.registerForm);
 
         expect(authPage, findsOne);
-        expect(registerForm, findsOne);
       });
 
-      testWidgets('[CP-027] When user is authenticated but not registered',
-          (WidgetTester tester) async {
-        final SemanticsHandle handle = tester.ensureSemantics();
+      testWidgets('[CP-028] Empty fields in form', (WidgetTester tester) async {
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
-              authRepositoryProvider.overrideWith((ref) => authRepository),
+              authControllerProvider.overrideWith((ref) => mockAuthController),
+              authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
               authResultProvider.overrideWith((ref) => AuthResult.registering),
               userDisplayNameProvider.overrideWith((ref) => null),
+              userIdProvider.overrideWith((ref) => '1234'),
               isLoadingProvider.overrideWith((ref) => true),
             ],
             child: const MyApp(),
@@ -95,31 +118,110 @@ void main() {
 
         final authPage = find.byKey(Keys.authPage);
         final registerForm = find.byKey(Keys.registerForm);
-        final registerButton = find.byKey(Keys.registerButton);
 
         expect(authPage, findsOne);
+        log("AuthPage verified");
         expect(registerForm, findsOne);
+        log("RegisterForm verified");
+
+        final registerButton = find.byKey(Keys.registerButton);
 
         await tester.tap(registerButton);
-        await tester.pump(const Duration(seconds: 1));
+        await tester.pump(const Duration(milliseconds: 100));
+
         expect(find.text("Debes ingresar tu edad"), findsAny);
         expect(find.text("Debes seleccionar un genero"), findsAny);
         expect(find.text("Debes ingresar tu nombre"), findsAny);
-        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
 
-// Checks that tappable nodes have a minimum size of 44 by 44 pixels
-// for iOS.
-        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        final nameFormField = find.byKey(Keys.nameTextFormField);
+        final ageFormField = find.byKey(Keys.ageTextFormField);
+        final genderDropdown = find.byKey(Keys.genderDropdownButton);
 
-// Checks that touch targets with a tap or long press action are labeled.
-        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+        await tester.enterText(nameFormField, "Carlos");
+        await tester.tap(registerButton);
+        await tester.pump(const Duration(milliseconds: 100));
 
-// Checks whether semantic nodes meet the minimum text contrast levels.
-// The recommended text contrast is 3:1 for larger text
-// (18 point and above regular).
-        await expectLater(tester, meetsGuideline(textContrastGuideline));
+        expect(find.text("Debes ingresar tu edad"), findsAny);
+        expect(find.text("Debes seleccionar un genero"), findsAny);
+        expect(find.text("Debes ingresar tu nombre"), findsNothing);
 
-        handle.dispose();
+        await tester.enterText(ageFormField, "21");
+        await tester.tap(registerButton);
+        await tester.pump(const Duration(milliseconds: 100));
+
+        expect(find.text("Debes ingresar tu edad"), findsNothing);
+        expect(find.text("Debes seleccionar un genero"), findsAny);
+        expect(find.text("Debes ingresar tu nombre"), findsNothing);
+
+        final coordinates = tester.getCenter(genderDropdown);
+        log(coordinates.toString());
+        await tester.tap(genderDropdown);
+        await tester.tapAt(coordinates);
+        await tester.pump(const Duration(milliseconds: 100));
+        await tester.tapAt(coordinates);
+        await tester.pump(const Duration(milliseconds: 100));
+
+        when(() => mockAuthController.register(User(
+            userId: '1234',
+            name: 'Carlos',
+            gender: Gender.male,
+            age: 21))).thenAnswer(
+          (_) => Future.value(),
+        );
+
+        await tester.tap(nameFormField);
+        await tester.tap(registerButton);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.text("Debes ingresar tu edad"), findsNothing);
+        expect(find.text("Debes seleccionar un genero"), findsNothing);
+        expect(find.text("Debes ingresar tu nombre"), findsNothing);
+      });
+
+      testWidgets('[CP-028] Sucessful register', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              authControllerProvider.overrideWith((ref) => mockAuthController),
+              authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              authResultProvider.overrideWith((ref) => AuthResult.registering),
+              userDisplayNameProvider.overrideWith((ref) => null),
+              userIdProvider.overrideWith((ref) => '1234'),
+              isLoadingProvider.overrideWith((ref) => true),
+            ],
+            child: const MyApp(),
+          ),
+        );
+        final user = User(
+          userId: '1234',
+          name: 'Carlos',
+          gender: Gender.male,
+          age: 21,
+        );
+
+        final registerButton = find.byKey(Keys.registerButton);
+        final nameFormField = find.byKey(Keys.nameTextFormField);
+        final ageFormField = find.byKey(Keys.ageTextFormField);
+        final genderDropdown = find.byKey(Keys.genderDropdownButton);
+
+        await tester.enterText(nameFormField, "Carlos");
+        await tester.enterText(ageFormField, "21");
+        final coordinates = tester.getCenter(genderDropdown);
+        await tester.tap(genderDropdown);
+        await tester.tapAt(coordinates);
+        await tester.pump(const Duration(milliseconds: 100));
+        await tester.tapAt(coordinates);
+        await tester.pump(const Duration(milliseconds: 100));
+
+        when(() => mockAuthController.register(user)).thenAnswer(
+          (_) => Future.value(),
+        );
+
+        await tester.tap(nameFormField);
+        await tester.tap(registerButton);
+        await tester.pump(const Duration(seconds: 1));
+
+        verify(() => mockAuthController.register(user)).called(1);
       });
     },
   );

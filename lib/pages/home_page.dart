@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/keys/widget_keys.dart';
 import 'package:luciapp/common/components/app_logotype.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/buttons/logout_button.dart';

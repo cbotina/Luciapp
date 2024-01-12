@@ -8,7 +8,7 @@ import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/form_fields/enum_dropdown_form_field.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/form_fields/outlined_text_form_field.dart';
-import 'package:luciapp/features/auth/presentation/widgets/components/text_divider.dart';
+import 'package:luciapp/common/components/text_divider.dart';
 import 'package:luciapp/features/auth/presentation/widgets/validators/age_validator.dart';
 import 'package:luciapp/features/auth/presentation/widgets/validators/gender_validator.dart';
 import 'package:luciapp/features/auth/presentation/widgets/validators/name_validator.dart';
@@ -59,18 +59,20 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             runSpacing: 15,
             children: [
               OutlinedTextFormField(
-                key: Keys.ageTextFormField,
+                key: Keys.nameTextFormField,
                 label: 'Nombre',
                 controller: _nameController,
                 validator: nameValidator,
               ),
               OutlinedTextFormField(
+                key: Keys.ageTextFormField,
                 label: 'Edad',
                 isNumberField: true,
                 controller: _ageController,
                 validator: ageValidator,
               ),
               EnumDropdownButtonFormField<Gender>(
+                key: Keys.genderDropdownButton,
                 label: 'Género',
                 values: Gender.values,
                 validator: genderValidator,
