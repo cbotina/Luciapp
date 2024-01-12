@@ -1,4 +1,5 @@
 class Strings {
+  static const appName = "Luciapp";
   static const welcome = " Te damos la bienvenida ";
   static const enterYourInfo = " Ingresa tus datos ";
   static const nameLabel = "Nombre";

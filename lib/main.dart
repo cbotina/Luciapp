@@ -1,17 +1,18 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:luciapp/pages/auth_page.dart';
+import 'package:luciapp/pages/home_page.dart';
+import 'package:luciapp/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/common/loading/loading_screen.dart';
-import 'package:luciapp/common/providers/is_loading_provider.dart';
 import 'package:luciapp/common/theme/app_theme.dart';
+import 'package:luciapp/common/loading/loading_screen.dart';
 import 'package:luciapp/features/auth/data/auth_repository.dart';
+import 'package:luciapp/features/auth/data/users_repository.dart';
+import 'package:luciapp/common/providers/is_loading_provider.dart';
 import 'package:luciapp/features/auth/data/firebase_auth_repository.dart';
 import 'package:luciapp/features/auth/data/firebase_users_repository.dart';
 import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
-import 'package:luciapp/features/auth/data/users_repository.dart';
-import 'package:luciapp/firebase_options.dart';
-import 'package:luciapp/pages/auth_page.dart';
-import 'package:luciapp/pages/home_page.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: Strings.appName,
       theme: AppTheme.lightTheme,
       home: Consumer(
         builder: (context, ref, child) {
