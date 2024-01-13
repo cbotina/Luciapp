@@ -12,7 +12,6 @@ class RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      key: Keys.registerButton,
       onPressed: onPressed,
       child: const Text(Strings.createAccount),
     );
