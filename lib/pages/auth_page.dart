@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/common/keys/widget_keys.dart';
 import 'package:luciapp/common/components/app_logotype_with_slogan.dart';
 import 'package:luciapp/features/auth/data/providers/is_registering_provider.dart';
 import 'package:luciapp/features/auth/presentation/widgets/login_buttons_widget.dart';
 import 'package:luciapp/features/auth/presentation/widgets/register_form_widget.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key = Keys.authPage});

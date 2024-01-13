@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/common/keys/widget_keys.dart';
 import 'package:luciapp/features/auth/presentation/widgets/constants/strings.dart';
 import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart';
 
 class GoogleButton extends ConsumerWidget {
   const GoogleButton({super.key = Keys.googleButton});

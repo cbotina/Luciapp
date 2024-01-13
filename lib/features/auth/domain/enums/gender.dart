@@ -38,11 +38,11 @@ extension ToIcon on GenderString {
 extension ToGender on GenderString {
   Gender toGender() {
     switch (this) {
-      case "Gender.male":
+      case "Masculino":
         return Gender.male;
-      case "Gender.female":
+      case "Femenino":
         return Gender.female;
-      case "Gender.nonBinary":
+      case "No binario":
         return Gender.nonBinary;
       default:
         return Gender.male;

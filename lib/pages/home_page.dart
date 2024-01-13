@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:luciapp/common/keys/widget_keys.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart';
 import 'package:luciapp/common/components/app_logotype.dart';
-import 'package:luciapp/features/auth/presentation/widgets/components/buttons/logout_button.dart';
+import 'package:luciapp/features/auth/presentation/widgets/components/buttons/logout_icon_button.dart';
 import 'package:luciapp/common/components/switch_theme_button.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/user_container.dart';
 
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const AppLogotype(),
         centerTitle: true,
-        leading: const LogoutButton(),
+        leading: const LogoutIconButton(),
         actions: const [SwitchThemeButton()],
       ),
       body: ListView(

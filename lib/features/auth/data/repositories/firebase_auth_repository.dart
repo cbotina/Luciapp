@@ -24,7 +24,6 @@ class FirebaseAuthRepository implements AuthRepository {
     await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
     await FacebookAuth.instance.logOut();
-    //await PhoneAuth.instance.logOut();
   }
 
   @override
@@ -33,7 +32,6 @@ class FirebaseAuthRepository implements AuthRepository {
     final String? token = loginResult.accessToken?.token;
 
     if (token == null) {
-      // user has aborted
       return AuthResult.aborted;
     }
 

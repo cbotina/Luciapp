@@ -4,8 +4,8 @@ import 'package:luciapp/pages/home_page.dart';
 import 'package:luciapp/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/common/theme/app_theme.dart';
 import 'package:luciapp/common/constants/strings.dart';
+import 'package:luciapp/common/themes/light_theme.dart';
 import 'package:luciapp/common/loading/loading_screen.dart';
 import 'package:luciapp/common/providers/is_loading_provider.dart';
 import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Strings.appName,
-      theme: AppTheme.lightTheme,
+      theme: lightTheme,
       home: Consumer(
         builder: (context, ref, child) {
           final query = MediaQuery.of(context);

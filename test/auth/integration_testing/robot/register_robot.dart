@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:luciapp/common/keys/widget_keys.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart';
 
 class RegisterRobot {
   final WidgetTester tester;

@@ -26,154 +26,152 @@ void main() {
   });
 
   group(TestNames.unitTest, () {
-    group('(AuthService)', () {
-      test(TestNames.cp012, () async {
-        when(authRepository.loginWithGoogle).thenAnswer(
-          (invocation) => Future.value(AuthResult.success),
-        );
+    test(TestNames.cp012, () async {
+      when(authRepository.loginWithGoogle).thenAnswer(
+        (invocation) => Future.value(AuthResult.success),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => '1234');
+      when(() => authRepository.userId).thenAnswer((_) => '1234');
 
-        when(() => usersRepository.findUser('1234'))
-            .thenAnswer((_) => Future.value(null));
+      when(() => usersRepository.findUser('1234'))
+          .thenAnswer((_) => Future.value(null));
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.google);
+      final result = await service.login(AuthMethod.google);
 
-        expect(result, AuthResult.registering);
-      });
+      expect(result, AuthResult.registering);
+    });
 
-      test(TestNames.cp013, () async {
-        when(authRepository.loginWithGoogle).thenAnswer(
-          (invocation) => Future.value(AuthResult.success),
-        );
+    test(TestNames.cp013, () async {
+      when(authRepository.loginWithGoogle).thenAnswer(
+        (invocation) => Future.value(AuthResult.success),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => '1234');
+      when(() => authRepository.userId).thenAnswer((_) => '1234');
 
-        when(() => usersRepository.findUser('1234'))
-            .thenAnswer((_) => Future.value(existingUser));
+      when(() => usersRepository.findUser('1234'))
+          .thenAnswer((_) => Future.value(existingUser));
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.google);
+      final result = await service.login(AuthMethod.google);
 
-        expect(result, AuthResult.success);
-      });
+      expect(result, AuthResult.success);
+    });
 
-      test(TestNames.cp014, () async {
-        when(authRepository.loginWithGoogle).thenAnswer(
-          (invocation) => Future.value(AuthResult.failure),
-        );
+    test(TestNames.cp014, () async {
+      when(authRepository.loginWithGoogle).thenAnswer(
+        (invocation) => Future.value(AuthResult.failure),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => null);
+      when(() => authRepository.userId).thenAnswer((_) => null);
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.google);
+      final result = await service.login(AuthMethod.google);
 
-        expect(result, AuthResult.failure);
-      });
+      expect(result, AuthResult.failure);
+    });
 
-      test(TestNames.cp015, () async {
-        when(authRepository.loginWithGoogle).thenAnswer(
-          (invocation) => Future.value(AuthResult.aborted),
-        );
+    test(TestNames.cp015, () async {
+      when(authRepository.loginWithGoogle).thenAnswer(
+        (invocation) => Future.value(AuthResult.aborted),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => null);
+      when(() => authRepository.userId).thenAnswer((_) => null);
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.google);
+      final result = await service.login(AuthMethod.google);
 
-        expect(result, AuthResult.aborted);
-      });
+      expect(result, AuthResult.aborted);
+    });
 
-      test(TestNames.cp016, () async {
-        when(authRepository.loginWithFacebook).thenAnswer(
-          (invocation) => Future.value(AuthResult.success),
-        );
+    test(TestNames.cp016, () async {
+      when(authRepository.loginWithFacebook).thenAnswer(
+        (invocation) => Future.value(AuthResult.success),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => '1234');
+      when(() => authRepository.userId).thenAnswer((_) => '1234');
 
-        when(() => usersRepository.findUser('1234'))
-            .thenAnswer((_) => Future.value(null));
+      when(() => usersRepository.findUser('1234'))
+          .thenAnswer((_) => Future.value(null));
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.facebook);
+      final result = await service.login(AuthMethod.facebook);
 
-        expect(result, AuthResult.registering);
-      });
+      expect(result, AuthResult.registering);
+    });
 
-      test(TestNames.cp017, () async {
-        when(authRepository.loginWithFacebook).thenAnswer(
-          (invocation) => Future.value(AuthResult.success),
-        );
+    test(TestNames.cp017, () async {
+      when(authRepository.loginWithFacebook).thenAnswer(
+        (invocation) => Future.value(AuthResult.success),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => '1234');
+      when(() => authRepository.userId).thenAnswer((_) => '1234');
 
-        when(() => usersRepository.findUser('1234'))
-            .thenAnswer((_) => Future.value(existingUser));
+      when(() => usersRepository.findUser('1234'))
+          .thenAnswer((_) => Future.value(existingUser));
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.facebook);
+      final result = await service.login(AuthMethod.facebook);
 
-        expect(result, AuthResult.success);
-      });
+      expect(result, AuthResult.success);
+    });
 
-      test(TestNames.cp018, () async {
-        when(authRepository.loginWithFacebook).thenAnswer(
-          (invocation) => Future.value(AuthResult.failure),
-        );
+    test(TestNames.cp018, () async {
+      when(authRepository.loginWithFacebook).thenAnswer(
+        (invocation) => Future.value(AuthResult.failure),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => null);
+      when(() => authRepository.userId).thenAnswer((_) => null);
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.facebook);
+      final result = await service.login(AuthMethod.facebook);
 
-        expect(result, AuthResult.failure);
-      });
+      expect(result, AuthResult.failure);
+    });
 
-      test(TestNames.cp019, () async {
-        when(authRepository.loginWithFacebook).thenAnswer(
-          (invocation) => Future.value(AuthResult.aborted),
-        );
+    test(TestNames.cp019, () async {
+      when(authRepository.loginWithFacebook).thenAnswer(
+        (invocation) => Future.value(AuthResult.aborted),
+      );
 
-        when(() => authRepository.userId).thenAnswer((_) => null);
+      when(() => authRepository.userId).thenAnswer((_) => null);
 
-        final service = AuthService(
-          authRepository: authRepository,
-          usersRepository: usersRepository,
-        );
+      final service = AuthService(
+        authRepository: authRepository,
+        usersRepository: usersRepository,
+      );
 
-        final result = await service.login(AuthMethod.facebook);
+      final result = await service.login(AuthMethod.facebook);
 
-        expect(result, AuthResult.aborted);
-      });
+      expect(result, AuthResult.aborted);
     });
 
     test(TestNames.cp020, () async {
