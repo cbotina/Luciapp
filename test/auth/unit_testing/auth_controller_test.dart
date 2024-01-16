@@ -209,9 +209,9 @@ void main() {
     });
 
     test(TestNames.cp009, () async {
-      when(mockAuthService.logOut).thenAnswer((_) => Future.value());
+      when(mockAuthService.logout).thenAnswer((_) => Future.value());
       final controller = AuthController(authService: mockAuthService);
-      await controller.logOut();
+      await controller.logout();
       expect(controller.state, const AuthState.unknown());
     });
 

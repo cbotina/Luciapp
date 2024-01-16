@@ -6,7 +6,7 @@ import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/common/constants/firebase_collection_name.dart';
 import 'package:luciapp/features/auth/data/abstract_repositories/users_repository.dart';
 
-class FirebaseUserRepository implements UsersRepository {
+class FirebaseUserRepository implements IUsersRepository {
   const FirebaseUserRepository();
 
   @override

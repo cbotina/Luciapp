@@ -10,7 +10,7 @@ class LogoutButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextButton(
-      onPressed: ref.read(authControllerProvider.notifier).logOut,
+      onPressed: ref.read(authControllerProvider.notifier).logout,
       child: const Text(Strings.exit),
     );
   }

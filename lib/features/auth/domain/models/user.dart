@@ -1,22 +1,26 @@
 import 'dart:collection';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show immutable;
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/common/constants/firebase_field_name.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 
 @immutable
 class User extends MapView<String, dynamic> {
-  final UserId userId;
-  final String name;
-  final Gender gender;
-  final int age;
+  final UserId _userId;
+  final String _name;
+  final Gender _gender;
+  final int _age;
 
   User({
-    required this.userId,
-    required this.name,
-    required this.gender,
-    required this.age,
-  }) : super(
+    required userId,
+    required name,
+    required gender,
+    required age,
+  })  : _age = age,
+        _gender = gender,
+        _name = name,
+        _userId = userId,
+        super(
           {
             FirebaseFieldName.username: name,
             FirebaseFieldName.userId: userId,
@@ -33,23 +37,28 @@ class User extends MapView<String, dynamic> {
           age: json[FirebaseFieldName.age] ?? 0,
         );
 
+  UserId get userId => _userId;
+  String get name => _name;
+  Gender get gender => _gender;
+  int get age => _age;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is User &&
           runtimeType == other.runtimeType &&
-          userId == other.userId &&
-          name == other.name &&
-          gender == other.gender &&
-          age == other.age;
+          _userId == other.userId &&
+          _name == other.name &&
+          _gender == other.gender &&
+          _age == other.age;
 
   @override
   int get hashCode => Object.hashAll(
         [
-          userId,
-          name,
-          gender,
-          age,
+          _userId,
+          _name,
+          _gender,
+          _age,
         ],
       );
 }

@@ -8,28 +8,29 @@ import 'package:luciapp/features/auth/data/abstract_repositories/auth_repository
 import 'package:luciapp/features/auth/data/abstract_repositories/users_repository.dart';
 
 class AuthService {
-  final AuthRepository authRepository;
-  final UsersRepository usersRepository;
+  final IAuthRepository _authRepository;
+  final IUsersRepository _usersRepository;
 
   AuthService({
-    required this.authRepository,
-    required this.usersRepository,
-  });
+    required IAuthRepository authRepository,
+    required IUsersRepository usersRepository,
+  })  : _usersRepository = usersRepository,
+        _authRepository = authRepository;
 
   Future<AuthResult> login(AuthMethod method) async {
     late AuthResult authResult;
 
     switch (method) {
       case AuthMethod.facebook:
-        authResult = await authRepository.loginWithFacebook();
+        authResult = await _authRepository.loginWithFacebook();
       case AuthMethod.google:
-        authResult = await authRepository.loginWithGoogle();
+        authResult = await _authRepository.loginWithGoogle();
     }
 
-    final UserId? userId = authRepository.userId;
+    final UserId? userId = _authRepository.userId;
 
     if (authResult == AuthResult.success && userId != null) {
-      final user = await usersRepository.findUser(userId);
+      final user = await _usersRepository.findUser(userId);
 
       if (user != null) {
         return authResult;
@@ -42,16 +43,16 @@ class AuthService {
   }
 
   Future<bool> register(User user) async {
-    final bool savedSuccessfully = await usersRepository.saveUser(user);
+    final bool savedSuccessfully = await _usersRepository.saveUser(user);
     return savedSuccessfully;
   }
 
-  String? getUserId() {
-    return authRepository.userId;
+  UserId? getUserId() {
+    return _authRepository.userId;
   }
 
-  Future<void> logOut() async {
-    return await authRepository.logOut();
+  Future<void> logout() async {
+    return await _authRepository.logout();
   }
 }
 

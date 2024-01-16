@@ -175,16 +175,16 @@ void main() {
     });
 
     test(TestNames.cp020, () async {
-      when(authRepository.logOut).thenAnswer((_) => Future.value());
+      when(authRepository.logout).thenAnswer((_) => Future.value());
 
       final service = AuthService(
         authRepository: authRepository,
         usersRepository: usersRepository,
       );
 
-      await service.logOut();
+      await service.logout();
 
-      verify(authRepository.logOut).called(1);
+      verify(authRepository.logout).called(1);
     });
 
     test(TestNames.cp021, () async {

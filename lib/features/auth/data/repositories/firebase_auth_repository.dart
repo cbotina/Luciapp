@@ -7,7 +7,7 @@ import 'package:luciapp/features/auth/data/constants/constants.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/auth/data/abstract_repositories/auth_repository.dart';
 
-class FirebaseAuthRepository implements AuthRepository {
+class FirebaseAuthRepository implements IAuthRepository {
   const FirebaseAuthRepository();
 
   @override
@@ -20,7 +20,7 @@ class FirebaseAuthRepository implements AuthRepository {
       FirebaseAuth.instance.authStateChanges();
 
   @override
-  Future<void> logOut() async {
+  Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
     await FacebookAuth.instance.logOut();

@@ -55,10 +55,10 @@ class MyApp extends StatelessWidget {
 
 // Repositories
 
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
+final authRepositoryProvider = Provider<IAuthRepository>((ref) {
   return const FirebaseAuthRepository();
 });
 
-final usersRepositoryProvider = Provider<UsersRepository>((ref) {
+final usersRepositoryProvider = Provider<IUsersRepository>((ref) {
   return const FirebaseUserRepository();
 });
