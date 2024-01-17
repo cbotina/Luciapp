@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/pages/auth_page.dart';
-import 'package:luciapp/pages/home_page.dart';
+import 'package:luciapp/pages/main_page.dart';
 import 'package:luciapp/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
 
           return MediaQuery(
             data: query.copyWith(textScaler: const TextScaler.linear(1)),
-            child: isLoggedIn ? const HomePage() : const AuthPage(),
+            child: isLoggedIn ? const MainPage() : const AuthPage(),
           );
         },
       ),

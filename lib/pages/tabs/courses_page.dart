@@ -5,8 +5,8 @@ import 'package:luciapp/features/auth/presentation/widgets/components/buttons/lo
 import 'package:luciapp/common/components/switch_theme_button.dart';
 import 'package:luciapp/features/auth/presentation/widgets/components/user_container.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key = Keys.homePage});
+class CoursesPage extends StatelessWidget {
+  const CoursesPage({super.key = Keys.homePage});
 
   @override
   Widget build(BuildContext context) {

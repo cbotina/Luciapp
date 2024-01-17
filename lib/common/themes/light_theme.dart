@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/color_schemes/light_color_scheme.dart';
 
 final lightTheme = ThemeData(
+  // useMaterial3: false,
   fontFamily: 'Nunito',
   colorScheme: lightColorScheme,
   textTheme: const TextTheme(
-    titleLarge: TextStyle(
-      fontFamily: 'Roboto',
+    displaySmall: TextStyle(
       fontWeight: FontWeight.bold,
+      fontSize: 32,
+      fontFamily: 'Roboto',
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
