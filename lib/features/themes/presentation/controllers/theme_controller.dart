@@ -12,10 +12,6 @@ class ThemeController extends AsyncNotifier<AppThemeMode> {
     return _themeService.getCurrentTheme();
   }
 
-  // Future<void> _setCurrentTheme() async {
-  //   state = await AsyncValue.guard(() => _themeService.getCurrentTheme());
-  // }
-
   Future<void> toggleDarkMode() async {
     state = await AsyncValue.guard(() => _themeService.toggleDarkMode());
   }

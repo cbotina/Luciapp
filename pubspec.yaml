@@ -43,6 +43,8 @@ dependencies:
   flutter_hooks: ^0.20.4
   iconoir_flutter: ^7.3.0
   mocktail: ^1.0.2
+  sqflite: ^2.3.0
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:

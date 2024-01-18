@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:luciapp/features/themes/data/abstract_repositories/theme_repository.dart';
+import 'package:luciapp/features/themes/data/repositories/sqlite_theme_repository.dart';
 import 'package:luciapp/pages/auth_page.dart';
 import 'package:luciapp/pages/main_page.dart';
 import 'package:luciapp/firebase_options.dart';
@@ -61,4 +63,8 @@ final authRepositoryProvider = Provider<IAuthRepository>((ref) {
 
 final usersRepositoryProvider = Provider<IUsersRepository>((ref) {
   return const FirebaseUserRepository();
+});
+
+final themeRepositoryProvider = Provider<IThemeRepository>((ref) {
+  return SqLiteThemeRepository();
 });
