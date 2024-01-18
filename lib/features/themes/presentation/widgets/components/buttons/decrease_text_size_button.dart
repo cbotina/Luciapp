@@ -18,7 +18,7 @@ class DecreaseTextSizeButton extends StatelessWidget {
           Icon(
             Icons.text_decrease,
             size: 70,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           Text(
             Strings.decreaseFontSize,

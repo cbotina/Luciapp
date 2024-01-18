@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luciapp/common/components/title_container_border.dart';
 import 'package:luciapp/features/themes/presentation/widgets/components/accessibility_buttons.dart';
 import 'package:luciapp/features/themes/presentation/widgets/components/titles/accessibility_page_title.dart';
 import 'package:luciapp/pages/tabs/games_tab.dart';

@@ -11,13 +11,13 @@ class SqLiteThemeRepository implements IThemeRepository {
   @override
   Future<void> open() async {
     final database = openDatabase(
-      join(await getDatabasesPath(), 'configurations.db'),
+      join(await getDatabasesPath(), 'config.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE user_settings(id VARCHAR(150), dark_mode BOOL, hc_mode BOOL )',
+          'CREATE TABLE user_settings(user_id VARCHAR(150), dark_mode INTEGER, hc_mode INTEGER )',
         );
       },
-      version: 1,
+      version: 3,
     );
     db = await database;
   }
@@ -32,8 +32,11 @@ class SqLiteThemeRepository implements IThemeRepository {
     await open();
 
     final ThemeSettings? themeSettings = await db
-        .query('user_settings')
-        .then((maps) => ThemeSettings.fromJson(maps[1]));
+        .query('user_settings', where: 'user_id = ?', whereArgs: [userId]).then(
+            (maps) => maps
+                .map((e) => ThemeSettings.fromJson(e))
+                .toList()
+                .firstOrNull);
 
     await close();
 
@@ -41,17 +44,16 @@ class SqLiteThemeRepository implements IThemeRepository {
   }
 
   @override
-  Future<bool> updateUserThemeSettings(
-      UserId userId, ThemeSettings themeSettings) async {
+  Future<bool> updateUserThemeSettings(ThemeSettings themeSettings) async {
     await open();
     final changes = await db.update('user_settings', themeSettings,
-        where: 'id = ?', whereArgs: [userId]);
+        where: 'user_id = ?', whereArgs: [themeSettings.userId]);
     return changes > 0;
   }
 
   @override
   Future<ThemeSettings> createUserThemeSettings(
-      UserId userId, ThemeSettings themeSettings) async {
+      ThemeSettings themeSettings) async {
     await open();
 
     await db.insert(
@@ -62,8 +64,27 @@ class SqLiteThemeRepository implements IThemeRepository {
 
     await close();
 
-    final createdUserThemeSettings = await getUserThemeSettings(userId);
+    final createdUserThemeSettings =
+        await getUserThemeSettings(themeSettings.userId);
 
     return createdUserThemeSettings!;
+  }
+
+  @override
+  Future<void> deleteUserThemeSettings(UserId userId) async {
+    await open();
+    await db.delete('user_settings', where: 'user_id = ?', whereArgs: [userId]);
+    await close();
+  }
+
+  @override
+  Future<List<ThemeSettings>> getAllUsersThemeSettings() async {
+    await open();
+    final List<ThemeSettings> allUsersThemeSettings = await db
+        .query('user_settings')
+        .then((maps) => maps.map((e) => ThemeSettings.fromJson(e)).toList());
+    await close();
+
+    return allUsersThemeSettings;
   }
 }

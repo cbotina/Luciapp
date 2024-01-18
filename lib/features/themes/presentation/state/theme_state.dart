@@ -1,21 +1,36 @@
 import 'package:luciapp/features/themes/domain/enums/theme_mode.dart';
 
 class ThemeState {
-  final AppThemeMode themeMode;
+  final bool isDarkModeEnabled;
+  final bool isHCModeEnabled;
+
+  get appThemeMode {
+    if (isDarkModeEnabled && isHCModeEnabled) {
+      return AppThemeMode.hcDark;
+    } else if (isDarkModeEnabled && !isHCModeEnabled) {
+      return AppThemeMode.dark;
+    } else if (!isDarkModeEnabled && isHCModeEnabled) {
+      return AppThemeMode.hcLight;
+    } else {
+      return AppThemeMode.light;
+    }
+  }
 
   ThemeState({
-    required this.themeMode,
+    required this.isDarkModeEnabled,
+    required this.isHCModeEnabled,
   });
 
-  ThemeState.light() : themeMode = AppThemeMode.light;
-
-  ThemeState copyWithIsLoading(bool isLoading) =>
-      ThemeState(themeMode: themeMode);
+  ThemeState.light()
+      : isDarkModeEnabled = false,
+        isHCModeEnabled = false;
 
   @override
   bool operator ==(covariant ThemeState other) =>
-      identical(this, other) || (themeMode == other.themeMode);
+      identical(this, other) ||
+      (isDarkModeEnabled == other.isDarkModeEnabled &&
+          isHCModeEnabled == other.isHCModeEnabled);
 
   @override
-  int get hashCode => Object.hash(themeMode, null);
+  int get hashCode => Object.hash(isDarkModeEnabled, isHCModeEnabled);
 }

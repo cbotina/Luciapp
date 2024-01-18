@@ -1,7 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:luciapp/common/themes/dark_theme.dart';
+import 'package:luciapp/common/themes/themes.dart';
 import 'package:luciapp/features/themes/data/abstract_repositories/theme_repository.dart';
 import 'package:luciapp/features/themes/data/repositories/sqlite_theme_repository.dart';
+import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
+import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/pages/auth_page.dart';
+import 'package:luciapp/pages/db_test.dart';
 import 'package:luciapp/pages/main_page.dart';
 import 'package:luciapp/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,14 +31,24 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appThemeMode = ref.watch(themeControllerProvider);
+
     return MaterialApp(
       title: Strings.appName,
-      theme: lightTheme,
+      // theme: darkTheme,
+      theme: appThemeMode.when(
+        data: (data) {
+          log(data.appThemeMode.toString());
+          return themes[data.appThemeMode];
+        },
+        error: (error, stackTrace) => lightTheme,
+        loading: () => lightTheme,
+      ),
       home: Consumer(
         builder: (context, ref, child) {
           final query = MediaQuery.of(context);

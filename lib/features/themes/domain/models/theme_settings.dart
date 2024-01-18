@@ -19,15 +19,15 @@ class ThemeSettings extends MapView<String, dynamic> {
         _userId = userId,
         super({
           FieldNames.userId: userId,
-          FieldNames.isDarkModeEnabled: isDarkModeEnabled,
-          FieldNames.isHCModeEnabled: isHCModeEnabled,
+          FieldNames.isDarkModeEnabled: isDarkModeEnabled ? 1 : 0,
+          FieldNames.isHCModeEnabled: isHCModeEnabled ? 1 : 0,
         });
 
   ThemeSettings.fromJson(Map<String, dynamic> json)
       : this(
           userId: json[FieldNames.userId],
-          isDarkModeEnabled: json[FieldNames.isDarkModeEnabled],
-          isHCModeEnabled: json[FieldNames.isHCModeEnabled],
+          isDarkModeEnabled: json[FieldNames.isDarkModeEnabled] == 1,
+          isHCModeEnabled: json[FieldNames.isHCModeEnabled] == 1,
         );
 
   ThemeSettings.initial(UserId userId)
@@ -36,8 +36,8 @@ class ThemeSettings extends MapView<String, dynamic> {
         _userId = userId,
         super({
           FieldNames.userId: userId,
-          FieldNames.isDarkModeEnabled: false,
-          FieldNames.isHCModeEnabled: false,
+          FieldNames.isDarkModeEnabled: 0,
+          FieldNames.isHCModeEnabled: 0,
         });
 
   ThemeSettings copyWithDarkMode(bool isDarkModeEnabled) => ThemeSettings(

@@ -34,7 +34,7 @@ class UserContainer extends ConsumerWidget {
               maxHeight: double.infinity,
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(40),
                 bottomRight: Radius.circular(40),

@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
-import 'package:luciapp/features/themes/domain/enums/theme_mode.dart';
+import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 
-class ThemeController extends AsyncNotifier<AppThemeMode> {
+class ThemeController extends AsyncNotifier<ThemeState> {
   late final ThemeService _themeService = ref.watch(themeServiceProvider);
 
   @override
-  FutureOr<AppThemeMode> build() {
+  FutureOr<ThemeState> build() {
     return _themeService.getCurrentTheme();
   }
 
@@ -22,7 +22,7 @@ class ThemeController extends AsyncNotifier<AppThemeMode> {
 }
 
 final themeControllerProvider =
-    AsyncNotifierProvider<ThemeController, AppThemeMode>(
+    AsyncNotifierProvider<ThemeController, ThemeState>(
   () {
     return ThemeController();
   },

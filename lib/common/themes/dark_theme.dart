@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:luciapp/common/themes/color_schemes/dark_color_scheme.dart';
 import 'package:luciapp/common/themes/color_schemes/light_color_scheme.dart';
 
-final lightTheme = ThemeData(
+final darkTheme = ThemeData(
   // useMaterial3: false,
   fontFamily: 'Nunito',
-  colorScheme: lightColorScheme,
+  colorScheme: darkColorScheme,
   textTheme: const TextTheme(
     displaySmall: TextStyle(
       fontWeight: FontWeight.bold,
@@ -52,20 +53,19 @@ final lightTheme = ThemeData(
       ),
     ),
   ),
-  scaffoldBackgroundColor: lightColorScheme.background,
-  iconButtonTheme: IconButtonThemeData(
+  scaffoldBackgroundColor: darkColorScheme.background,
+  iconButtonTheme: const IconButtonThemeData(
     style: ButtonStyle(
-      foregroundColor: MaterialStatePropertyAll(Colors.grey.shade700),
+      foregroundColor:
+          MaterialStatePropertyAll(Color.fromARGB(255, 207, 207, 207)),
     ),
   ),
   shadowColor: Colors.black.withOpacity(.3),
   appBarTheme: AppBarTheme(
     elevation: 0,
-    color: Colors.white,
+    color: darkColorScheme.surface,
     foregroundColor: Colors.black,
-    iconTheme: IconThemeData(
-      color: Colors.grey[600],
-    ),
+    iconTheme: const IconThemeData(color: Color(0xffA1C4FF)),
   ),
   dialogTheme: DialogTheme(
     shape: RoundedRectangleBorder(

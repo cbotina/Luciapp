@@ -18,7 +18,7 @@ class IncreaseTextSizeButton extends StatelessWidget {
           Icon(
             Icons.text_increase,
             size: 70,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           Text(
             Strings.increaseFontSize,

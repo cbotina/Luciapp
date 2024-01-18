@@ -40,7 +40,10 @@ class GoogleButton extends ConsumerWidget {
             Expanded(
               child: Text(
                 Strings.continueWithGoogle,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.black),
                 textAlign: TextAlign.center,
               ),
             ),
