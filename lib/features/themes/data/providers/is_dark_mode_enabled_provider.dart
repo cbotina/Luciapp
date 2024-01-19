@@ -4,9 +4,8 @@ import 'package:luciapp/main.dart';
 
 final isDarkModeEnabledProvider = FutureProvider<bool>((ref) async {
   final userId = ref.watch(userIdProvider);
-  final userSettings = await ref
-      .watch(themeRepositoryProvider)
-      .getUserThemeSettings(userId ?? "");
+  final userSettings =
+      await ref.watch(themeRepositoryProvider).get(userId ?? "");
 
   return userSettings?.isDarkModeEnabled ?? false;
 });

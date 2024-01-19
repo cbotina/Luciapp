@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:luciapp/common/themes/color_schemes/dark_color_scheme.dart';
 import 'package:luciapp/common/themes/color_schemes/hc_dark_color_scheme.dart';
 import 'package:luciapp/common/themes/color_schemes/light_color_scheme.dart';
 
@@ -12,6 +11,12 @@ final hcDarkTheme = ThemeData(
       fontWeight: FontWeight.bold,
       fontSize: 32,
       fontFamily: 'Roboto',
+    ),
+    titleMedium: TextStyle(
+      fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontWeight: FontWeight.bold,
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -54,7 +59,7 @@ final hcDarkTheme = ThemeData(
       ),
     ),
   ),
-  scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
+  scaffoldBackgroundColor: hcDarkColorScheme.background,
   iconButtonTheme: const IconButtonThemeData(
     style: ButtonStyle(
       foregroundColor:
@@ -64,9 +69,9 @@ final hcDarkTheme = ThemeData(
   shadowColor: Colors.black.withOpacity(.3),
   appBarTheme: AppBarTheme(
     elevation: 0,
-    color: darkColorScheme.surface,
+    color: hcDarkColorScheme.surface,
     foregroundColor: Colors.black,
-    iconTheme: const IconThemeData(color: Color(0xffA1C4FF)),
+    iconTheme: const IconThemeData(color: Colors.white),
   ),
   dialogTheme: DialogTheme(
     shape: RoundedRectangleBorder(
@@ -78,6 +83,7 @@ final hcDarkTheme = ThemeData(
   cardTheme: CardTheme(
     elevation: 13,
     shadowColor: Colors.black,
+    surfaceTintColor: hcDarkColorScheme.surface,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
     ),

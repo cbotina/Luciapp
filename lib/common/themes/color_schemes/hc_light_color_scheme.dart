@@ -2,22 +2,28 @@ import 'package:flutter/material.dart';
 
 const hcLightColorScheme = ColorScheme(
   brightness: Brightness.light,
-  primary: Color.fromARGB(255, 139, 173, 234),
-  onPrimary: Color.fromARGB(255, 0, 0, 0),
-  secondary: Color.fromARGB(255, 240, 200, 124), // ribbon
+  primary: Color.fromARGB(255, 0, 89, 255),
+  onPrimary: Color.fromARGB(255, 255, 255, 255),
+  secondary: Color.fromARGB(255, 255, 166, 0), // ribbon
   onSecondary: Color(0xff0e0e0e),
-  tertiary: Color.fromARGB(255, 132, 255, 243),
-  onTertiary: Colors.white,
-  error: Color(0xffe6202d),
+  tertiary: Color.fromARGB(255, 0, 255, 76),
+  onTertiary: Color.fromARGB(255, 0, 0, 0),
+  error: Color.fromARGB(255, 255, 0, 17),
   onError: Colors.white,
-  primaryContainer: Colors.white,
-  onPrimaryContainer: Color.fromARGB(255, 222, 222, 222),
-  onSecondaryContainer: Color.fromARGB(255, 169, 169, 169), // gris
+  primaryContainer: Color.fromARGB(255, 255, 255, 255),
+  onPrimaryContainer: Color.fromARGB(255, 0, 0, 0),
 
-  surface: Color(0xff26264E),
-  onSurface: Color.fromARGB(255, 255, 255, 255), // en containers
+  secondaryContainer: Colors.white,
+  onSecondaryContainer: Colors.black,
 
+  tertiaryContainer: Colors.white,
+  onTertiaryContainer: Colors.black, // gris
+
+  surface: Color.fromARGB(255, 255, 255, 255),
+  onSurface: Color.fromARGB(255, 0, 0, 0), // en containers
+  surfaceTint: Colors.black,
   background: Color.fromARGB(255, 255, 255, 255), // dialog background
-  onBackground: Color.fromARGB(255, 255, 11, 11),
-  surfaceVariant: Color(0xff1D1D42),
+  onBackground: Color.fromARGB(255, 0, 0, 0),
+  surfaceVariant: Color.fromARGB(255, 255, 255, 255),
+  scrim: Colors.black,
 );

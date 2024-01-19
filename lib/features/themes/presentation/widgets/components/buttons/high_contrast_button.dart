@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
@@ -30,10 +29,16 @@ class HighContrastButton extends ConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              CupertinoSwitch(
+              Switch.adaptive(
                 value:
                     ref.watch(themeControllerProvider).value!.isHCModeEnabled,
                 onChanged: null,
+                thumbColor: const MaterialStatePropertyAll(Colors.white),
+                inactiveTrackColor: Colors.grey,
+                activeTrackColor: Theme.of(context).colorScheme.primary,
+                trackOutlineWidth: const MaterialStatePropertyAll(0),
+                trackOutlineColor:
+                    const MaterialStatePropertyAll(Colors.transparent),
               ),
             ],
           ),

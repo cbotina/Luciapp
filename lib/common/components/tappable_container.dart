@@ -27,6 +27,10 @@ class TappableContainer extends StatelessWidget {
         child: Ink(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).colorScheme.outline, // transparente
+              width: 3,
+            ),
             color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(borderRadius),
             // border: Border.all(color: Colors.black), para HC

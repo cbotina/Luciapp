@@ -11,13 +11,20 @@ const darkColorScheme = ColorScheme(
   error: Color(0xffe6202d),
   onError: Colors.white,
   primaryContainer: Colors.white,
-  onPrimaryContainer: Color.fromARGB(255, 222, 222, 222),
-  onSecondaryContainer: Color.fromARGB(255, 169, 169, 169), // gris
+  onPrimaryContainer: Color.fromARGB(255, 245, 245, 245),
+
+  secondaryContainer: Colors.white, // google
+  onSecondaryContainer: Color.fromARGB(255, 18, 18, 18),
+  tertiaryContainer: Color(0xff486CB4), //facebook
+  onTertiaryContainer: Colors.white,
 
   surface: Color(0xff26264E),
   onSurface: Color.fromARGB(255, 255, 255, 255), // en containers
-
+  // surfaceTint: Color.fromARGB(255, 255, 255, 255),
   background: Color(0xff141432), // dialog background
   onBackground: Color(0xff0e0e0e),
   surfaceVariant: Color(0xff1D1D42),
+  scrim: Colors.transparent,
+
+  outline: Colors.transparent,
 );

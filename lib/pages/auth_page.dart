@@ -24,6 +24,9 @@ class AuthPage extends StatelessWidget {
             opacity: const AlwaysStoppedAnimation(.5),
           ),
         ),
+        Container(
+          color: Theme.of(context).colorScheme.scrim, // hc filter
+        ),
         Card(
           child: ConstrainedBox(
             constraints: BoxConstraints(

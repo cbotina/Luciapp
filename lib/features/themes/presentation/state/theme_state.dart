@@ -1,10 +1,10 @@
-import 'package:luciapp/features/themes/domain/enums/theme_mode.dart';
+import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
 
 class ThemeState {
   final bool isDarkModeEnabled;
   final bool isHCModeEnabled;
 
-  get appThemeMode {
+  AppThemeMode get appThemeMode {
     if (isDarkModeEnabled && isHCModeEnabled) {
       return AppThemeMode.hcDark;
     } else if (isDarkModeEnabled && !isHCModeEnabled) {

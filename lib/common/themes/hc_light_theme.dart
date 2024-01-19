@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luciapp/common/themes/color_schemes/dark_color_scheme.dart';
 import 'package:luciapp/common/themes/color_schemes/hc_light_color_scheme.dart';
-import 'package:luciapp/common/themes/color_schemes/light_color_scheme.dart';
 
 final hcLightTheme = ThemeData(
   // useMaterial3: false,
@@ -13,18 +11,24 @@ final hcLightTheme = ThemeData(
       fontSize: 32,
       fontFamily: 'Roboto',
     ),
+    titleMedium: TextStyle(
+      fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontWeight: FontWeight.bold,
+    ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       elevation: const MaterialStatePropertyAll(3),
       overlayColor: const MaterialStatePropertyAll(
-        Colors.blueAccent,
+        Color.fromARGB(255, 54, 54, 54),
       ),
-      backgroundColor: MaterialStatePropertyAll(
-        lightColorScheme.primary,
+      backgroundColor: const MaterialStatePropertyAll(
+        Color.fromARGB(255, 0, 0, 0),
       ),
       foregroundColor: MaterialStatePropertyAll(
-        lightColorScheme.onPrimary,
+        hcLightColorScheme.onPrimary,
       ),
       padding: const MaterialStatePropertyAll(
         EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -39,10 +43,11 @@ final hcLightTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       elevation: const MaterialStatePropertyAll(0),
-      backgroundColor: MaterialStatePropertyAll(
-        Colors.blue.shade100,
+      backgroundColor: const MaterialStatePropertyAll(
+        Color.fromARGB(255, 255, 255, 255),
       ),
-      foregroundColor: MaterialStatePropertyAll(lightColorScheme.primary),
+      foregroundColor:
+          const MaterialStatePropertyAll(Color.fromARGB(255, 0, 0, 0)),
       overlayColor: const MaterialStatePropertyAll(Colors.white),
       padding: const MaterialStatePropertyAll(
         EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -57,16 +62,15 @@ final hcLightTheme = ThemeData(
   scaffoldBackgroundColor: hcLightColorScheme.background,
   iconButtonTheme: const IconButtonThemeData(
     style: ButtonStyle(
-      foregroundColor:
-          MaterialStatePropertyAll(Color.fromARGB(255, 207, 207, 207)),
+      foregroundColor: MaterialStatePropertyAll(Colors.black),
     ),
   ),
-  shadowColor: Colors.black.withOpacity(.3),
+  shadowColor: Colors.transparent,
   appBarTheme: AppBarTheme(
     elevation: 0,
-    color: darkColorScheme.surface,
+    color: hcLightColorScheme.surface,
     foregroundColor: Colors.black,
-    iconTheme: const IconThemeData(color: Color(0xffA1C4FF)),
+    iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
   ),
   dialogTheme: DialogTheme(
     shape: RoundedRectangleBorder(
@@ -76,7 +80,7 @@ final hcLightTheme = ThemeData(
     shadowColor: Colors.black,
   ),
   cardTheme: CardTheme(
-    elevation: 13,
+    elevation: 0,
     shadowColor: Colors.black,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),

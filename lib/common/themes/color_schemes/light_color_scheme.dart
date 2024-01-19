@@ -12,12 +12,17 @@ const lightColorScheme = ColorScheme(
   onError: Colors.white,
   primaryContainer: Colors.white,
   onPrimaryContainer: Color.fromARGB(255, 97, 97, 97),
-  onSecondaryContainer: Color.fromARGB(255, 169, 169, 169), // gris
 
+  secondaryContainer: Colors.white, // google
+  onSecondaryContainer: Color.fromARGB(255, 18, 18, 18),
+  tertiaryContainer: Color(0xff486CB4), //facebook
+  onTertiaryContainer: Colors.white,
+  surfaceTint: null,
   surface: Colors.white,
   onSurface: Color(0xff0e0e0e), // en containers
-
   background: Color(0xffF2F5FC), // dialog background
   onBackground: Color(0xff0e0e0e),
   surfaceVariant: Color(0xffF2F5FC),
+  outline: Colors.transparent,
+  scrim: Colors.transparent,
 );

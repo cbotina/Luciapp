@@ -1,16 +1,15 @@
 import 'dart:collection';
-
 import 'package:flutter/foundation.dart' show immutable;
+import 'package:luciapp/common/constants/sqlite_field_name.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
-import 'package:luciapp/features/themes/data/constants/field_names.dart';
 
 @immutable
-class ThemeSettings extends MapView<String, dynamic> {
+class UserThemeSettings extends MapView<String, dynamic> {
   final UserId _userId;
   final bool _isDarkModeEnabled;
   final bool _isHCModeEnabled;
 
-  ThemeSettings({
+  UserThemeSettings({
     required String userId,
     required bool isDarkModeEnabled,
     required bool isHCModeEnabled,
@@ -18,35 +17,36 @@ class ThemeSettings extends MapView<String, dynamic> {
         _isDarkModeEnabled = isDarkModeEnabled,
         _userId = userId,
         super({
-          FieldNames.userId: userId,
-          FieldNames.isDarkModeEnabled: isDarkModeEnabled ? 1 : 0,
-          FieldNames.isHCModeEnabled: isHCModeEnabled ? 1 : 0,
+          SQLiteFieldName.userId: userId,
+          SQLiteFieldName.isDarkModeEnabled: isDarkModeEnabled ? 1 : 0,
+          SQLiteFieldName.isHCModeEnabled: isHCModeEnabled ? 1 : 0,
         });
 
-  ThemeSettings.fromJson(Map<String, dynamic> json)
+  UserThemeSettings.fromJson(Map<String, dynamic> json)
       : this(
-          userId: json[FieldNames.userId],
-          isDarkModeEnabled: json[FieldNames.isDarkModeEnabled] == 1,
-          isHCModeEnabled: json[FieldNames.isHCModeEnabled] == 1,
+          userId: json[SQLiteFieldName.userId],
+          isDarkModeEnabled: json[SQLiteFieldName.isDarkModeEnabled] == 1,
+          isHCModeEnabled: json[SQLiteFieldName.isHCModeEnabled] == 1,
         );
 
-  ThemeSettings.initial(UserId userId)
+  UserThemeSettings.initial(UserId userId)
       : _isHCModeEnabled = false,
         _isDarkModeEnabled = false,
         _userId = userId,
         super({
-          FieldNames.userId: userId,
-          FieldNames.isDarkModeEnabled: 0,
-          FieldNames.isHCModeEnabled: 0,
+          SQLiteFieldName.userId: userId,
+          SQLiteFieldName.isDarkModeEnabled: 0,
+          SQLiteFieldName.isHCModeEnabled: 0,
         });
 
-  ThemeSettings copyWithDarkMode(bool isDarkModeEnabled) => ThemeSettings(
+  UserThemeSettings copyWithDarkMode(bool isDarkModeEnabled) =>
+      UserThemeSettings(
         userId: userId,
         isDarkModeEnabled: isDarkModeEnabled,
         isHCModeEnabled: isHCModeEnabled,
       );
 
-  ThemeSettings copyWithHCMode(bool isHCModeEnabled) => ThemeSettings(
+  UserThemeSettings copyWithHCMode(bool isHCModeEnabled) => UserThemeSettings(
         userId: userId,
         isDarkModeEnabled: isDarkModeEnabled,
         isHCModeEnabled: isHCModeEnabled,

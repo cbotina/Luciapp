@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/themes/data/repositories/sqlite_theme_repository.dart';
-import 'package:luciapp/features/themes/domain/models/theme_settings.dart';
+import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 import 'package:luciapp/main.dart';
 
 class Test extends ConsumerWidget {
@@ -53,7 +53,8 @@ class Test extends ConsumerWidget {
                 // ref
                 //     .read(themeRepositoryProvider)
                 //     .deleteUserThemeSettings('2fRyV0irg5XQCRMqVhzDRbL2Lqr1');
-
+                final allSettings = ref.read(themeRepositoryProvider).getAll();
+                log(allSettings.toString());
                 ref.invalidate(getAllSettingsProvider);
               },
               child: const Text('Refresh'),
@@ -65,6 +66,7 @@ class Test extends ConsumerWidget {
   }
 }
 
-final getAllSettingsProvider = FutureProvider<List<ThemeSettings>>((ref) async {
-  return ref.read(themeRepositoryProvider).getAllUsersThemeSettings();
+final getAllSettingsProvider =
+    FutureProvider<List<UserThemeSettings>>((ref) async {
+  return ref.read(themeRepositoryProvider).getAll();
 });

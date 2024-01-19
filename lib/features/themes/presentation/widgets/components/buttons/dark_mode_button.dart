@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
-import 'package:luciapp/features/themes/data/providers/is_dark_mode_enabled_provider.dart';
-import 'package:luciapp/features/themes/domain/enums/theme_mode.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/features/themes/presentation/widgets/constants/strings.dart';
 
@@ -26,20 +23,25 @@ class DarkModeButton extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.sunny,
+                  Icons.nightlight_round,
                   size: 50,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                CupertinoSwitch(
+                Switch(
                   value: ref
                       .watch(themeControllerProvider)
                       .value!
                       .isDarkModeEnabled,
                   onChanged: null,
-                  activeColor: Theme.of(context).colorScheme.primary,
+                  thumbColor: const MaterialStatePropertyAll(Colors.white),
+                  inactiveTrackColor: Colors.grey,
+                  activeTrackColor: Theme.of(context).colorScheme.primary,
+                  trackOutlineWidth: const MaterialStatePropertyAll(0),
+                  trackOutlineColor:
+                      const MaterialStatePropertyAll(Colors.transparent),
                 ),
               ],
             ),

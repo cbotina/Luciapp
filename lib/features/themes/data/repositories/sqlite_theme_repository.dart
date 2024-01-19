@@ -1,89 +1,77 @@
+import 'package:luciapp/common/constants/sqlite_field_name.dart';
+import 'package:luciapp/common/constants/sqlite_table_name.dart';
+import 'package:luciapp/common/local_db/db_facade.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/themes/data/abstract_repositories/theme_repository.dart';
 import 'dart:async';
-import 'package:luciapp/features/themes/domain/models/theme_settings.dart';
-import 'package:path/path.dart';
+import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SqLiteThemeRepository implements IThemeRepository {
-  late Database db;
+  final DbFacade facade = DbFacade();
 
   @override
-  Future<void> open() async {
-    final database = openDatabase(
-      join(await getDatabasesPath(), 'config.db'),
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE user_settings(user_id VARCHAR(150), dark_mode INTEGER, hc_mode INTEGER )',
-        );
-      },
-      version: 3,
-    );
-    db = await database;
-  }
+  Future<UserThemeSettings?> get(UserId userId) async {
+    await facade.open();
 
-  @override
-  Future<void> close() async {
-    await db.close();
-  }
+    final UserThemeSettings? themeSettings = await facade.connection.query(
+        SQLiteTableName.themeSettings,
+        where: '${SQLiteFieldName.userId} = ?',
+        whereArgs: [
+          userId
+        ]).then((maps) =>
+        maps.map((e) => UserThemeSettings.fromJson(e)).toList().firstOrNull);
 
-  @override
-  Future<ThemeSettings?> getUserThemeSettings(UserId userId) async {
-    await open();
-
-    final ThemeSettings? themeSettings = await db
-        .query('user_settings', where: 'user_id = ?', whereArgs: [userId]).then(
-            (maps) => maps
-                .map((e) => ThemeSettings.fromJson(e))
-                .toList()
-                .firstOrNull);
-
-    await close();
+    await facade.close();
 
     return themeSettings;
   }
 
   @override
-  Future<bool> updateUserThemeSettings(ThemeSettings themeSettings) async {
-    await open();
-    final changes = await db.update('user_settings', themeSettings,
-        where: 'user_id = ?', whereArgs: [themeSettings.userId]);
+  Future<bool> update(UserThemeSettings themeSettings) async {
+    await facade.open();
+
+    final changes = await facade.connection.update(
+        SQLiteTableName.themeSettings, themeSettings,
+        where: '${SQLiteFieldName.userId} = ?',
+        whereArgs: [themeSettings.userId]);
+
+    await facade.close();
     return changes > 0;
   }
 
   @override
-  Future<ThemeSettings> createUserThemeSettings(
-      ThemeSettings themeSettings) async {
-    await open();
+  Future<UserThemeSettings> create(UserThemeSettings themeSettings) async {
+    await facade.open();
 
-    await db.insert(
-      'user_settings',
+    await facade.connection.insert(
+      SQLiteTableName.themeSettings,
       themeSettings,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-    await close();
+    await facade.close();
 
-    final createdUserThemeSettings =
-        await getUserThemeSettings(themeSettings.userId);
+    final createdUserThemeSettings = await get(themeSettings.userId);
 
     return createdUserThemeSettings!;
   }
 
   @override
-  Future<void> deleteUserThemeSettings(UserId userId) async {
-    await open();
-    await db.delete('user_settings', where: 'user_id = ?', whereArgs: [userId]);
-    await close();
+  Future<void> delete(UserId userId) async {
+    await facade.open();
+    await facade.connection.delete(SQLiteTableName.themeSettings,
+        where: '${SQLiteFieldName.userId} = ?', whereArgs: [userId]);
+    await facade.close();
   }
 
   @override
-  Future<List<ThemeSettings>> getAllUsersThemeSettings() async {
-    await open();
-    final List<ThemeSettings> allUsersThemeSettings = await db
-        .query('user_settings')
-        .then((maps) => maps.map((e) => ThemeSettings.fromJson(e)).toList());
-    await close();
+  Future<List<UserThemeSettings>> getAll() async {
+    await facade.open();
+    final List<UserThemeSettings> allUsersThemeSettings =
+        await facade.connection.query(SQLiteTableName.themeSettings).then(
+            (maps) => maps.map((e) => UserThemeSettings.fromJson(e)).toList());
+    await facade.close();
 
     return allUsersThemeSettings;
   }
