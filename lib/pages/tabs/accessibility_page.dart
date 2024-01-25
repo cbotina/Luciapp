@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/components/title_container_border.dart';
+import 'package:luciapp/common/constants/widget_keys.dart';
 import 'package:luciapp/features/themes/presentation/widgets/components/accessibility_buttons.dart';
 import 'package:luciapp/features/themes/presentation/widgets/components/titles/accessibility_page_title.dart';
 
 class AccessibilityPage extends StatelessWidget {
-  const AccessibilityPage({super.key});
+  const AccessibilityPage({super.key = Keys.accessibilityPage});
 
   @override
   Widget build(BuildContext context) {

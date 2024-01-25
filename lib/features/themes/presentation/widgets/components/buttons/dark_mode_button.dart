@@ -4,11 +4,10 @@ import 'package:luciapp/common/components/tappable_container.dart';
 import 'package:luciapp/features/themes/data/providers/is_dark_mode_enabled_provider.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/features/themes/presentation/widgets/constants/strings.dart';
+import 'package:luciapp/features/themes/presentation/widgets/constants/widget_keys.dart';
 
 class DarkModeButton extends ConsumerWidget {
-  const DarkModeButton({
-    super.key,
-  });
+  const DarkModeButton({super.key = Keys.darkModeButton});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

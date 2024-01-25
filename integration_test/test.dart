@@ -8,7 +8,7 @@ import '../test/common/mocks/mock_auth_repository.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/common/providers/is_loading_provider.dart';
-import '../test/auth/integration_testing/robot/register_robot.dart';
+import '../test/auth/integration_testing/robot/auth_robot.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
 import 'package:luciapp/features/auth/data/providers/auth_result_provider.dart';
