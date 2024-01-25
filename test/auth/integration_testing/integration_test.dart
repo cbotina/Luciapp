@@ -25,7 +25,7 @@ import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys
     as auth;
 
 import '../mocks/mock_auth_service.dart';
-import 'robot/auth_robot.dart';
+import '../../common/robot/testing_robot.dart';
 
 void main() {
   late final User testUser;
@@ -73,7 +73,7 @@ void main() {
 
         final element = tester.element(find.byType(MyApp));
         final container = ProviderScope.containerOf(element);
-        final robot = AuthRobot(tester: tester);
+        final robot = TestingRobot(tester: tester);
 
         await robot.loginWithFacebook();
 
@@ -108,7 +108,7 @@ void main() {
 
         final element = tester.element(find.byType(MyApp));
         final container = ProviderScope.containerOf(element);
-        final robot = AuthRobot(tester: tester);
+        final robot = TestingRobot(tester: tester);
 
         // robot login with facebook
         await robot.loginWithFacebook();
@@ -142,7 +142,7 @@ void main() {
 
         final element = tester.element(find.byType(MyApp));
         final container = ProviderScope.containerOf(element);
-        final robot = AuthRobot(tester: tester);
+        final robot = TestingRobot(tester: tester);
 
         await robot.loginWithFacebook();
 
@@ -173,7 +173,7 @@ void main() {
 
         final element = tester.element(find.byType(MyApp));
         final container = ProviderScope.containerOf(element);
-        final robot = AuthRobot(tester: tester);
+        final robot = TestingRobot(tester: tester);
 
         await robot.loginWithFacebook();
 
@@ -187,7 +187,7 @@ void main() {
         reset(mockAuthRepository);
         reset(mockAuthController);
 
-        final robot = AuthRobot(tester: tester);
+        final robot = TestingRobot(tester: tester);
 
         await tester.pumpWidget(
           ProviderScope(
@@ -220,7 +220,7 @@ void main() {
         reset(mockAuthRepository);
         reset(mockAuthController);
 
-        final robot = AuthRobot(tester: tester);
+        final robot = TestingRobot(tester: tester);
 
         await tester.pumpWidget(
           ProviderScope(
@@ -295,7 +295,7 @@ void main() {
 
         final element = tester.element(find.byType(MyApp));
         final container = ProviderScope.containerOf(element);
-        final robot = AuthRobot(tester: tester);
+        final robot = TestingRobot(tester: tester);
 
         await robot.loginWithFacebook();
 

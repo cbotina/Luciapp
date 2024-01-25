@@ -1,17 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart';
+import 'package:luciapp/common/constants/widget_keys.dart';
+import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart'
+    as auth;
 
-class AuthRobot {
+class TestingRobot {
   final WidgetTester tester;
 
-  final genderDropdown = find.byKey(Keys.genderDropdownButton);
-  final nameFormField = find.byKey(Keys.nameTextFormField);
-  final ageFormField = find.byKey(Keys.ageTextFormField);
-  final registerButton = find.byKey(Keys.registerButton);
-  final facebookButton = find.byKey(Keys.facebookButton);
-  final logoutIconButton = find.byKey(Keys.logoutIconButton);
+  final genderDropdown = find.byKey(auth.Keys.genderDropdownButton);
+  final nameFormField = find.byKey(auth.Keys.nameTextFormField);
+  final ageFormField = find.byKey(auth.Keys.ageTextFormField);
+  final registerButton = find.byKey(auth.Keys.registerButton);
+  final facebookButton = find.byKey(auth.Keys.facebookButton);
+  final logoutIconButton = find.byKey(auth.Keys.logoutIconButton);
+  final mainPage = find.byKey(Keys.mainPage);
+  final accessibilityPage = find.byKey(Keys.accessibilityPage);
 
-  AuthRobot({required this.tester});
+  TestingRobot({required this.tester});
 
   Future<void> enterName(String name) async {
     await tester.enterText(nameFormField, name);
@@ -44,5 +48,14 @@ class AuthRobot {
   Future<void> pressLogoutIconButton() async {
     await tester.tap(logoutIconButton);
     await tester.pump(const Duration(milliseconds: 100));
+  }
+
+  Future<void> goToAccessibilityPage() async {
+    await tester.dragUntilVisible(
+      accessibilityPage,
+      mainPage,
+      const Offset(-300, 0),
+      duration: const Duration(milliseconds: 500),
+    );
   }
 }
