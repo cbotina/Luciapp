@@ -5,6 +5,8 @@ import 'package:luciapp/features/themes/presentation/controllers/theme_controlle
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../constants/strings.dart';
+
 class MockThemeService extends Mock implements ThemeService {}
 
 class Listener<T> extends Mock {
@@ -28,8 +30,8 @@ void main() {
     return container;
   }
 
-  group("ThemeController", () {
-    test("Toggle Dark mode", () async {
+  group(TestNames.unitTest, () {
+    test(TestNames.cp032, () async {
       container = makeProviderContainer(mockThemeService);
 
       final initialState = ThemeState.light();
@@ -50,7 +52,7 @@ void main() {
       expect(themeController.state, AsyncData(finalstate));
     });
 
-    test("Toggle HC mode", () async {
+    test(TestNames.cp033, () async {
       container = makeProviderContainer(mockThemeService);
 
       final initialState = ThemeState.light();
@@ -71,7 +73,7 @@ void main() {
       expect(themeController.state, AsyncData(finalstate));
     });
 
-    test("Refresh", () async {
+    test(TestNames.cp034, () async {
       container = makeProviderContainer(mockThemeService);
 
       final initialState = ThemeState.light();

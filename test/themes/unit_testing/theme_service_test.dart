@@ -7,6 +7,7 @@ import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../common/mocks/mock_auth_repository.dart';
+import '../constants/strings.dart';
 import '../mocks/mock_theme_settings_repository.dart';
 
 void main() {
@@ -32,8 +33,8 @@ void main() {
     );
   });
 
-  group("ThemeService", () {
-    test("Get existing theme settings", () async {
+  group(TestNames.unitTest, () {
+    test(TestNames.cp035, () async {
       when(() => mockThemeSettingsRepository.get(user.userId)).thenAnswer(
         (invocation) => Future.value(existingUserThemeSettings),
       );
@@ -48,7 +49,7 @@ void main() {
       expect(result, existingUserThemeSettings);
     });
 
-    test("Theme settings doesn't exist", () async {
+    test(TestNames.cp036, () async {
       when(() => mockThemeSettingsRepository.get(user.userId)).thenAnswer(
         (invocation) => Future.value(null),
       );
@@ -68,7 +69,7 @@ void main() {
       expect(result, defaultSettings);
     });
 
-    test("Get Current Theme state when user is not authenticated", () async {
+    test(TestNames.cp037, () async {
       when(() => mockAuthRepository.userId).thenAnswer(
         (invocation) => null,
       );
@@ -83,7 +84,7 @@ void main() {
       expect(result, ThemeState.light());
     });
 
-    test("Get Current Theme state when user is  authenticated", () async {
+    test(TestNames.cp038, () async {
       when(() => mockAuthRepository.userId).thenAnswer(
         (invocation) => user.userId,
       );
@@ -105,7 +106,7 @@ void main() {
       );
     });
 
-    test("Toggle Dark Mode", () async {
+    test(TestNames.cp039, () async {
       final updatedSettings = existingUserThemeSettings
           .copyWithDarkMode(!existingUserThemeSettings.isDarkModeEnabled);
 
@@ -137,7 +138,7 @@ void main() {
       expect(result, ThemeState.fromUserThemeSettings(updatedSettings));
     });
 
-    test("Toggle HC Mode", () async {
+    test(TestNames.cp040, () async {
       final updatedSettings = existingUserThemeSettings
           .copyWithHCMode(!existingUserThemeSettings.isHCModeEnabled);
 
