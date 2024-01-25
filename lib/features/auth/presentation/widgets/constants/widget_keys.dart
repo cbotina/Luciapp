@@ -13,4 +13,5 @@ class Keys {
   static const ageTextFormField = ValueKey('age-text-form-field');
   static const nameTextFormField = ValueKey('name-text-form-field');
   static const genderDropdownButton = ValueKey('gender-drop-down-button');
+  static const mainPage = ValueKey('main-page');
 }

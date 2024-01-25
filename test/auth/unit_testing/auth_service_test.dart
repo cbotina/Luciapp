@@ -1,6 +1,6 @@
 import '../constants/strings.dart';
 import 'package:mocktail/mocktail.dart';
-import '../mocks/mock_auth_repository.dart';
+import '../../common/mocks/mock_auth_repository.dart';
 import '../mocks/mock_users_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';

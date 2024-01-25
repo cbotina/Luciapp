@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/common/constants/firebase_field_name.dart';
@@ -23,6 +24,7 @@ class FirebaseUserRepository implements IUsersRepository {
         .get();
 
     if (user.docs.isNotEmpty) {
+      log(User.fromJson(user.docs.first.data(), userId: userId).toString());
       return User.fromJson(user.docs.first.data(), userId: userId);
     } else {
       return null;

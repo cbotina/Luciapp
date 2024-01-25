@@ -1,7 +1,13 @@
+import 'package:luciapp/features/auth/application/auth_service.dart';
+import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
+import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
+import 'package:luciapp/features/themes/application/theme_service.dart';
+import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
+import '../../../integration_test/i2.dart';
 import '../constants/strings.dart';
 import 'package:mocktail/mocktail.dart';
-import '../mocks/mock_auth_repository.dart';
+import '../../common/mocks/mock_auth_repository.dart';
 import '../mocks/mock_auth_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,12 +22,15 @@ import 'package:luciapp/features/auth/presentation/controllers/auth_controller.d
 import 'package:luciapp/features/auth/data/providers/user_display_name_provider.dart';
 import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart';
 
+import '../mocks/mock_auth_service.dart';
 import 'robot/register_robot.dart';
 
 void main() {
   late final User testUser;
   late final MockAuthRepository mockAuthRepository;
   late final MockAuthController mockAuthController;
+  late final MockAuthService mockAuthService;
+  late final MockThemeService mockThemeService;
 
   setUpAll(() async {
     testUser = User(
@@ -32,25 +41,44 @@ void main() {
     );
     mockAuthRepository = MockAuthRepository();
     mockAuthController = MockAuthController();
+    mockAuthService = MockAuthService();
+    mockThemeService = MockThemeService();
   });
 
   group(
     TestNames.integrationTest,
     () {
       testWidgets(TestNames.cp025, (WidgetTester tester) async {
+        when(mockThemeService.getCurrentThemeState)
+            .thenAnswer((_) => Future.value(ThemeState.light()));
+
+        when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+          (_) => Future.value(AuthResult.success),
+        );
+
+        when(() => mockAuthService.getUserId()).thenReturn('1234');
+
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
+              authServiceProvider.overrideWith((ref) => mockAuthService),
+              themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
-              authResultProvider.overrideWith((ref) => AuthResult.success),
-              isLoadingProvider.overrideWith((ref) => false),
             ],
             child: const MyApp(),
           ),
         );
 
-        final homePage = find.byKey(Keys.homePage);
-        expect(homePage, findsOne);
+        final element = tester.element(find.byType(MyApp));
+        final container = ProviderScope.containerOf(element);
+        final robot = AuthRobot(tester: tester);
+
+        await robot.loginWithFacebook();
+
+        final mainPage = find.byKey(Keys.mainPage);
+
+        expect(container.read(isLoggedInProvider), true);
+        expect(mainPage, findsOne);
       });
 
       testWidgets(TestNames.cp026, (WidgetTester tester) async {
@@ -108,7 +136,7 @@ void main() {
         reset(mockAuthRepository);
         reset(mockAuthController);
 
-        final robot = RegisterRobot(tester: tester);
+        final robot = AuthRobot(tester: tester);
 
         await tester.pumpWidget(
           ProviderScope(
@@ -141,7 +169,7 @@ void main() {
         reset(mockAuthRepository);
         reset(mockAuthController);
 
-        final robot = RegisterRobot(tester: tester);
+        final robot = AuthRobot(tester: tester);
 
         await tester.pumpWidget(
           ProviderScope(

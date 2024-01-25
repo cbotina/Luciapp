@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
@@ -11,8 +13,11 @@ class UserContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.read(userIdProvider);
+    ref.invalidate(userIdProvider);
+    final userId = ref.watch(userIdProvider);
     final fetchUser = ref.watch(userModelProvider(userId ?? ''));
+
+    log(userId.toString());
 
     return fetchUser.when(
       data: (user) {

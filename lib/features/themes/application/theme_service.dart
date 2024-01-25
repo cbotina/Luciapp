@@ -7,13 +7,13 @@ import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
 
 class ThemeService {
-  final IThemeRepository _themeRepository;
+  final IThemeSettingsReposiroty _themeSettingsRepository;
   final IAuthRepository _authRepository;
 
-  ThemeService(
-      {required IThemeRepository themeRepository,
-      required IAuthRepository authRepository})
-      : _themeRepository = themeRepository,
+  ThemeService({
+    required IThemeSettingsReposiroty themeSettingsRepository,
+    required IAuthRepository authRepository,
+  })  : _themeSettingsRepository = themeSettingsRepository,
         _authRepository = authRepository;
 
   Future<ThemeState> getCurrentThemeState() async {
@@ -23,15 +23,9 @@ class ThemeService {
       return ThemeState.light();
     }
 
-    final userThemeSettings = await _getOrCreateUserThemeSettings(userId);
+    final userThemeSettings = await getOrCreateUserThemeSettings(userId);
 
-    final isDarkModeEnabled = userThemeSettings.isDarkModeEnabled;
-    final isHCModeEnabled = userThemeSettings.isHCModeEnabled;
-
-    return ThemeState(
-      isDarkModeEnabled: isDarkModeEnabled,
-      isHCModeEnabled: isHCModeEnabled,
-    );
+    return ThemeState.fromUserThemeSettings(userThemeSettings);
   }
 
   Future<ThemeState> toggleDarkMode() async {
@@ -41,14 +35,14 @@ class ThemeService {
       return ThemeState.light();
     }
 
-    final userThemeSettings = await _getOrCreateUserThemeSettings(userId);
+    final userThemeSettings = await getOrCreateUserThemeSettings(userId);
 
     final isDarkModeEnabled = userThemeSettings.isDarkModeEnabled;
 
     final updatedSettings =
         userThemeSettings.copyWithDarkMode(!isDarkModeEnabled);
 
-    await _themeRepository.update(updatedSettings);
+    await _themeSettingsRepository.update(updatedSettings);
 
     return getCurrentThemeState();
   }
@@ -60,22 +54,23 @@ class ThemeService {
       return ThemeState.light();
     }
 
-    final userThemeSettings = await _getOrCreateUserThemeSettings(userId);
+    final userThemeSettings = await getOrCreateUserThemeSettings(userId);
 
     final isHCModeEnabled = userThemeSettings.isHCModeEnabled;
 
     final updatedSettings = userThemeSettings.copyWithHCMode(!isHCModeEnabled);
 
-    await _themeRepository.update(updatedSettings);
+    await _themeSettingsRepository.update(updatedSettings);
 
     return getCurrentThemeState();
   }
 
-  Future<UserThemeSettings> _getOrCreateUserThemeSettings(UserId userId) async {
-    final userThemeSettings = await _themeRepository.get(userId);
+  Future<UserThemeSettings> getOrCreateUserThemeSettings(UserId userId) async {
+    final userThemeSettings = await _themeSettingsRepository.get(userId);
 
     if (userThemeSettings == null) {
-      return await _themeRepository.create(UserThemeSettings.initial(userId));
+      return await _themeSettingsRepository
+          .create(UserThemeSettings.initial(userId));
     } else {
       return userThemeSettings;
     }
@@ -84,7 +79,7 @@ class ThemeService {
 
 final themeServiceProvider = Provider<ThemeService>((ref) {
   return ThemeService(
-    themeRepository: ref.watch(themeRepositoryProvider),
+    themeSettingsRepository: ref.watch(themeRepositoryProvider),
     authRepository: ref.watch(authRepositoryProvider),
   );
 });

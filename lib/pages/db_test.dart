@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/themes/data/repositories/sqlite_theme_repository.dart';
+import 'package:luciapp/features/themes/data/repositories/sqlite_theme_settings_repository.dart';
 import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 import 'package:luciapp/main.dart';
 
 class Test extends ConsumerWidget {
   Test({super.key});
 
-  final themeRepository = SqLiteThemeRepository();
+  final themeRepository = SqLiteThemeSettingsRepository();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

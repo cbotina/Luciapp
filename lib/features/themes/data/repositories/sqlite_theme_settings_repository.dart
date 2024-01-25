@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 import 'package:sqflite/sqflite.dart';
 
-class SqLiteThemeRepository implements IThemeRepository {
+class SqLiteThemeSettingsRepository implements IThemeSettingsReposiroty {
   final DbFacade facade = DbFacade();
 
   @override

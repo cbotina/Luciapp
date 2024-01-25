@@ -1,4 +1,5 @@
 import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
+import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 
 class ThemeState {
   final bool isDarkModeEnabled;
@@ -25,11 +26,25 @@ class ThemeState {
       : isDarkModeEnabled = false,
         isHCModeEnabled = false;
 
+  ThemeState copyWithIsDarkModeEnabled(bool isDarkModeEnabled) => ThemeState(
+        isDarkModeEnabled: isDarkModeEnabled,
+        isHCModeEnabled: isHCModeEnabled,
+      );
+
+  ThemeState copyWithIsHCModeEnabled(bool isHCModeEnabled) => ThemeState(
+        isDarkModeEnabled: isDarkModeEnabled,
+        isHCModeEnabled: isHCModeEnabled,
+      );
+
+  ThemeState.fromUserThemeSettings(UserThemeSettings userThemeSettings)
+      : isDarkModeEnabled = userThemeSettings.isDarkModeEnabled,
+        isHCModeEnabled = userThemeSettings.isHCModeEnabled;
+
   @override
-  bool operator ==(covariant ThemeState other) =>
-      identical(this, other) ||
-      (isDarkModeEnabled == other.isDarkModeEnabled &&
-          isHCModeEnabled == other.isHCModeEnabled);
+  bool operator ==(Object other) =>
+      other is ThemeState &&
+      isDarkModeEnabled == other.isDarkModeEnabled &&
+      isHCModeEnabled == other.isHCModeEnabled;
 
   @override
   int get hashCode => Object.hash(isDarkModeEnabled, isHCModeEnabled);

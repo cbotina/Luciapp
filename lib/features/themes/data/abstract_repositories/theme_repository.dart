@@ -1,7 +1,7 @@
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 
-abstract class IThemeRepository {
+abstract class IThemeSettingsReposiroty {
   Future<UserThemeSettings?> get(UserId userId);
 
   Future<UserThemeSettings> create(UserThemeSettings themeSettings);

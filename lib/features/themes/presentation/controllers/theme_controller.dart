@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 
@@ -14,7 +12,6 @@ class ThemeController extends AsyncNotifier<ThemeState> {
   }
 
   Future<void> refresh() async {
-    ref.watch(userIdProvider);
     state = await AsyncValue.guard(() => _themeService.getCurrentThemeState());
   }
 

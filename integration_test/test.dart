@@ -4,7 +4,7 @@ import '../test/auth/constants/strings.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../test/auth/mocks/mock_auth_controller.dart';
-import '../test/auth/mocks/mock_auth_repository.dart';
+import '../test/common/mocks/mock_auth_repository.dart';
 import 'package:luciapp/features/auth/domain/models/user.dart';
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/common/providers/is_loading_provider.dart';
@@ -105,7 +105,7 @@ void main() {
       reset(mockAuthRepository);
       reset(mockAuthController);
 
-      final robot = RegisterRobot(tester: tester);
+      final robot = AuthRobot(tester: tester);
 
       await tester.pumpWidget(
         ProviderScope(
@@ -138,7 +138,7 @@ void main() {
       reset(mockAuthRepository);
       reset(mockAuthController);
 
-      final robot = RegisterRobot(tester: tester);
+      final robot = AuthRobot(tester: tester);
 
       await tester.pumpWidget(
         ProviderScope(
