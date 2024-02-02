@@ -43,6 +43,8 @@ dependencies:
   flutter_hooks: ^0.20.4
   iconoir_flutter: ^7.3.0
   mocktail: ^1.0.2
+  sqflite: ^2.3.0
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/light/
+    - assets/images/dark/
+    - assets/images/hc_light/
+    - assets/images/hc_dark/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

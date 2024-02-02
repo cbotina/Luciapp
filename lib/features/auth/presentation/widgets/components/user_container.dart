@@ -11,7 +11,8 @@ class UserContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.read(userIdProvider);
+    ref.invalidate(userIdProvider);
+    final userId = ref.watch(userIdProvider);
     final fetchUser = ref.watch(userModelProvider(userId ?? ''));
 
     return fetchUser.when(
@@ -29,15 +30,20 @@ class UserContainer extends ConsumerWidget {
           }
 
           return Container(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height * .18,
+              maxHeight: double.infinity,
+            ),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40),
               ),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,
-                  blurRadius: 3,
+                  blurRadius: 0,
                   spreadRadius: 0,
                   offset: const Offset(0, 2),
                 ),
@@ -45,23 +51,32 @@ class UserContainer extends ConsumerWidget {
             ),
             padding: const EdgeInsets.all(30),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 240,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${Strings.hello} ${user.name.split(' ').first}! 👋",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text("$readyAdjective ${Strings.toLearnSomethingNew}")
-                    ],
+                  child: SizedBox(
+                    width:
+                        MediaQuery.of(context).size.width - 30 - 30 - 30 - 30,
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${Strings.hello} ${user.name.split(' ').first}! 👋",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "$readyAdjective ${Strings.toLearnSomethingNew}",
+                          style: Theme.of(context).textTheme.titleMedium,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 ProfilePhoto(userId: userId)

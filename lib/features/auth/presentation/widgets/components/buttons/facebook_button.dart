@@ -15,7 +15,12 @@ class FacebookButton extends ConsumerWidget {
       onTap: ref.read(authControllerProvider.notifier).loginWithFacebook,
       child: Ink(
         decoration: BoxDecoration(
-          color: const Color(0xff486CB4),
+          // color: const Color(0xff486CB4),
+          color: Theme.of(context).colorScheme.tertiaryContainer,
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outline, // transparente
+            width: 3,
+          ),
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -29,10 +34,10 @@ class FacebookButton extends ConsumerWidget {
         padding: const EdgeInsets.all(10),
         child: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.facebook,
               size: 38,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
             ),
             const SizedBox(
               width: 10,
@@ -40,10 +45,9 @@ class FacebookButton extends ConsumerWidget {
             Expanded(
               child: Text(
                 Strings.continueWithFacebook,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onTertiaryContainer,
+                    ),
                 textAlign: TextAlign.center,
               ),
             ),

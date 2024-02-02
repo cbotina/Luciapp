@@ -2,28 +2,27 @@ import 'package:flutter/material.dart';
 
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
-
   primary: Color(0xff4074cf),
   onPrimary: Colors.white,
-
   secondary: Color(0xffffac0e), // ribbon
   onSecondary: Color(0xff0e0e0e),
-
   tertiary: Colors.teal,
   onTertiary: Colors.white,
-
   error: Color(0xffe6202d),
   onError: Colors.white,
-
   primaryContainer: Colors.white,
   onPrimaryContainer: Color.fromARGB(255, 97, 97, 97),
-  onSecondaryContainer: Color.fromARGB(255, 169, 169, 169), // gris
 
+  secondaryContainer: Colors.white, // google
+  onSecondaryContainer: Color.fromARGB(255, 18, 18, 18),
+  tertiaryContainer: Color(0xff486CB4), //facebook
+  onTertiaryContainer: Colors.white,
+  surfaceTint: null,
   surface: Colors.white,
   onSurface: Color(0xff0e0e0e), // en containers
-
-  background: Colors.white, // dialog background
+  background: Color(0xffF2F5FC), // dialog background
   onBackground: Color(0xff0e0e0e),
-
-  surfaceVariant: Color.fromARGB(255, 224, 224, 224),
+  surfaceVariant: Color(0xffF2F5FC),
+  outline: Colors.transparent,
+  scrim: Colors.transparent,
 );

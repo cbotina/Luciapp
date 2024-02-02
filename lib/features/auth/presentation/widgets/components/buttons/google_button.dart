@@ -15,7 +15,11 @@ class GoogleButton extends ConsumerWidget {
       onTap: ref.read(authControllerProvider.notifier).loginWithGoogle,
       child: Ink(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outline, // transparente
+            width: 3,
+          ),
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -33,6 +37,7 @@ class GoogleButton extends ConsumerWidget {
               'assets/images/google.png',
               width: 32,
               height: 38,
+              // color: Theme.of(context).colorScheme.surfaceTint,
             ),
             const SizedBox(
               width: 10,
@@ -40,7 +45,9 @@ class GoogleButton extends ConsumerWidget {
             Expanded(
               child: Text(
                 Strings.continueWithGoogle,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
                 textAlign: TextAlign.center,
               ),
             ),
