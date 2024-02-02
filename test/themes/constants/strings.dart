@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show immutable;
 
 @immutable
-class TestNames {
+class Siu {
   static const integrationTest = "Integration Test";
   static const unitTest = "Unit Test";
 
@@ -26,7 +26,7 @@ class TestNames {
       "[CP-044] Toggle high contrast mode with dark mode enabled";
 }
 
-class SpanishNames {
+class TestNames {
   static const integrationTest = "Prueba de Integración";
   static const unitTest = "Prueba Unitaria";
 

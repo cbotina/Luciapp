@@ -2,7 +2,7 @@ import 'package:luciapp/common/constants/sqlite_field_name.dart';
 import 'package:luciapp/common/constants/sqlite_table_name.dart';
 import 'package:luciapp/common/local_db/db_facade.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
-import 'package:luciapp/features/themes/data/abstract_repositories/theme_repository.dart';
+import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repositor.dart';
 import 'dart:async';
 import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 import 'package:sqflite/sqflite.dart';

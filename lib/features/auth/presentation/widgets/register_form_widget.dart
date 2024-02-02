@@ -47,7 +47,8 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = ref.read(userIdProvider);
+    ref.invalidate(userIdProvider);
+    final userId = ref.watch(userIdProvider);
 
     return Form(
       key: _formKey,

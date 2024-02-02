@@ -64,6 +64,42 @@ void main() {
   group(TestNames.integrationTest, () {
     testWidgets(TestNames.cp041, (tester) async {
       darkmode = false;
+      hcmode = true;
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: overrides,
+          child: const MyApp(),
+        ),
+      );
+
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(MyApp)),
+      );
+
+      final robot = TestingRobot(tester: tester);
+
+      await robot.loginWithFacebook();
+
+      await robot.goToAccessibilityPage();
+
+      await container.read(themeControllerProvider.notifier).toggleDarkMode();
+
+      expect(
+        container.read(themeControllerProvider).value!.appThemeMode,
+        AppThemeMode.hcDark,
+      );
+
+      await container.read(themeControllerProvider.notifier).toggleDarkMode();
+
+      expect(
+        container.read(themeControllerProvider).value!.appThemeMode,
+        AppThemeMode.hcLight,
+      );
+    });
+
+    testWidgets(TestNames.cp042, (tester) async {
+      darkmode = false;
       hcmode = false;
 
       await tester.pumpWidget(
@@ -99,42 +135,6 @@ void main() {
         AppThemeMode.light,
       );
       await tester.pump(const Duration(milliseconds: 100));
-    });
-
-    testWidgets(TestNames.cp042, (tester) async {
-      darkmode = false;
-      hcmode = true;
-
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: overrides,
-          child: const MyApp(),
-        ),
-      );
-
-      final container = ProviderScope.containerOf(
-        tester.element(find.byType(MyApp)),
-      );
-
-      final robot = TestingRobot(tester: tester);
-
-      await robot.loginWithFacebook();
-
-      await robot.goToAccessibilityPage();
-
-      await container.read(themeControllerProvider.notifier).toggleDarkMode();
-
-      expect(
-        container.read(themeControllerProvider).value!.appThemeMode,
-        AppThemeMode.hcDark,
-      );
-
-      await container.read(themeControllerProvider.notifier).toggleDarkMode();
-
-      expect(
-        container.read(themeControllerProvider).value!.appThemeMode,
-        AppThemeMode.hcLight,
-      );
     });
 
     testWidgets(TestNames.cp043, (tester) async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
-import 'package:luciapp/features/themes/data/abstract_repositories/theme_repository.dart';
+import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repositor.dart';
 import 'package:luciapp/features/themes/data/repositories/sqlite_theme_settings_repository.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/pages/auth_page.dart';

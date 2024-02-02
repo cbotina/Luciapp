@@ -17,8 +17,6 @@ class UserContainer extends ConsumerWidget {
     final userId = ref.watch(userIdProvider);
     final fetchUser = ref.watch(userModelProvider(userId ?? ''));
 
-    log(userId.toString());
-
     return fetchUser.when(
       data: (user) {
         if (user != null) {
