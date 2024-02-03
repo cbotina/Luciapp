@@ -81,7 +81,7 @@ void main() {
 
       final result = await service.getCurrentThemeState();
 
-      expect(result, ThemeState.light());
+      expect(result, const ThemeState.light());
     });
 
     test(TestNames.cp038, () async {

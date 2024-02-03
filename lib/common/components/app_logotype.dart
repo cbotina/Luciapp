@@ -20,7 +20,7 @@ class AppLogotype extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) {
-        return const Text("Error loading the image");
+        return Text(error.toString());
       },
       loading: () => const CircularProgressIndicator(),
     );

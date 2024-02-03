@@ -34,7 +34,7 @@ void main() {
     test(TestNames.cp032, () async {
       container = makeProviderContainer(mockThemeService);
 
-      final initialState = ThemeState.light();
+      const initialState = ThemeState.light();
 
       when(mockThemeService.getCurrentThemeState)
           .thenAnswer((invocation) => Future.value(initialState));
@@ -55,7 +55,7 @@ void main() {
     test(TestNames.cp033, () async {
       container = makeProviderContainer(mockThemeService);
 
-      final initialState = ThemeState.light();
+      const initialState = ThemeState.light();
 
       when(mockThemeService.getCurrentThemeState)
           .thenAnswer((invocation) => Future.value(initialState));
@@ -76,18 +76,18 @@ void main() {
     test(TestNames.cp034, () async {
       container = makeProviderContainer(mockThemeService);
 
-      final initialState = ThemeState.light();
+      const initialState = ThemeState.light();
 
       when(mockThemeService.getCurrentThemeState)
           .thenAnswer((invocation) => Future.value(initialState));
 
-      final finalstate = ThemeState.light();
+      const finalstate = ThemeState.light();
 
       final themeController = container.read(themeControllerProvider.notifier);
 
       await themeController.refresh();
 
-      expect(themeController.state, AsyncData(finalstate));
+      expect(themeController.state, const AsyncData(finalstate));
     });
   });
 }

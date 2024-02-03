@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/data/abstract_repositories/auth_repository.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
-import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repositor.dart';
+import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repository.dart';
 import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
@@ -20,7 +20,7 @@ class ThemeService {
     final userId = _authRepository.userId;
 
     if (userId == null) {
-      return ThemeState.light();
+      return const ThemeState.light();
     }
 
     final userThemeSettings = await getOrCreateUserThemeSettings(userId);
@@ -32,7 +32,7 @@ class ThemeService {
     final userId = _authRepository.userId;
 
     if (userId == null) {
-      return ThemeState.light();
+      return const ThemeState.light();
     }
 
     final userThemeSettings = await getOrCreateUserThemeSettings(userId);
@@ -51,7 +51,7 @@ class ThemeService {
     final userId = _authRepository.userId;
 
     if (userId == null) {
-      return ThemeState.light();
+      return const ThemeState.light();
     }
 
     final userThemeSettings = await getOrCreateUserThemeSettings(userId);
