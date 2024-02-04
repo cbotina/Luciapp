@@ -24,8 +24,7 @@ import 'package:luciapp/features/auth/presentation/controllers/auth_controller.d
 import 'package:luciapp/features/auth/data/providers/user_display_name_provider.dart';
 import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart'
     as auth;
-
-import '../test/themes/unit_testing/theme_controller_test.dart';
+import '../test/themes/mocks/mock_theme_service.dart';
 
 void main() {
   late final User testUser;

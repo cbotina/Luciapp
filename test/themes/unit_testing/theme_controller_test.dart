@@ -4,18 +4,13 @@ import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:mocktail/mocktail.dart';
-
 import '../constants/strings.dart';
-
-class MockThemeService extends Mock implements ThemeService {}
-
-class Listener<T> extends Mock {
-  void call(T? previous, T next);
-}
+import '../mocks/mock_theme_service.dart';
 
 void main() {
   late MockThemeService mockThemeService;
   late ProviderContainer container;
+
   setUp(() {
     mockThemeService = MockThemeService();
   });

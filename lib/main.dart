@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
 import 'package:luciapp/features/font_size/data/abstract_repositories/font_settings_repository.dart';
 import 'package:luciapp/features/font_size/data/repositories/sqlite_font_settings_repository.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
-import 'package:luciapp/features/font_size/presentation/state/font_size_state.dart';
 import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repository.dart';
 import 'package:luciapp/features/themes/data/repositories/sqlite_theme_settings_repository.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
@@ -73,7 +70,6 @@ class MyApp extends ConsumerWidget {
                     return data.scaleFactor;
                   },
                   error: (error, stackTrace) {
-                    log(error.toString());
                     return 1;
                   },
                   loading: () {

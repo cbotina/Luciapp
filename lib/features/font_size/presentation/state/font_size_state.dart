@@ -20,13 +20,17 @@ class FontSizeState {
 
   FontSizeState.fromUserFontSettings(UserFontSettings fontSettings)
       : scaleFactor = fontSettings.scaleFactor,
-        canDecreaseSize = fontSettings.scaleFactor >= .8,
-        canIncreaseSize = fontSettings.scaleFactor <= 2;
+        canDecreaseSize = fontSettings.scaleFactor > .8,
+        canIncreaseSize = fontSettings.scaleFactor < 2;
+
+  const FontSizeState.fromScaleFactor(this.scaleFactor)
+      : canDecreaseSize = scaleFactor > .8,
+        canIncreaseSize = scaleFactor < 2;
 
   FontSizeState copyWithScaleFactor(double scaleFactor) => FontSizeState(
         scaleFactor: scaleFactor,
-        canIncreaseSize: canIncreaseSize,
-        canDecreaseSize: canDecreaseSize,
+        canDecreaseSize: scaleFactor > .8,
+        canIncreaseSize: scaleFactor < 2,
       );
 
   FontSizeState copyWithCanIncreaseSize(bool canIncreaseSize) => FontSizeState(

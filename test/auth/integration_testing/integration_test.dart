@@ -5,7 +5,7 @@ import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
-import '../../themes/unit_testing/theme_controller_test.dart';
+import '../../themes/mocks/mock_theme_service.dart';
 import '../constants/strings.dart';
 import 'package:mocktail/mocktail.dart';
 import '../../common/mocks/mock_auth_repository.dart';

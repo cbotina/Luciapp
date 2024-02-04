@@ -13,7 +13,7 @@ import '../test/common/robot/testing_robot.dart';
 import '../test/auth/mocks/mock_auth_service.dart';
 import '../test/common/mocks/mock_auth_repository.dart';
 import '../test/themes/constants/strings.dart';
-import '../test/themes/unit_testing/theme_controller_test.dart';
+import '../test/themes/mocks/mock_theme_service.dart';
 
 void main() {
   late MockAuthService mockAuthService;
