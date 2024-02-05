@@ -34,6 +34,17 @@ class UserFontSettings extends MapView<String, dynamic> {
   UserFontSettings copyWithScaleFactor(double scaleFactor) =>
       UserFontSettings(scaleFactor: scaleFactor, userId: userId);
 
+  @override
+  bool operator ==(Object other) =>
+      other is UserFontSettings &&
+      _userId == other.userId &&
+      _scaleFactor == other.scaleFactor;
+
+  @override
+  int get hashCode => Object.hashAll(
+        [_userId, _scaleFactor],
+      );
+
   double get scaleFactor => _scaleFactor;
   UserId get userId => _userId;
 }
