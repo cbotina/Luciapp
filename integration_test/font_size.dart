@@ -9,12 +9,13 @@ import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
 import 'package:mocktail/mocktail.dart';
-import '../../auth/mocks/mock_auth_service.dart';
-import '../../common/mocks/mock_auth_repository.dart';
-import '../../common/robot/testing_robot.dart';
-import '../../themes/mocks/mock_theme_service.dart';
-import '../constants/strings.dart';
-import '../mocks/mock_font_settings_repository.dart';
+
+import '../test/auth/mocks/mock_auth_service.dart';
+import '../test/common/mocks/mock_auth_repository.dart';
+import '../test/common/robot/testing_robot.dart';
+import '../test/font_size/constants/strings.dart';
+import '../test/font_size/mocks/mock_font_settings_repository.dart';
+import '../test/themes/mocks/mock_theme_service.dart';
 
 void main() {
   late final MockAuthRepository mockAuthRepository;

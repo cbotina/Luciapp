@@ -5,6 +5,7 @@ import 'package:luciapp/features/font_size/presentation/controllers/font_size_co
 import 'package:luciapp/features/font_size/presentation/state/font_size_state.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../constants/strings.dart';
 import '../mocks/mock_font_size_service.dart';
 
 void main() {
@@ -25,8 +26,8 @@ void main() {
     return container;
   }
 
-  group("Unit Testing", () {
-    test("When text increases and doesn't reach the limit", () async {
+  group(TestNames.unitTest, () {
+    test(TestNames.cp045, () async {
       container = makeProviderContainer(mockFontSizeService);
 
       const initialState = FontSizeState.initial();
@@ -45,7 +46,7 @@ void main() {
 
       expect(controller.state, AsyncData(finalState));
     });
-    test("When text increases and reaches the limit", () async {
+    test(TestNames.cp046, () async {
       container = makeProviderContainer(mockFontSizeService);
 
       const initalScaleFactor = 1.9;
@@ -68,7 +69,7 @@ void main() {
       expect(controller.state.value!.canIncreaseSize, false);
     });
 
-    test("When text doesn't increase its size", () async {
+    test(TestNames.cp047, () async {
       container = makeProviderContainer(mockFontSizeService);
 
       const initalScaleFactor = 2.0;
@@ -90,7 +91,7 @@ void main() {
       expect(controller.state.value!.canIncreaseSize, false);
     });
 
-    test("When text decreases and doesn't reach the limit", () async {
+    test(TestNames.cp048, () async {
       container = makeProviderContainer(mockFontSizeService);
 
       const initialScaleFactor = 1.0;
@@ -112,7 +113,7 @@ void main() {
 
       expect(controller.state, AsyncData(finalState));
     });
-    test("When text decreases and reaches the limit", () async {
+    test(TestNames.cp049, () async {
       container = makeProviderContainer(mockFontSizeService);
 
       const initalScaleFactor = .9;
@@ -135,7 +136,7 @@ void main() {
       expect(controller.state.value!.canDecreaseSize, false);
     });
 
-    test("When text doesn't decrease its size", () async {
+    test(TestNames.cp050, () async {
       container = makeProviderContainer(mockFontSizeService);
 
       const initalScaleFactor = .8;
@@ -157,7 +158,7 @@ void main() {
       expect(controller.state.value!.canDecreaseSize, false);
     });
 
-    test("refresh", () async {
+    test(TestNames.cp051, () async {
       container = makeProviderContainer(mockFontSizeService);
 
       const initalScaleFactor = .8;

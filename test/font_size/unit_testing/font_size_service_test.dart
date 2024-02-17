@@ -6,6 +6,7 @@ import 'package:luciapp/features/font_size/domain/models/user_font_settings.dart
 import 'package:luciapp/features/font_size/presentation/state/font_size_state.dart';
 import 'package:mocktail/mocktail.dart';
 import '../../common/mocks/mock_auth_repository.dart';
+import '../constants/strings.dart';
 import '../mocks/mock_font_settings_repository.dart';
 
 void main() {
@@ -29,15 +30,15 @@ void main() {
     );
   });
 
-  group("Unit testing", () {
-    test("getcurrent for not authenticated", () async {
+  group(TestNames.unitTest, () {
+    test(TestNames.cp052, () async {
       when(() => mockAuthRepository.userId).thenAnswer((_) => null);
 
       final result = await service.getCurrentFontSizeState();
 
       expect(result, const FontSizeState.initial());
     });
-    test("getcurrent for authenticated", () async {
+    test(TestNames.cp053, () async {
       when(() => mockAuthRepository.userId).thenAnswer((_) => user.userId);
 
       final existingSettings = UserFontSettings(scaleFactor: 2, userId: '1234');
@@ -50,7 +51,7 @@ void main() {
 
       expect(result, FontSizeState.fromUserFontSettings(existingSettings));
     });
-    test("increse when it can increase", () async {
+    test(TestNames.cp054, () async {
       when(() => mockAuthRepository.userId).thenAnswer((_) => user.userId);
       final existingSettings =
           UserFontSettings(scaleFactor: 1.9, userId: '1234');
@@ -68,7 +69,7 @@ void main() {
 
       expect(result, FontSizeState.fromUserFontSettings(increased));
     });
-    test("increse when it can't increase", () async {
+    test(TestNames.cp055, () async {
       when(() => mockAuthRepository.userId).thenAnswer((_) => user.userId);
       final existingSettings = UserFontSettings(scaleFactor: 2, userId: '1234');
 
@@ -80,7 +81,7 @@ void main() {
 
       expect(result, FontSizeState.fromUserFontSettings(existingSettings));
     });
-    test("decrease when it can decrease", () async {
+    test(TestNames.cp056, () async {
       when(() => mockAuthRepository.userId).thenAnswer((_) => user.userId);
       final existingSettings =
           UserFontSettings(scaleFactor: 1.8, userId: '1234');
@@ -98,7 +99,7 @@ void main() {
 
       expect(result, FontSizeState.fromUserFontSettings(decreased));
     });
-    test("decrease when it can't decrease", () async {
+    test(TestNames.cp057, () async {
       when(() => mockAuthRepository.userId).thenAnswer((_) => user.userId);
       final existingSettings =
           UserFontSettings(scaleFactor: .8, userId: '1234');
@@ -111,7 +112,7 @@ void main() {
 
       expect(result, FontSizeState.fromUserFontSettings(existingSettings));
     });
-    test("get existing from database", () async {
+    test(TestNames.cp058, () async {
       final existingSettings =
           UserFontSettings(scaleFactor: .8, userId: '1234');
 
@@ -123,7 +124,7 @@ void main() {
 
       expect(result, existingSettings);
     });
-    test("create new in database", () async {
+    test(TestNames.cp059, () async {
       when(() => mockFontSettingsRepository.get(user.userId)).thenAnswer(
         (invocation) => Future.value(null),
       );
