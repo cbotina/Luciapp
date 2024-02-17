@@ -24,8 +24,7 @@ import 'package:luciapp/features/auth/presentation/controllers/auth_controller.d
 import 'package:luciapp/features/auth/data/providers/user_display_name_provider.dart';
 import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart'
     as auth;
-
-import '../test/themes/unit_testing/theme_controller_test.dart';
+import '../test/themes/mocks/mock_theme_service.dart';
 
 void main() {
   late final User testUser;
@@ -52,7 +51,7 @@ void main() {
     () {
       testWidgets(TestNames.cp025, (WidgetTester tester) async {
         when(mockThemeService.getCurrentThemeState)
-            .thenAnswer((_) => Future.value(ThemeState.light()));
+            .thenAnswer((_) => Future.value(const ThemeState.light()));
 
         when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
           (_) => Future.value(AuthResult.success),
@@ -85,7 +84,7 @@ void main() {
 
       testWidgets(TestNames.cp026, (WidgetTester tester) async {
         when(mockThemeService.getCurrentThemeState)
-            .thenAnswer((invocation) => Future.value(ThemeState.light()));
+            .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
         when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
           (_) => Future.value(AuthResult.registering),
@@ -121,7 +120,7 @@ void main() {
 
       testWidgets(TestNames.cp027, (WidgetTester tester) async {
         when(mockThemeService.getCurrentThemeState)
-            .thenAnswer((invocation) => Future.value(ThemeState.light()));
+            .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
         when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
           (_) => Future.value(AuthResult.failure),
@@ -154,7 +153,7 @@ void main() {
 
       testWidgets(TestNames.cp028, (WidgetTester tester) async {
         when(mockThemeService.getCurrentThemeState)
-            .thenAnswer((invocation) => Future.value(ThemeState.light()));
+            .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
         when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
           (_) => Future.value(AuthResult.aborted),
@@ -270,7 +269,7 @@ void main() {
 
       testWidgets(TestNames.cp031, (WidgetTester tester) async {
         when(mockThemeService.getCurrentThemeState)
-            .thenAnswer((invocation) => Future.value(ThemeState.light()));
+            .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
         when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
           (_) => Future.value(AuthResult.success),

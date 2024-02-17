@@ -28,7 +28,7 @@ class DbFacade {
           '''
             CREATE TABLE ${SQLiteTableName.fontSettings} (
               ${SQLiteFieldName.userId} VARCHAR(150),
-              ${SQLiteFieldName.fontSize} REAL)
+              ${SQLiteFieldName.scaleFactor} REAL)
           
           ''',
         );
@@ -38,14 +38,20 @@ class DbFacade {
 
         db.execute(
           '''
-            CREATE TABLE ${SQLiteTableName.fontSettings} (
-              ${SQLiteFieldName.userId} VARCHAR(150),
-              ${SQLiteFieldName.fontSize} REAL)
+            DROP TABLE ${SQLiteTableName.fontSettings}
           
           ''',
         );
+        db.execute(
+          '''
+            CREATE TABLE ${SQLiteTableName.fontSettings} (
+              ${SQLiteFieldName.userId} VARCHAR(150),
+              ${SQLiteFieldName.scaleFactor} REAL)
+
+          ''',
+        );
       },
-      version: 4,
+      version: 6,
     );
 
     db = await database;

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
-import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repositor.dart';
+import 'package:luciapp/features/font_size/data/abstract_repositories/font_settings_repository.dart';
+import 'package:luciapp/features/font_size/data/repositories/sqlite_font_settings_repository.dart';
+import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
+import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repository.dart';
 import 'package:luciapp/features/themes/data/repositories/sqlite_theme_settings_repository.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/pages/auth_page.dart';
@@ -32,6 +35,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appThemeMode = ref.watch(themeControllerProvider);
+    final fontSizeState = ref.watch(fontSizeControllerProvider);
 
     return MaterialApp(
       title: Strings.appName,
@@ -58,7 +62,22 @@ class MyApp extends ConsumerWidget {
           });
 
           return MediaQuery(
-            data: query.copyWith(textScaler: const TextScaler.linear(1)),
+            data: query.copyWith(
+              textScaler: TextScaler.linear(
+                fontSizeState.when(
+                  data: (data) {
+                    ref.read(fontSizeControllerProvider.notifier).refresh();
+                    return data.scaleFactor;
+                  },
+                  error: (error, stackTrace) {
+                    return 1;
+                  },
+                  loading: () {
+                    return 1;
+                  },
+                ),
+              ),
+            ),
             child: isLoggedIn ? const MainPage() : const AuthPage(),
           );
         },
@@ -79,4 +98,8 @@ final usersRepositoryProvider = Provider<IUsersRepository>((ref) {
 
 final themeRepositoryProvider = Provider<IThemeSettingsReposiroty>((ref) {
   return SqLiteThemeSettingsRepository();
+});
+
+final fontSettingsRepositoryProvider = Provider<IFontSettingsRepository>((ref) {
+  return SqLiteFontSettingsRepository();
 });

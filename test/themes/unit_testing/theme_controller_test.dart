@@ -4,18 +4,13 @@ import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:mocktail/mocktail.dart';
-
 import '../constants/strings.dart';
-
-class MockThemeService extends Mock implements ThemeService {}
-
-class Listener<T> extends Mock {
-  void call(T? previous, T next);
-}
+import '../mocks/mock_theme_service.dart';
 
 void main() {
   late MockThemeService mockThemeService;
   late ProviderContainer container;
+
   setUp(() {
     mockThemeService = MockThemeService();
   });
@@ -34,7 +29,7 @@ void main() {
     test(TestNames.cp032, () async {
       container = makeProviderContainer(mockThemeService);
 
-      final initialState = ThemeState.light();
+      const initialState = ThemeState.light();
 
       when(mockThemeService.getCurrentThemeState)
           .thenAnswer((invocation) => Future.value(initialState));
@@ -55,7 +50,7 @@ void main() {
     test(TestNames.cp033, () async {
       container = makeProviderContainer(mockThemeService);
 
-      final initialState = ThemeState.light();
+      const initialState = ThemeState.light();
 
       when(mockThemeService.getCurrentThemeState)
           .thenAnswer((invocation) => Future.value(initialState));
@@ -76,18 +71,18 @@ void main() {
     test(TestNames.cp034, () async {
       container = makeProviderContainer(mockThemeService);
 
-      final initialState = ThemeState.light();
+      const initialState = ThemeState.light();
 
       when(mockThemeService.getCurrentThemeState)
           .thenAnswer((invocation) => Future.value(initialState));
 
-      final finalstate = ThemeState.light();
+      const finalstate = ThemeState.light();
 
       final themeController = container.read(themeControllerProvider.notifier);
 
       await themeController.refresh();
 
-      expect(themeController.state, AsyncData(finalstate));
+      expect(themeController.state, const AsyncData(finalstate));
     });
   });
 }

@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart' show immutable;
 import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
 import 'package:luciapp/features/themes/domain/models/user_theme_settings.dart';
 
+@immutable
 class ThemeState {
   final bool isDarkModeEnabled;
   final bool isHCModeEnabled;
@@ -17,12 +19,12 @@ class ThemeState {
     }
   }
 
-  ThemeState({
+  const ThemeState({
     required this.isDarkModeEnabled,
     required this.isHCModeEnabled,
   });
 
-  ThemeState.light()
+  const ThemeState.light()
       : isDarkModeEnabled = false,
         isHCModeEnabled = false;
 
