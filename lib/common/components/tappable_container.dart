@@ -5,7 +5,10 @@ class TappableContainer extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? splashColor;
   final double? minHeight;
+  final Color? borderColor;
+  final Color? backgroundColor;
   final double borderRadius;
+  final double padding;
   const TappableContainer({
     super.key,
     this.child,
@@ -13,6 +16,9 @@ class TappableContainer extends StatelessWidget {
     this.splashColor,
     this.minHeight,
     this.borderRadius = 15,
+    this.padding = 20,
+    this.borderColor,
+    this.backgroundColor,
   });
 
   @override
@@ -25,13 +31,14 @@ class TappableContainer extends StatelessWidget {
         onTap: onPressed,
         splashColor: splashColor,
         child: Ink(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(padding),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Theme.of(context).colorScheme.outline, // transparente
+              color: borderColor ??
+                  Theme.of(context).colorScheme.outline, // transparente
               width: 3,
             ),
-            color: Theme.of(context).colorScheme.surface,
+            color: backgroundColor ?? Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(borderRadius),
             // border: Border.all(color: Colors.black), para HC
           ),

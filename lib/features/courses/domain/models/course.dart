@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:luciapp/features/courses/domain/models/course_colors.dart';
+import 'package:luciapp/features/courses/presentation/widgets/colors/course_colors.dart';
 
 class Course {
   String id;

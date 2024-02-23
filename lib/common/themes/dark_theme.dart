@@ -64,7 +64,7 @@ final darkTheme = ThemeData(
   appBarTheme: AppBarTheme(
     elevation: 0,
     color: darkColorScheme.surface,
-    foregroundColor: Colors.black,
+    foregroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Color(0xffA1C4FF)),
   ),
   dialogTheme: DialogTheme(

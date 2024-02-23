@@ -1,29 +1,40 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/common/components/tappable_container.dart';
+import 'package:luciapp/common/utils/page_wrapper.dart';
+import 'package:luciapp/features/courses/data/providers/course_colors_controller.dart';
+import 'package:luciapp/features/courses/domain/models/course.dart';
+import 'package:luciapp/features/themes/data/providers/is_dark_mode_enabled_provider.dart';
+import 'package:luciapp/features/themes/data/providers/is_hc_mode_enabled_provider.dart';
+import 'package:luciapp/pages/course_page.dart';
 import 'package:ribbon_widget/ribbon_widget.dart';
 
 // Todo: Replace with tappable container
 
-class CourseWidget extends StatelessWidget {
+class CourseWidget extends ConsumerWidget {
   const CourseWidget({
+    required this.course,
     super.key,
     this.isNew = false,
-    required this.name,
-    required this.description,
-    required this.imageProvider,
     required this.percentageCompleted,
-    required this.mainColor,
   });
 
+  final Course course;
   final bool isNew;
-  final String name;
-  final String description;
-  final ImageProvider imageProvider;
   final double percentageCompleted;
-  final Color mainColor;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final hc = ref.watch(isHcModeEnabledProvider);
+    final dark = ref.watch(isDarkModeEnabledProvider);
+
+    final borderColor = dark && hc
+        ? course.colors.mainColor
+        : hc
+            ? Colors.black
+            : null;
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Ribbon(
@@ -31,23 +42,31 @@ class CourseWidget extends StatelessWidget {
           farLength: isNew ? 30 : 0,
           title: 'Nuevo!',
           titleStyle: TextStyle(
-            color: Theme.of(context).colorScheme.onSecondary,
+            color: Theme.of(context).colorScheme.onTertiary,
             fontFamily: 'Lilita',
             fontSize: 18,
           ),
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.tertiary,
           location: RibbonLocation.topEnd,
-          child: Ink(
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              boxShadow: const [], // ! add shadows
-              borderRadius: BorderRadius.circular(15),
-              color: Theme.of(context).colorScheme.surface,
-            ),
+          child: TappableContainer(
+            onPressed: () {
+              ref
+                  .read(courseColorsControllerProvider.notifier)
+                  .setCourseColors(course);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PageWrapper(CoursePage(course: course));
+                  },
+                ),
+              );
+            },
+            splashColor: course.colors.mainColor,
+            borderColor: borderColor,
             child: Column(
               children: [
                 Text(
-                  name,
+                  course.name,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.w800,
@@ -64,9 +83,9 @@ class CourseWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: constraints.maxWidth - 15 - 15 - 120,
+                          width: constraints.maxWidth - 20 - 20 - 120,
                           child: Text(
-                            description,
+                            course.description,
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 5,
@@ -76,7 +95,7 @@ class CourseWidget extends StatelessWidget {
                       ],
                     ),
                     Image(
-                      image: imageProvider,
+                      image: Image.network(course.imagePath).image,
                       width: 110,
                       height: 110,
                     ),
@@ -86,9 +105,8 @@ class CourseWidget extends StatelessWidget {
                   height: 15,
                 ),
                 LinearProgressIndicator(
-                  backgroundColor:
-                      Theme.of(context).colorScheme.tertiaryContainer,
-                  color: mainColor,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+                  color: course.colors.mainColor,
                   value: percentageCompleted,
                   borderRadius: BorderRadius.circular(20),
                   minHeight: 15,

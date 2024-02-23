@@ -24,6 +24,6 @@ const hcLightColorScheme = ColorScheme(
   surfaceTint: Colors.black,
   background: Color.fromARGB(255, 255, 255, 255), // dialog background
   onBackground: Color.fromARGB(255, 0, 0, 0),
-  surfaceVariant: Color.fromARGB(255, 255, 255, 255),
+  surfaceVariant: Color.fromARGB(255, 0, 0, 0),
   scrim: Colors.black,
 );

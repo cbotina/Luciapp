@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
+import 'package:luciapp/features/courses/data/abstract_repositories/course_content_repository.dart';
 import 'package:luciapp/features/courses/data/abstract_repositories/courses_repository.dart';
+import 'package:luciapp/features/courses/data/repositories/firebase_course_content_reposiroty.dart';
 import 'package:luciapp/features/courses/data/repositories/firebase_course_repository.dart';
 import 'package:luciapp/features/font_size/data/abstract_repositories/font_settings_repository.dart';
 import 'package:luciapp/features/font_size/data/repositories/sqlite_font_settings_repository.dart';
@@ -108,4 +110,9 @@ final fontSettingsRepositoryProvider = Provider<IFontSettingsRepository>((ref) {
 
 final coursesRepositoryProvider = Provider<CoursesRepository>((ref) {
   return FirebaseCourseRepository();
+});
+
+final courseContentsRepositoryProvider =
+    Provider<CourseContentsRepository>((ref) {
+  return FirebaseCourseContentsRepository();
 });

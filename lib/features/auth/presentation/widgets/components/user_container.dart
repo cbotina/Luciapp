@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/common/components/header_container.dart';
 import 'package:luciapp/features/auth/domain/enums/gender.dart';
 import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
 import 'package:luciapp/features/auth/data/providers/user_model_provider.dart';
@@ -29,27 +30,7 @@ class UserContainer extends ConsumerWidget {
               readyAdjective = Strings.readyNonBinary;
           }
 
-          return Container(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height * .18,
-              maxHeight: double.infinity,
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).shadowColor,
-                  blurRadius: 0,
-                  spreadRadius: 0,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(30),
+          return HeaderContainer(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

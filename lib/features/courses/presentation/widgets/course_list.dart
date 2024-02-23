@@ -20,6 +20,7 @@ class CourseListWidget extends ConsumerWidget {
       child: ListView(
         padding: const EdgeInsets.all(15),
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         addRepaintBoundaries: false,
         children: [
           Row(
@@ -31,8 +32,9 @@ class CourseListWidget extends ConsumerWidget {
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.only(left: 10.0),
-                  child: const Divider(
+                  child: Divider(
                     height: 36,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                 ),
               ),
@@ -55,21 +57,11 @@ class CourseListWidget extends ConsumerWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    Color mainColor = courses.elementAt(index).colors.mainColor;
                     Course course = courses.elementAt(index);
-                    return InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.circular(15),
-                      splashColor: mainColor.withOpacity(.5),
-                      highlightColor: mainColor.withOpacity(.2),
-                      child: CourseWidget(
-                        name: course.name,
-                        description: course.description,
-                        imageProvider: Image.network(course.imagePath).image,
-                        percentageCompleted: .78,
-                        mainColor: mainColor,
-                        isNew: true,
-                      ),
+                    return CourseWidget(
+                      course: course,
+                      percentageCompleted: .78,
+                      isNew: true,
                     );
                   },
                   separatorBuilder: (context, index) {
