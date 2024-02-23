@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/courses/data/providers/course_contents_provider.dart';
 import 'package:luciapp/features/courses/domain/typedefs/course_id.dart';
-import 'package:luciapp/pages/course_page.dart';
+import 'package:luciapp/features/courses/presentation/widgets/components/course_content_widget.dart';
 
 class CourseContentsList extends ConsumerWidget {
   final CourseId courseId;
