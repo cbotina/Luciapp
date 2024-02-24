@@ -4,6 +4,8 @@ import 'package:luciapp/common/components/tappable_container.dart';
 import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/domain/models/course_content.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
+import 'package:luciapp/pages/game_page.dart';
+import 'package:luciapp/pages/tabs/games_tab.dart';
 
 class CourseContentWidget extends ConsumerWidget {
   final CourseContent content;
@@ -26,7 +28,19 @@ class CourseContentWidget extends ConsumerWidget {
     }
 
     return TappableContainer(
-      onPressed: () {},
+      onPressed: () {
+        if (content.type == ContentTypes.game) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return GamePage(
+                  gameId: content.gameId!,
+                );
+              },
+            ),
+          );
+        }
+      },
       padding: 5,
       borderColor: colors.borders,
       backgroundColor: colors.contentBackground,

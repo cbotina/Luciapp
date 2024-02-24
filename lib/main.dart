@@ -7,6 +7,10 @@ import 'package:luciapp/features/courses/data/repositories/firebase_course_repos
 import 'package:luciapp/features/font_size/data/abstract_repositories/font_settings_repository.dart';
 import 'package:luciapp/features/font_size/data/repositories/sqlite_font_settings_repository.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
+import 'package:luciapp/features/games/data/abstract_repositories/game_levels_repositoryl.dart';
+import 'package:luciapp/features/games/data/abstract_repositories/games_repository.dart';
+import 'package:luciapp/features/games/data/repositories/firebase_game_levels_repository.dart';
+import 'package:luciapp/features/games/data/repositories/firebase_games_repository.dart';
 import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repository.dart';
 import 'package:luciapp/features/themes/data/repositories/sqlite_theme_settings_repository.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
@@ -115,4 +119,12 @@ final coursesRepositoryProvider = Provider<CoursesRepository>((ref) {
 final courseContentsRepositoryProvider =
     Provider<CourseContentsRepository>((ref) {
   return FirebaseCourseContentsRepository();
+});
+
+final gamesRepositoryProvider = Provider<IGamesRepository>((ref) {
+  return FirebaseGamesRepository();
+});
+
+final gameLevelsRepositoryProvider = Provider<IGameLevelsRepository>((ref) {
+  return FirebaseGameLevelsRepository();
 });

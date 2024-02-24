@@ -5,6 +5,9 @@ import 'package:luciapp/common/components/tappable_container.dart';
 import 'package:luciapp/common/utils/page_wrapper.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
 import 'package:luciapp/features/courses/domain/models/course.dart';
+import 'package:luciapp/features/games/domain/enums/game_mode.dart';
+import 'package:luciapp/features/games/domain/models/hangman_level.dart';
+import 'package:luciapp/features/games/presentation/hangman_screen.dart';
 import 'package:luciapp/features/themes/data/providers/is_dark_mode_enabled_provider.dart';
 import 'package:luciapp/features/themes/data/providers/is_hc_mode_enabled_provider.dart';
 import 'package:luciapp/pages/course_page.dart';
@@ -53,6 +56,19 @@ class CourseWidget extends ConsumerWidget {
               ref
                   .read(courseColorsControllerProvider.notifier)
                   .setCourseColors(course);
+
+              // todo: cambiar a original
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) {
+              //     final List<HangmanLevel> levels = [
+              //       HangmanLevel('Hola', "Mundo"),
+              //       HangmanLevel('Hello', "World"),
+              //     ];
+
+              //     return HangmanScreen(levels: levels, mode: GameMode.custom);
+              //   },
+              // ));
+
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
