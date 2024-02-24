@@ -19,6 +19,7 @@ class CoursePage extends ConsumerWidget {
     final colors = ref.read(courseColorsControllerProvider);
 
     return Scaffold(
+      backgroundColor: colors.backgroundColor,
       appBar: AppBar(
         title: Text(course.name,
             style: Theme.of(context)

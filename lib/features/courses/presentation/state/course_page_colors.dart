@@ -8,6 +8,7 @@ class CoursePageColors {
   final Color? borders;
   final Color? contentBackground;
   final Color? appBarBackground;
+  final Color? backgroundColor;
   final Color appBarForeground;
   final Color appBarIcons;
   final List<Color>? gradientColors;
@@ -19,6 +20,7 @@ class CoursePageColors {
     required this.appBarForeground,
     required this.appBarIcons,
     this.appBarBackground,
+    this.backgroundColor,
     this.borders,
     this.gradientColors,
     this.contentBackground,
@@ -37,6 +39,8 @@ class CoursePageColors {
         contentBackground = null,
         appBarBackground = courseColors.mainColor,
         appBarForeground = Colors.white,
+        backgroundColor = Color.alphaBlend(
+            courseColors.mainColor.withOpacity(.2), Colors.white),
         appBarIcons = Colors.white;
 
   CoursePageColors.dark(CloudCourseColors courseColors)
@@ -48,6 +52,7 @@ class CoursePageColors {
         contentBackground = null,
         appBarBackground = null,
         appBarForeground = Colors.white,
+        backgroundColor = null,
         appBarIcons = Colors.white;
 
   CoursePageColors.hcLight(CloudCourseColors courseColors)
@@ -62,6 +67,7 @@ class CoursePageColors {
         contentBackground = courseColors.highlightColor,
         appBarBackground = courseColors.highlightColor,
         appBarForeground = Colors.black,
+        backgroundColor = null,
         appBarIcons = Colors.black;
 
   CoursePageColors.hcDark(CloudCourseColors courseColors)
@@ -73,6 +79,7 @@ class CoursePageColors {
         contentBackground = null,
         appBarBackground = null,
         appBarForeground = courseColors.highlightColor,
+        backgroundColor = null,
         appBarIcons = courseColors.highlightColor;
 
   CoursePageColors.defaultColors()
@@ -84,5 +91,6 @@ class CoursePageColors {
         contentBackground = null,
         appBarBackground = null,
         appBarForeground = Colors.black,
+        backgroundColor = null,
         appBarIcons = Colors.black;
 }
