@@ -71,7 +71,7 @@ class CoursePageColors {
         shadow = courseColors.shadowColor,
         accent = courseColors.highlightColor,
         main = courseColors.mainColor,
-        letterBagkround = courseColors.mainColor,
+        letterBagkround = courseColors.shadowColor,
         letterForeground = Colors.white,
         letterDisabledBackground = courseColors.mainColor.withOpacity(.5),
         alphabetContainer = courseColors.mainColor.withOpacity(.5),
@@ -124,9 +124,9 @@ class CoursePageColors {
         shadow = courseColors.shadowColor,
         accent = courseColors.highlightColor,
         main = courseColors.mainColor,
-        letterBagkround = Colors.white,
+        letterBagkround = courseColors.highlightColor,
         letterForeground = Colors.black,
-        letterDisabledBackground = courseColors.mainColor.withOpacity(.5),
+        letterDisabledBackground = Colors.white,
         alphabetContainer = Colors.black,
         falseForeground = Colors.black,
         falseBackground = const Color.fromARGB(255, 255, 120, 151),
@@ -156,8 +156,8 @@ class CoursePageColors {
         falseForeground = Colors.white,
         falseBackground = Colors.black,
         falseBorder = const Color(0xffff0c27),
-        trueForeground = Colors.black,
-        trueBackground = const Color(0xff1863FF),
+        trueForeground = const Color.fromARGB(255, 255, 255, 255),
+        trueBackground = const Color.fromARGB(255, 0, 0, 0),
         trueBorder = const Color.fromARGB(255, 94, 207, 255);
 
   CoursePageColors.defaultColors()

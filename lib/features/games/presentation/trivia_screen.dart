@@ -1,12 +1,13 @@
 import 'dart:math';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
+import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
 import 'package:luciapp/features/games/domain/models/game_level.dart';
@@ -83,6 +84,9 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: colors.appBarIcons,
+        ),
         excludeHeaderSemantics: true,
         backgroundColor: colors.appBarBackground,
         centerTitle: true,
@@ -126,11 +130,11 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: colors.main,
+                          color: colors.letterForeground,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.question_mark,
-                          color: Colors.white,
+                          color: colors.letterBagkround,
                         ),
                       ),
                       const SizedBox(
@@ -168,6 +172,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
             ),
           ),
           Material(
+            color: Colors.transparent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -200,20 +205,24 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
                     child: Ink(
                       height: MediaQuery.of(context).size.height * .25,
                       width: (MediaQuery.of(context).size.width / 2) - 15,
-                      decoration: const BoxDecoration(
-                        color: Colors.pink,
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: colors.falseBackground,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(30),
                           bottomLeft: Radius.circular(30),
                         ),
+                        border: Border.all(
+                          color: colors.falseBorder,
+                          width: 6,
+                        ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: ExcludeSemantics(
                           child: Text(
                             "F",
                             style: TextStyle(
                               fontSize: 70,
-                              color: Colors.white,
+                              color: colors.falseForeground,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -251,20 +260,24 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
                     child: Ink(
                       height: MediaQuery.of(context).size.height * .25,
                       width: (MediaQuery.of(context).size.width / 2) - 15,
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: colors.trueBackground,
+                        borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(30),
                           bottomRight: Radius.circular(30),
                         ),
+                        border: Border.all(
+                          color: colors.trueBorder,
+                          width: 6,
+                        ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: ExcludeSemantics(
                           child: Text(
                             "V",
                             style: TextStyle(
                               fontSize: 70,
-                              color: Colors.white,
+                              color: colors.trueForeground,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -291,6 +304,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
         _levelIndex++;
         if (_levelIndex >= widget.levels.length) {
           showScoreDialog();
+          ref.read(authControllerProvider);
         } else {
           _level = widget.levels[_levelIndex] as TriviaLevel;
         }
@@ -299,6 +313,13 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
   }
 
   showScoreDialog() {
+    final scaleFactor =
+        ref.watch(fontSizeControllerProvider).value?.scaleFactor ?? 1.0;
+
+    const bodySize = 15;
+    const titleSize = 20;
+    const buttonTextSize = 18;
+
     if (_hits == widget.levels.length) {
       _confettiController.play();
     }
@@ -312,8 +333,8 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
         Navigator.of(context).pop();
       },
       btnOkText: 'Continuar',
-      buttonsTextStyle: const TextStyle(
-        fontSize: 20,
+      buttonsTextStyle: TextStyle(
+        fontSize: buttonTextSize * scaleFactor,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
@@ -323,16 +344,16 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
       body: Column(
         children: [
           Confetti(confettiController: _confettiController, widget: widget),
-          const Text(
+          Text(
             'Bien hecho!',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: titleSize * scaleFactor,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             'Has acertado $_hits preguntas de ${widget.levels.length}',
-            style: const TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: bodySize * scaleFactor),
             textAlign: TextAlign.center,
           )
         ],
@@ -341,6 +362,13 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
   }
 
   showSuccessDialog() {
+    final scaleFactor =
+        ref.watch(fontSizeControllerProvider).value?.scaleFactor ?? 1.0;
+
+    const bodySize = 15;
+    const titleSize = 20;
+    const buttonTextSize = 18;
+
     AwesomeDialog(
       context: context,
       animType: AnimType.topSlide,
@@ -353,16 +381,16 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
         setNextLevel();
       },
       btnOkText: 'Siguiente',
-      buttonsTextStyle: const TextStyle(
-        fontSize: 20,
+      buttonsTextStyle: TextStyle(
+        fontSize: buttonTextSize * scaleFactor,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
-      titleTextStyle: const TextStyle(
-        fontSize: 25,
+      titleTextStyle: TextStyle(
+        fontSize: titleSize * scaleFactor,
         fontWeight: FontWeight.bold,
       ),
-      descTextStyle: const TextStyle(fontSize: 15),
+      descTextStyle: TextStyle(fontSize: bodySize * scaleFactor),
       btnOkColor: Colors.blue,
       closeIcon: Container(),
       dismissOnTouchOutside: false,
@@ -377,6 +405,13 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
   }
 
   showFailureDialog() {
+    final scaleFactor =
+        ref.watch(fontSizeControllerProvider).value?.scaleFactor ?? 1.0;
+
+    const bodySize = 15;
+    const titleSize = 20;
+    const buttonTextSize = 18;
+
     AwesomeDialog(
       context: context,
       animType: AnimType.scale,
@@ -391,16 +426,16 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
         });
       },
       btnOkText: 'Siguiente',
-      buttonsTextStyle: const TextStyle(
-        fontSize: 22,
+      buttonsTextStyle: TextStyle(
+        fontSize: buttonTextSize * scaleFactor,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
-      titleTextStyle: const TextStyle(
-        fontSize: 25,
+      titleTextStyle: TextStyle(
+        fontSize: titleSize * scaleFactor,
         fontWeight: FontWeight.bold,
       ),
-      descTextStyle: const TextStyle(fontSize: 20),
+      descTextStyle: TextStyle(fontSize: bodySize * scaleFactor),
       btnOkColor: Colors.blue,
       closeIcon: Container(),
       dismissOnTouchOutside: false,

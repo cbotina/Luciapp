@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
+import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
 import 'package:luciapp/features/games/domain/models/game_level.dart';
@@ -126,13 +127,15 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: colors.appBarIcons,
+        ),
         backgroundColor: colors.appBarBackground,
         centerTitle: true,
-        foregroundColor: Colors.white,
+        foregroundColor: colors.appBarForeground,
         title: const Text(
           'El Ahorcado',
           style: TextStyle(
-            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 25,
           ),
@@ -362,6 +365,13 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
   }
 
   showSuccessDialog() {
+    final scaleFactor =
+        ref.watch(fontSizeControllerProvider).value?.scaleFactor ?? 1.0;
+
+    const bodySize = 15;
+    const titleSize = 20;
+    const buttonTextSize = 18;
+
     AwesomeDialog(
       context: context,
       animType: AnimType.scale,
@@ -397,16 +407,16 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
       },
       btnOkIcon: Icons.check_circle,
       btnOkText: 'Si',
-      buttonsTextStyle: const TextStyle(
-        fontSize: 20,
+      buttonsTextStyle: TextStyle(
+        fontSize: buttonTextSize * scaleFactor,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
-      titleTextStyle: const TextStyle(
-        fontSize: 25,
+      titleTextStyle: TextStyle(
+        fontSize: titleSize * scaleFactor,
         fontWeight: FontWeight.bold,
       ),
-      descTextStyle: const TextStyle(fontSize: 20),
+      descTextStyle: TextStyle(fontSize: bodySize * scaleFactor),
       btnCancelOnPress: () {
         Navigator.of(context).pop();
       },
@@ -417,6 +427,13 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
   }
 
   showFailureDialog() {
+    final scaleFactor =
+        ref.watch(fontSizeControllerProvider).value?.scaleFactor ?? 1.0;
+
+    const bodySize = 15;
+    const titleSize = 20;
+    const buttonTextSize = 18;
+
     AwesomeDialog(
       context: context,
       animType: AnimType.scale,
@@ -441,16 +458,16 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
       },
       btnOkIcon: Icons.check_circle,
       btnOkText: 'Si',
-      buttonsTextStyle: const TextStyle(
-        fontSize: 20,
+      buttonsTextStyle: TextStyle(
+        fontSize: buttonTextSize * scaleFactor,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
-      titleTextStyle: const TextStyle(
-        fontSize: 25,
+      titleTextStyle: TextStyle(
+        fontSize: titleSize * scaleFactor,
         fontWeight: FontWeight.bold,
       ),
-      descTextStyle: const TextStyle(fontSize: 20),
+      descTextStyle: TextStyle(fontSize: bodySize * scaleFactor),
       btnCancelOnPress: () {
         Navigator.of(context).pop();
       },
@@ -477,16 +494,17 @@ class AlphabetLetterField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final selectedColor =
-        ref.watch(courseColorsControllerProvider).letterBagkround;
-    final letterColor =
-        ref.watch(courseColorsControllerProvider).letterForeground;
+    final colors = ref.watch(courseColorsControllerProvider);
     return Semantics(
       label: "${letter.toLowerCase()}!",
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? Colors.grey : selectedColor,
+          color: isSelected ? Colors.grey : colors.letterBagkround,
           borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: colors.borders ?? Colors.transparent,
+            width: 4,
+          ),
         ),
         width: 60,
         height: 70,
@@ -498,7 +516,8 @@ class AlphabetLetterField extends ConsumerWidget {
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-                color: isSelected ? Colors.grey.shade300 : letterColor,
+                color:
+                    isSelected ? Colors.grey.shade300 : colors.letterForeground,
               ),
             ),
           ),
@@ -520,20 +539,16 @@ class LetterField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final letterColor =
-        ref.watch(courseColorsControllerProvider).letterForeground;
-    final borderColor = ref.watch(courseColorsControllerProvider).borders;
-    final letterBakgroundColor =
-        ref.watch(courseColorsControllerProvider).letterBagkround;
-    final invisibleColor =
-        ref.watch(courseColorsControllerProvider).letterDisabledBackground;
+    final colors = ref.watch(courseColorsControllerProvider);
 
     return Container(
       decoration: BoxDecoration(
-        color: isVisible ? letterBakgroundColor : invisibleColor,
+        color: isVisible
+            ? colors.letterBagkround
+            : colors.letterDisabledBackground,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: borderColor ?? Colors.transparent,
+          color: colors.borders ?? Colors.transparent,
           width: 4,
         ),
       ),
@@ -548,7 +563,7 @@ class LetterField extends ConsumerWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: letterColor,
+              color: colors.letterForeground,
             ),
           ),
         ),
