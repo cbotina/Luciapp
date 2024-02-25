@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
+import 'package:luciapp/common/utils/page_wrapper.dart';
 import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/domain/models/course_content.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
 import 'package:luciapp/pages/game_page.dart';
-import 'package:luciapp/pages/tabs/games_tab.dart';
 
 class CourseContentWidget extends ConsumerWidget {
   final CourseContent content;
@@ -33,8 +33,10 @@ class CourseContentWidget extends ConsumerWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return GamePage(
-                  gameId: content.gameId!,
+                return PageWrapper(
+                  GamePage(
+                    gameId: content.gameId!,
+                  ),
                 );
               },
             ),

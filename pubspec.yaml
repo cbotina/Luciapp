@@ -82,6 +82,8 @@ flutter:
     - assets/images/dark/
     - assets/images/hc_light/
     - assets/images/hc_dark/
+    - assets/audio/
+    - assets/images/hangman/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

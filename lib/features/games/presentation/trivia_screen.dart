@@ -7,27 +7,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
-import 'package:luciapp/features/courses/presentation/state/course_page_colors.dart';
+import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
+import 'package:luciapp/features/games/domain/models/game_level.dart';
 import 'package:luciapp/features/games/domain/models/trivia_level.dart';
-import 'package:luciapp/features/games/presentation/hangman_screen.dart';
 
-class TrueOrFalseGame extends ConsumerStatefulWidget {
-  final List<TriviaLevel> levels;
-  final GameMode mode;
-  final CoursePageColors colors;
-
-  const TrueOrFalseGame(
-      {super.key,
-      required this.colors,
-      required this.levels,
-      required this.mode});
+class TriviaPage extends ConsumerWidget {
+  final String gameId;
+  const TriviaPage({super.key, required this.gameId});
 
   @override
-  ConsumerState<TrueOrFalseGame> createState() => _TrueOrFalseGameState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.invalidate(triviaLevelsProvider);
+    final levels = ref.read(triviaLevelsProvider(gameId));
+    return levels.when(
+      data: (data) {
+        return TriviaGame(levels: data, mode: GameMode.custom);
+      },
+      error: (error, stackTrace) => Text(error.toString()),
+      loading: () => const LinearProgressIndicator(),
+    );
+  }
 }
 
-class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
+class TriviaGame extends ConsumerStatefulWidget {
+  final List<GameLevel> levels;
+  final GameMode mode;
+
+  const TriviaGame({super.key, required this.levels, required this.mode});
+
+  @override
+  ConsumerState<TriviaGame> createState() => _TrueOrFalseGameState();
+}
+
+class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
   late int _levelIndex;
   late TriviaLevel _level;
   late AudioPlayer _player;
@@ -44,9 +57,10 @@ class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
         case GameMode.custom:
           _levelIndex = 0;
           _hits = 0;
-          _level = widget.levels[_levelIndex];
+          _level = widget.levels[_levelIndex] as TriviaLevel;
         case GameMode.random:
-          _level = widget.levels[_random.nextInt(widget.levels.length)];
+          _level = widget.levels[_random.nextInt(widget.levels.length)]
+              as TriviaLevel;
       }
     } else {
       Navigator.of(context).pop();
@@ -70,29 +84,26 @@ class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
     return Scaffold(
       appBar: AppBar(
         excludeHeaderSemantics: true,
-        backgroundColor: colors.main,
+        backgroundColor: colors.appBarBackground,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Verdadero o Falso",
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
-              color: Colors.white,
+              color: colors.appBarForeground,
               overflow: TextOverflow.ellipsis),
         ),
         foregroundColor: Colors.white,
       ),
-      backgroundColor: Color.alphaBlend(
-        colors.main.withOpacity(.2),
-        Colors.white,
-      ),
+      backgroundColor: colors.backgroundColor,
       body: ListView(
         children: [
           Container(
             margin: const EdgeInsets.all(15),
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -141,14 +152,14 @@ class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
                 ),
                 Text(
                   _level.question,
-                  style: const TextStyle(fontSize: 17),
+                  // style: const TextStyle(fontSize: 17, color: Colors.black),
                   textAlign: TextAlign.left,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 ExcludeSemantics(
-                  child: Image.asset(
+                  child: Image.network(
                     _level.imagePath,
                     height: MediaQuery.of(context).size.height * .2,
                   ),
@@ -156,117 +167,112 @@ class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
               ],
             ),
           ),
-          Container(
-            key: GlobalKey(),
-            child: Stack(
+          Material(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        if (_level.answer == false) {
-                          await _player.play(
-                            AssetSource('audio/success.mp3'),
-                          );
-                          setState(() {
-                            _hits++;
-                          });
-                          showSuccessDialog();
-                        } else {
-                          await _player.play(
-                            AssetSource('audio/fail.mp3'),
-                          );
-                          setState(() {});
-                          showFailureDialog();
-                        }
-                      },
-                      splashColor: Colors.pinkAccent.shade100,
-                      highlightColor: Colors.pinkAccent.shade100,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        bottomLeft: Radius.circular(30),
+                InkWell(
+                  onTap: () async {
+                    if (_level.answer == false) {
+                      await _player.play(
+                        AssetSource('audio/success.mp3'),
+                      );
+                      setState(() {
+                        _hits++;
+                      });
+                      showSuccessDialog();
+                    } else {
+                      await _player.play(
+                        AssetSource('audio/fail.mp3'),
+                      );
+                      setState(() {});
+                      showFailureDialog();
+                    }
+                  },
+                  splashColor: Colors.pinkAccent.shade100,
+                  highlightColor: Colors.pinkAccent.shade100,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  ),
+                  child: Semantics(
+                    label: "Falso",
+                    child: Ink(
+                      height: MediaQuery.of(context).size.height * .25,
+                      width: (MediaQuery.of(context).size.width / 2) - 15,
+                      decoration: const BoxDecoration(
+                        color: Colors.pink,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
+                        ),
                       ),
-                      child: Semantics(
-                        label: "Falso",
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height * .25,
-                          width: (MediaQuery.of(context).size.width / 2) - 15,
-                          decoration: const BoxDecoration(
-                            color: Colors.pink,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              bottomLeft: Radius.circular(30),
-                            ),
-                          ),
-                          child: const Center(
-                            child: ExcludeSemantics(
-                              child: Text(
-                                "F",
-                                style: TextStyle(
-                                  fontSize: 70,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                      child: const Center(
+                        child: ExcludeSemantics(
+                          child: Text(
+                            "F",
+                            style: TextStyle(
+                              fontSize: 70,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () async {
-                        if (_level.answer == true) {
-                          await _player.play(
-                            AssetSource('audio/success.mp3'),
-                          );
-                          setState(() {
-                            _hits++;
-                          });
-                          showSuccessDialog();
-                        } else {
-                          await _player.play(
-                            AssetSource('audio/fail.mp3'),
-                          );
-                          setState(() {});
-                          showFailureDialog();
-                        }
-                      },
-                      splashColor: Colors.blue.shade300,
-                      highlightColor: Colors.blue.shade300,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    if (_level.answer == true) {
+                      await _player.play(
+                        AssetSource('audio/success.mp3'),
+                      );
+                      setState(() {
+                        _hits++;
+                      });
+                      showSuccessDialog();
+                    } else {
+                      await _player.play(
+                        AssetSource('audio/fail.mp3'),
+                      );
+                      setState(() {});
+                      showFailureDialog();
+                    }
+                  },
+                  splashColor: Colors.blue.shade300,
+                  highlightColor: Colors.blue.shade300,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  ),
+                  child: Semantics(
+                    label: "Verdadero",
+                    child: Ink(
+                      height: MediaQuery.of(context).size.height * .25,
+                      width: (MediaQuery.of(context).size.width / 2) - 15,
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30),
+                          bottomRight: Radius.circular(30),
+                        ),
                       ),
-                      child: Semantics(
-                        label: "Verdadero",
-                        child: Ink(
-                          height: MediaQuery.of(context).size.height * .25,
-                          width: (MediaQuery.of(context).size.width / 2) - 15,
-                          decoration: const BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
-                            ),
-                          ),
-                          child: const Center(
-                            child: ExcludeSemantics(
-                              child: Text(
-                                "V",
-                                style: TextStyle(
-                                  fontSize: 70,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                      child: const Center(
+                        child: ExcludeSemantics(
+                          child: Text(
+                            "V",
+                            style: TextStyle(
+                              fontSize: 70,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -280,13 +286,13 @@ class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
       if (widget.mode == GameMode.random) {
         _level = widget.levels[_random.nextInt(
           widget.levels.length,
-        )];
+        )] as TriviaLevel;
       } else {
         _levelIndex++;
         if (_levelIndex >= widget.levels.length) {
           showScoreDialog();
         } else {
-          _level = widget.levels[_levelIndex];
+          _level = widget.levels[_levelIndex] as TriviaLevel;
         }
       }
     });
@@ -316,17 +322,7 @@ class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
       dismissOnBackKeyPress: false,
       body: Column(
         children: [
-          ConfettiWidget(
-            confettiController: _confettiController,
-            shouldLoop: true,
-            blastDirectionality: BlastDirectionality.explosive,
-            numberOfParticles: 30,
-            colors: [
-              widget.colors.main,
-              widget.colors.shadow,
-              widget.colors.accent
-            ],
-          ),
+          Confetti(confettiController: _confettiController, widget: widget),
           const Text(
             'Bien hecho!',
             style: TextStyle(
@@ -420,4 +416,27 @@ class _TrueOrFalseGameState extends ConsumerState<TrueOrFalseGame> {
   }
 }
 
-const assetsPath = 'assets/images/tof';
+class Confetti extends ConsumerWidget {
+  const Confetti({
+    super.key,
+    required ConfettiController confettiController,
+    required this.widget,
+  }) : _confettiController = confettiController;
+
+  final ConfettiController _confettiController;
+  final TriviaGame widget;
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final mainColor = ref.read(courseColorsControllerProvider).main;
+    final shadowColor = ref.read(courseColorsControllerProvider).shadow;
+    final accentColor = ref.read(courseColorsControllerProvider).accent;
+    return ConfettiWidget(
+      confettiController: _confettiController,
+      shouldLoop: true,
+      blastDirectionality: BlastDirectionality.explosive,
+      numberOfParticles: 30,
+      colors: [mainColor, shadowColor, accentColor],
+    );
+  }
+}

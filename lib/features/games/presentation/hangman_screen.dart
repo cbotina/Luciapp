@@ -6,22 +6,42 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
+import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
 import 'package:luciapp/features/games/domain/models/game_level.dart';
 import 'package:luciapp/features/games/domain/models/hangman_level.dart';
+import 'package:luciapp/features/themes/data/providers/theme_mode_provider.dart';
+import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
 
-class HangmanScreen extends ConsumerStatefulWidget {
+class HangmanPage extends ConsumerWidget {
+  final String gameId;
+  const HangmanPage({super.key, required this.gameId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final levels = ref.read(hangmanLevelsProvider(gameId));
+    return levels.when(
+      data: (data) {
+        return HangmanGame(levels: data, mode: GameMode.custom);
+      },
+      error: (error, stackTrace) => Text(error.toString()),
+      loading: () => const LinearProgressIndicator(),
+    );
+  }
+}
+
+class HangmanGame extends ConsumerStatefulWidget {
   final List<GameLevel> levels;
   final GameMode mode;
 
-  const HangmanScreen({
+  const HangmanGame({
     super.key,
     required this.levels,
     required this.mode,
   });
 
   @override
-  ConsumerState<HangmanScreen> createState() => _HangmanScreenState();
+  ConsumerState<HangmanGame> createState() => _HangmanScreenState();
 }
 
 const List<String> alphabet = [
@@ -54,7 +74,7 @@ const List<String> alphabet = [
   'Z',
 ];
 
-class _HangmanScreenState extends ConsumerState<HangmanScreen> {
+class _HangmanScreenState extends ConsumerState<HangmanGame> {
   bool isHintVisible = false;
   int errors = 0;
   int hits = 0;
@@ -93,6 +113,16 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = ref.watch(courseColorsControllerProvider);
+    Color? drawingColor;
+    final themeMode = ref.watch(themeModeProvider);
+
+    if (themeMode == AppThemeMode.dark) {
+      drawingColor = colors.main;
+    } else if (themeMode == AppThemeMode.hcDark) {
+      drawingColor = colors.accent;
+    } else if (themeMode == AppThemeMode.hcLight) {
+      drawingColor = Colors.black;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -125,7 +155,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
-                  color: colors.progressBar,
+                  color: colors.appBarBackground,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Stack(
@@ -135,6 +165,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
                       child: Image.asset(
                         'assets/images/hangman/hang.png',
                         width: MediaQuery.of(context).size.width / 1.8,
+                        color: drawingColor,
                       ),
                     ),
                     Visibility(
@@ -142,6 +173,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
                       child: Image.asset(
                         'assets/images/hangman/head.png',
                         width: MediaQuery.of(context).size.width / 1.8,
+                        color: drawingColor,
                       ),
                     ),
                     Visibility(
@@ -149,6 +181,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
                       child: Image.asset(
                         'assets/images/hangman/body.png',
                         width: MediaQuery.of(context).size.width / 1.8,
+                        color: drawingColor,
                       ),
                     ),
                     Visibility(
@@ -156,6 +189,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
                       child: Image.asset(
                         'assets/images/hangman/ra.png',
                         width: MediaQuery.of(context).size.width / 1.8,
+                        color: drawingColor,
                       ),
                     ),
                     Visibility(
@@ -163,6 +197,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
                       child: Image.asset(
                         'assets/images/hangman/la.png',
                         width: MediaQuery.of(context).size.width / 1.8,
+                        color: drawingColor,
                       ),
                     ),
                     Visibility(
@@ -170,6 +205,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
                       child: Image.asset(
                         'assets/images/hangman/rl.png',
                         width: MediaQuery.of(context).size.width / 1.8,
+                        color: drawingColor,
                       ),
                     ),
                     Visibility(
@@ -177,6 +213,7 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
                       child: Image.asset(
                         'assets/images/hangman/ll.png',
                         width: MediaQuery.of(context).size.width / 1.8,
+                        color: drawingColor,
                       ),
                     ),
                   ],
@@ -220,7 +257,9 @@ class _HangmanScreenState extends ConsumerState<HangmanScreen> {
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: colors.appBarBackground!.withOpacity(.5),
+                    color: colors.backgroundColor != null
+                        ? colors.shadow.withOpacity(.5)
+                        : Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(20)),
                 padding: const EdgeInsets.all(8),
                 margin: const EdgeInsets.only(bottom: 15),
@@ -438,7 +477,10 @@ class AlphabetLetterField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final selectedColor = ref.watch(courseColorsControllerProvider).shadow;
+    final selectedColor =
+        ref.watch(courseColorsControllerProvider).letterBagkround;
+    final letterColor =
+        ref.watch(courseColorsControllerProvider).letterForeground;
     return Semantics(
       label: "${letter.toLowerCase()}!",
       child: Container(
@@ -446,7 +488,8 @@ class AlphabetLetterField extends ConsumerWidget {
           color: isSelected ? Colors.grey : selectedColor,
           borderRadius: BorderRadius.circular(10),
         ),
-        width: 50,
+        width: 60,
+        height: 70,
         margin: const EdgeInsets.symmetric(horizontal: 3),
         child: Center(
           child: ExcludeSemantics(
@@ -455,7 +498,7 @@ class AlphabetLetterField extends ConsumerWidget {
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-                color: isSelected ? Colors.grey.shade300 : Colors.white,
+                color: isSelected ? Colors.grey.shade300 : letterColor,
               ),
             ),
           ),
@@ -477,29 +520,35 @@ class LetterField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final visibleColor = ref.watch(courseColorsControllerProvider).shadow;
+    final letterColor =
+        ref.watch(courseColorsControllerProvider).letterForeground;
+    final borderColor = ref.watch(courseColorsControllerProvider).borders;
+    final letterBakgroundColor =
+        ref.watch(courseColorsControllerProvider).letterBagkround;
     final invisibleColor =
-        ref.watch(courseColorsControllerProvider).appBarBackground;
+        ref.watch(courseColorsControllerProvider).letterDisabledBackground;
 
     return Container(
       decoration: BoxDecoration(
-        color: isVisible
-            ? visibleColor.withAlpha(255)
-            : invisibleColor!.withOpacity(.5),
+        color: isVisible ? letterBakgroundColor : invisibleColor,
         borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: borderColor ?? Colors.transparent,
+          width: 4,
+        ),
       ),
-      height: 50,
-      width: 30,
+      height: 60,
+      width: 40,
       margin: const EdgeInsets.symmetric(horizontal: 3),
       child: Center(
         child: Visibility(
           visible: isVisible,
           child: Text(
             letter.toUpperCase(),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: letterColor,
             ),
           ),
         ),
