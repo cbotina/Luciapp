@@ -49,6 +49,9 @@ dependencies:
   awesome_dialog: ^3.2.0
   audioplayers: ^5.2.1
   confetti: ^0.7.0
+  video_player: ^2.8.2
+  chewie: ^1.7.5
+  youtube_player_flutter: ^9.0.0
 
 dev_dependencies:
   flutter_test:

@@ -5,6 +5,7 @@ import 'package:luciapp/common/utils/page_wrapper.dart';
 import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/domain/models/course_content.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
+import 'package:luciapp/features/multimedia/presentation/youtube_video.dart';
 import 'package:luciapp/pages/game_page.dart';
 
 class CourseContentWidget extends ConsumerWidget {
@@ -33,14 +34,16 @@ class CourseContentWidget extends ConsumerWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return PageWrapper(
-                  GamePage(
-                    gameId: content.gameId!,
-                  ),
-                );
+                return PageWrapper(GamePage(gameId: content.gameId!));
               },
             ),
           );
+        } else if (content.type == ContentTypes.video) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) {
+              return PageWrapper(YtVideo(video: content));
+            },
+          ));
         }
       },
       padding: 5,

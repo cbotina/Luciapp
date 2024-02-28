@@ -10,6 +10,7 @@ class CourseContent {
   final ContentTypes type;
   final String? url;
   final String? gameId;
+  final String? transcription;
 
   CourseContent({
     required this.courseId,
@@ -19,6 +20,7 @@ class CourseContent {
     required this.description,
     this.url,
     this.gameId,
+    this.transcription,
   });
 
   CourseContent.fromSnapshot(
@@ -29,5 +31,6 @@ class CourseContent {
         index = snapshot.data()['index'],
         type = snapshot.data()['type'].toString().toContentType(),
         url = snapshot.data()['url'],
-        gameId = snapshot.data()['game_id'];
+        gameId = snapshot.data()['game_id'],
+        transcription = snapshot.data()['transcription'];
 }

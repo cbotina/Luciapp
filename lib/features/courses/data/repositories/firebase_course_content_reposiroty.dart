@@ -9,7 +9,8 @@ class FirebaseCourseContentsRepository implements CourseContentsRepository {
     final contents = FirebaseFirestore.instance
         .collection('courses')
         .doc(id)
-        .collection('contents');
+        .collection('contents')
+        .orderBy('index');
 
     final contentsList = await contents.get().then((value) {
       return value.docs.map((doc) => CourseContent.fromSnapshot(doc));

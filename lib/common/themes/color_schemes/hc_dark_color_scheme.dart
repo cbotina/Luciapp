@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 const hcDarkColorScheme = ColorScheme(
   brightness: Brightness.dark,
-  primary: Color.fromARGB(255, 65, 132, 255),
+  primary: Colors.cyanAccent,
   onPrimary: Color.fromARGB(255, 0, 0, 0),
   secondary: Color.fromARGB(255, 255, 169, 9), // ribbon
   onSecondary: Color(0xff0e0e0e),
   tertiary: Color.fromARGB(255, 0, 255, 42),
-  onTertiary: Colors.white,
+  onTertiary: Colors.black,
   error: Color(0xffe6202d),
   onError: Colors.white,
   primaryContainer: Colors.white,
