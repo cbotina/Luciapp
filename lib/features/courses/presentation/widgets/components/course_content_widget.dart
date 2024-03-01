@@ -30,6 +30,7 @@ class CourseContentWidget extends ConsumerWidget {
 
     return TappableContainer(
       onPressed: () {
+        // TODO: use activecontentcontroller.setactivecontent
         if (content.type == ContentTypes.game) {
           Navigator.of(context).push(
             MaterialPageRoute(

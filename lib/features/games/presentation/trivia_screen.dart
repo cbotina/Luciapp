@@ -5,7 +5,6 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
@@ -304,7 +303,8 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
         _levelIndex++;
         if (_levelIndex >= widget.levels.length) {
           showScoreDialog();
-          ref.read(authControllerProvider);
+          // TODO: use set course progress to completed using provider
+          // ref.read(authControllerProvider);
         } else {
           _level = widget.levels[_levelIndex] as TriviaLevel;
         }

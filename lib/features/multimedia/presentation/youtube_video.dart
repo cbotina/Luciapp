@@ -44,6 +44,8 @@ class _YtVideoState extends ConsumerState<YtVideo> {
         width: 6,
         onEnded: (metaData) {
           Navigator.of(context).pop();
+
+          // todo: complete content in progress
         },
       ),
       builder: (context, player) {

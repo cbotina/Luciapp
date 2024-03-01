@@ -3,7 +3,7 @@ import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/domain/typedefs/course_id.dart';
 
 class CourseContent {
-  final CourseId courseId;
+  final CourseId contentId;
   final int index;
   final String name;
   final String description;
@@ -13,7 +13,7 @@ class CourseContent {
   final String? transcription;
 
   CourseContent({
-    required this.courseId,
+    required this.contentId,
     required this.index,
     required this.name,
     required this.type,
@@ -25,7 +25,7 @@ class CourseContent {
 
   CourseContent.fromSnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : courseId = snapshot.id,
+      : contentId = snapshot.id,
         name = snapshot.data()['name'],
         description = snapshot.data()['description'],
         index = snapshot.data()['index'],

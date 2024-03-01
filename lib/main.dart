@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
+import 'package:luciapp/features/course_progress/data/abstract_repositories/content_progress_repository.dart';
+import 'package:luciapp/features/course_progress/data/abstract_repositories/course_progress_repository.dart';
+import 'package:luciapp/features/course_progress/data/repositories/firebase_content_progress_repository.dart';
+import 'package:luciapp/features/course_progress/data/repositories/firebase_course_progress_repository.dart';
 import 'package:luciapp/features/courses/data/abstract_repositories/course_content_repository.dart';
 import 'package:luciapp/features/courses/data/abstract_repositories/courses_repository.dart';
 import 'package:luciapp/features/courses/data/repositories/firebase_course_content_reposiroty.dart';
@@ -127,4 +131,14 @@ final gamesRepositoryProvider = Provider<IGamesRepository>((ref) {
 
 final gameLevelsRepositoryProvider = Provider<IGameLevelsRepository>((ref) {
   return FirebaseGameLevelsRepository();
+});
+
+final courseProgressRepositoryProvider =
+    Provider<ICourseProgressRepository>((ref) {
+  return FirebaseCourseProgressRepository();
+});
+
+final contentProgressRepositoryProvider =
+    Provider<IContentProgressRepository>((ref) {
+  return FirebaseContentProgressRepository();
 });

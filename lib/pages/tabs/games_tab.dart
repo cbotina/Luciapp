@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luciapp/common/components/tappable_container.dart';
 
 class GamesPage extends StatelessWidget {
   const GamesPage({super.key});
@@ -30,18 +31,42 @@ class GamesPage extends StatelessWidget {
         ),
       ),
       // backgroundColor: Colors.amber,
-      body: Column(
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(
-                //   builder: (context) {
-                //     return const YtVideo();
-                //   },
-                // ));
-              },
-              child: const Text("Video"))
-        ],
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return null;
+
+          // return const GameWidget();
+        },
+        itemCount: 6,
+        padding: const EdgeInsets.all(10),
+      ),
+    );
+  }
+}
+
+class GameWidget extends StatelessWidget {
+  final String name;
+  final IconData iconData;
+
+  const GameWidget({
+    super.key,
+    required this.name,
+    required this.iconData,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TappableContainer(
+        onPressed: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(name, textAlign: TextAlign.center),
+            Icon(iconData, size: 50),
+          ],
+        ),
       ),
     );
   }

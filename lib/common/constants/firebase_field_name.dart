@@ -7,5 +7,11 @@ class FirebaseFieldName {
   static const gender = 'gender';
   static const age = 'age';
 
+  static const courseUserId = 'user_id';
+  static const courseId = 'course_id';
+
+  static const contentId = 'contentId';
+  static const completed = 'completed';
+
   const FirebaseFieldName._();
 }

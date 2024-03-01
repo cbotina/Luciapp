@@ -10,8 +10,6 @@ import 'package:luciapp/features/themes/data/providers/is_hc_mode_enabled_provid
 import 'package:luciapp/pages/course_page.dart';
 import 'package:ribbon_widget/ribbon_widget.dart';
 
-// Todo: Replace with tappable container
-
 class CourseWidget extends ConsumerWidget {
   const CourseWidget({
     required this.course,
@@ -54,17 +52,7 @@ class CourseWidget extends ConsumerWidget {
                   .read(courseColorsControllerProvider.notifier)
                   .setCourseColors(course);
 
-              // todo: cambiar a original
-              // Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (context) {
-              //     final List<HangmanLevel> levels = [
-              //       HangmanLevel('Hola', "Mundo"),
-              //       HangmanLevel('Hello', "World"),
-              //     ];
-
-              //     return HangmanScreen(levels: levels, mode: GameMode.custom);
-              //   },
-              // ));
+              // TODO: use activecoursecontroller
 
               Navigator.of(context).push(
                 MaterialPageRoute(
