@@ -24,6 +24,18 @@ class ActiveContentState {
         userId: userId,
       );
 
+  ActiveContentState copyWithCourseId(String courseId) => ActiveContentState(
+        courseId: courseId,
+        contentId: contentId,
+        userId: userId,
+      );
+
+  ActiveContentState copyWithContentId(String contentId) => ActiveContentState(
+        courseId: courseId,
+        contentId: contentId,
+        userId: userId,
+      );
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

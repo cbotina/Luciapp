@@ -8,10 +8,24 @@ class ActiveContentController extends StateNotifier<ActiveContentState> {
 
   ActiveContentController({required this.userId})
       : super(const ActiveContentState.initial().copyWithUserId(userId ?? ''));
+
+  void setCourseId(String courseId) {
+    state = state.copyWithCourseId(courseId);
+  }
+
+  void setContentId(String contentId) {
+    state = state.copyWithContentId(contentId);
+  }
 }
 
+// final activeContentControllerProvider =
+//     Provider<ActiveContentController>((ref) {
+//   final userId = ref.watch(userIdProvider);
+//   return ActiveContentController(userId: userId);
+// });
+
 final activeContentControllerProvider =
-    Provider<ActiveContentController>((ref) {
+    StateNotifierProvider<ActiveContentController, ActiveContentState>((ref) {
   final userId = ref.watch(userIdProvider);
   return ActiveContentController(userId: userId);
 });

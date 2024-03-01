@@ -6,18 +6,22 @@ import 'package:luciapp/features/course_progress/domain/models/course_progress.d
 
 class FirebaseCourseProgressRepository implements ICourseProgressRepository {
   @override
-  Future<bool> create(String courseId, String userId) async {
-    try {
-      FirebaseFirestore.instance
-          .collection(FirebaseCollectionName.courseProgress)
-          .add({
-        FirebaseFieldName.courseUserId: userId,
-        FirebaseFieldName.courseId: courseId,
-      });
-    } catch (e) {
-      return false;
-    }
-    return true;
+  Future<CourseProgress> create(String courseId, String userId) async {
+    FirebaseFirestore.instance
+        .collection(FirebaseCollectionName.courseProgress)
+        .add({
+      FirebaseFieldName.courseUserId: userId,
+      FirebaseFieldName.courseId: courseId,
+    });
+
+    final created = await FirebaseFirestore.instance
+        .collection(FirebaseCollectionName.courseProgress)
+        .where(FirebaseFieldName.courseUserId, isEqualTo: userId)
+        .where(FirebaseFieldName.courseId, isEqualTo: courseId)
+        .limit(1)
+        .get();
+
+    return CourseProgress.fromJson(created.docs.first.data());
   }
 
   @override

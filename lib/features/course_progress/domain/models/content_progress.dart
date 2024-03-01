@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:luciapp/common/constants/firebase_field_name.dart';
 
@@ -8,8 +9,10 @@ class ContentProgress extends MapView<String, dynamic> {
   final String _contentId;
   final bool _completed;
 
-  ContentProgress({required completed, contentId})
-      : _completed = completed,
+  ContentProgress({
+    required completed,
+    required contentId,
+  })  : _completed = completed,
         _contentId = contentId,
         super({
           FirebaseFieldName.contentId: contentId,
@@ -20,6 +23,12 @@ class ContentProgress extends MapView<String, dynamic> {
       : this(
           completed: json[FirebaseFieldName.completed],
           contentId: json[FirebaseFieldName.contentId],
+        );
+
+  ContentProgress.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : this(
+          completed: snapshot.data()![FirebaseFieldName.completed],
+          contentId: snapshot.data()![FirebaseFieldName.contentId],
         );
 
   String get contentId => _contentId;
