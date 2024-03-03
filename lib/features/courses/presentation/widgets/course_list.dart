@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/course_progress/domain/models/course_progress.dart';
 import 'package:luciapp/features/course_progress/presentation/controllers/active_content_controller.dart';

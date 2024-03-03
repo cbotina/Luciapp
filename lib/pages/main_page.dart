@@ -4,7 +4,6 @@ import 'package:luciapp/common/constants/widget_keys.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/pages/tabs/accessibility_page.dart';
 import 'package:luciapp/pages/tabs/courses_page.dart';
-import 'package:luciapp/pages/tabs/games_tab.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key = Keys.mainPage});
