@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
-import 'package:luciapp/features/course_progress/presentation/controllers/active_content_controller.dart';
-import 'package:luciapp/main.dart';
 
 class GamesPage extends StatelessWidget {
   const GamesPage({super.key});
@@ -39,14 +37,7 @@ class GamesPage extends StatelessWidget {
           return Center(
             child: ElevatedButton(
               onPressed: () async {
-                final active = ref.watch(activeContentControllerProvider);
-
-                print(active.courseId);
-                print(active.userId);
-                final progress = await ref
-                    .watch(courseProgressRepositoryProvider)
-                    .get(active.courseId ?? "", active.userId ?? "");
-                print(progress);
+                //
               },
               child: const Text("hola"),
             ),

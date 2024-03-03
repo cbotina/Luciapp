@@ -1,3 +1,5 @@
+// ignore_for_file: unused_result
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -6,17 +8,16 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
+import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_content_list.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
 import 'package:luciapp/features/games/domain/models/game_level.dart';
 import 'package:luciapp/features/games/domain/models/hangman_level.dart';
-import 'package:luciapp/features/multimedia/presentation/youtube_video.dart';
 import 'package:luciapp/features/themes/data/providers/theme_mode_provider.dart';
 import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
-import 'package:luciapp/main.dart';
+import 'package:luciapp/pages/course_page.dart';
 
 class HangmanPage extends ConsumerWidget {
   final String gameId;
@@ -401,13 +402,16 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
           } else {
             levelIndex++;
             if (levelIndex >= widget.levels.length) {
+              ref.refresh(completedContentProvider);
               ref
                   .read(completeContentControllerProvider.notifier)
                   .completeContent();
-              // ref.invalidate(courseContentsRepositoryProvider);
-              Navigator.of(context).pop();
 
-              // ref.invalidate(courseProgressProvider);
+              ref
+                  .read(completedContentProvider.notifier)
+                  .setCompletedContentType(ContentTypes.video);
+
+              Navigator.of(context).pop();
             } else {
               level = widget.levels[levelIndex] as HangmanLevel;
             }

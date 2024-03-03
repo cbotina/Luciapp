@@ -57,6 +57,10 @@ class CourseWidget extends ConsumerWidget {
                   .read(activeContentControllerProvider.notifier)
                   .setCourseId(course.id);
 
+              ref
+                  .read(activeContentControllerProvider.notifier)
+                  .setNContents(course.nContents);
+
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {

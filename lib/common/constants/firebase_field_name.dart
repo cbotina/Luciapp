@@ -12,6 +12,7 @@ class FirebaseFieldName {
 
   static const contentId = 'content_id';
   static const completed = 'completed';
+  static const percentage = 'percentage_completed';
 
   const FirebaseFieldName._();
 }

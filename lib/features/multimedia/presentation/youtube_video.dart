@@ -1,18 +1,18 @@
+// ignore_for_file: unused_result, use_build_context_synchronously
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
 import 'package:luciapp/common/components/text_divider.dart';
-import 'package:luciapp/common/extensions/int_to_duration.dart';
-import 'package:luciapp/features/course_progress/presentation/controllers/active_content_controller.dart';
 import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
-import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
+import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/domain/models/course_content.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_content_list.dart';
+import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/main.dart';
-import 'package:luciapp/pages/game_page.dart';
+import 'package:luciapp/pages/course_page.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YtVideo extends ConsumerStatefulWidget {
@@ -34,6 +34,8 @@ class _YtVideoState extends ConsumerState<YtVideo> {
         autoPlay: true,
         mute: false,
         isLive: false,
+        controlsVisibleAtStart: false,
+        hideThumbnail: true,
       ),
     );
     super.initState();
@@ -52,11 +54,16 @@ class _YtVideoState extends ConsumerState<YtVideo> {
         ),
         width: 6,
         onEnded: (metaData) async {
-          ref
+          ref.refresh(completedContentProvider);
+          await ref
               .read(completeContentControllerProvider.notifier)
               .completeContent();
 
-          ref.invalidate(courseContentsRepositoryProvider);
+          ref
+              .read(completedContentProvider.notifier)
+              .setCompletedContentType(ContentTypes.video);
+
+          const Duration(milliseconds: 200);
 
           Navigator.of(context).pop();
         },
@@ -97,7 +104,7 @@ class _YtVideoState extends ConsumerState<YtVideo> {
   }
 }
 
-void showScoreDialog(BuildContext context, WidgetRef ref) {
+void showScoreDialog(BuildContext context, WidgetRef ref, String message) {
   final scaleFactor =
       ref.watch(fontSizeControllerProvider).value?.scaleFactor ?? 1.0;
 
@@ -113,6 +120,7 @@ void showScoreDialog(BuildContext context, WidgetRef ref) {
     showCloseIcon: false,
     btnOkOnPress: () {
       ref.invalidate(courseContentsRepositoryProvider);
+      ref.invalidate(coursesWithPercentagesProvider);
       Navigator.of(context).pop();
     },
     btnOkText: 'Continuar',
@@ -127,14 +135,14 @@ void showScoreDialog(BuildContext context, WidgetRef ref) {
     body: Column(
       children: [
         Text(
-          'Bien hecho!',
+          'Muy Bien!',
           style: TextStyle(
             fontSize: titleSize * scaleFactor,
             fontWeight: FontWeight.bold,
           ),
         ),
         Text(
-          'terminaste el video',
+          message,
           style: TextStyle(fontSize: bodySize * scaleFactor),
           textAlign: TextAlign.center,
         )

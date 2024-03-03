@@ -5,5 +5,9 @@ abstract class ICourseProgressRepository {
 
   Future<CourseProgress> create(String courseId, String userId);
 
+  Future<bool> update(CourseProgress courseProgress);
+
   Future<void> delete(String cpId);
+
+  Future<List<CourseProgress>> getAll();
 }

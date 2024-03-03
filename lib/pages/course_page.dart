@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/header_container.dart';
 import 'package:luciapp/common/components/text_divider.dart';
-import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
+import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
 import 'package:luciapp/features/courses/domain/models/course.dart';
 import 'package:luciapp/features/courses/presentation/widgets/course_content_list.dart';
 import 'package:luciapp/features/multimedia/presentation/youtube_video.dart';
-import 'package:luciapp/main.dart';
-import 'package:luciapp/pages/game_page.dart';
 
 class CoursePage extends ConsumerWidget {
   final Course course;
@@ -23,11 +21,18 @@ class CoursePage extends ConsumerWidget {
     final colors = ref.read(courseColorsControllerProvider);
 
     ref.listen(
-      completeContentControllerProvider,
+      completedContentProvider,
       (previous, next) {
-        showScoreDialog(context, ref);
+        showScoreDialog(context, ref, 'Terminaste el contenido!');
       },
     );
+
+    ///crear un listener para video terminado, juego terminado etc
+    /// dejar los propios
+    ///
+    /// * a trivia dejarlo solito
+    /// * a video ponerle su propio
+    /// * a hangman hacerle un propio
 
     return Scaffold(
       backgroundColor: colors.backgroundColor,
@@ -65,3 +70,16 @@ class CoursePage extends ConsumerWidget {
     );
   }
 }
+
+class ContentCompletedNotifier extends StateNotifier<ContentTypes?> {
+  ContentCompletedNotifier() : super(null);
+
+  void setCompletedContentType(ContentTypes type) {
+    state = type;
+  }
+}
+
+final completedContentProvider =
+    StateNotifierProvider<ContentCompletedNotifier, ContentTypes?>((ref) {
+  return ContentCompletedNotifier();
+});

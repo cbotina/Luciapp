@@ -16,6 +16,10 @@ class ActiveContentController extends StateNotifier<ActiveContentState> {
   void setContentId(String contentId) {
     state = state.copyWithContentId(contentId);
   }
+
+  void setNContents(int nContents) {
+    state = state.copyWithNContents(nContents);
+  }
 }
 
 // final activeContentControllerProvider =

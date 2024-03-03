@@ -1,3 +1,6 @@
+// ignore: unused_import
+import 'dart:developer';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/content_progress_repository.dart';
@@ -24,17 +27,20 @@ class CompleteContentService {
       final existingContentProgress = await contentProgressRepository.get(
           payload.contentId, courseProgress.id);
 
-      print(existingContentProgress);
-
       if (existingContentProgress == null) {
         await contentProgressRepository.create(
             ContentProgress(completed: true, contentId: payload.contentId),
             courseProgress.id);
+
+        final newPercentage =
+            (100 / payload.nContents) + courseProgress.percentage;
+
+        await courseProgressRepository
+            .update(courseProgress.copyWithPercentage(newPercentage.clank()));
       }
 
       return true;
     } catch (e) {
-      print(e.toString());
       return false;
     }
   }
@@ -45,6 +51,7 @@ class CompleteContentService {
 
     // print(courseId);
     if (courseProgress == null) {
+      // TODO: Create courseProgress with percentage 0
       return await courseProgressRepository.create(courseId, userId);
     }
 
@@ -58,3 +65,12 @@ final completeContentServiceProvider = Provider<CompleteContentService>((ref) {
     contentProgressRepository: ref.watch(contentProgressRepositoryProvider),
   );
 });
+
+extension Clank on double {
+  double clank() {
+    if (this >= 99.8 && this <= 100.2) {
+      return 100;
+    }
+    return this;
+  }
+}

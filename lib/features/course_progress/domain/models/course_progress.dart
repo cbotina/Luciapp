@@ -8,14 +8,21 @@ class CourseProgress extends MapView<String, dynamic> {
   final String _id;
   final String _courseId;
   final String _userId;
+  final double _percentage;
 
-  CourseProgress({required id, required courseId, required userId})
-      : _userId = userId,
+  CourseProgress({
+    required id,
+    required courseId,
+    required userId,
+    required percentage,
+  })  : _userId = userId,
         _courseId = courseId,
         _id = id,
+        _percentage = percentage,
         super({
           FirebaseFieldName.courseId: courseId,
           FirebaseFieldName.courseUserId: userId,
+          FirebaseFieldName.percentage: percentage,
           'id': id,
         });
 
@@ -23,12 +30,17 @@ class CourseProgress extends MapView<String, dynamic> {
       : this(
           courseId: json[FirebaseFieldName.courseId],
           userId: json[FirebaseFieldName.courseUserId],
+          percentage: json[FirebaseFieldName.percentage] as double,
           id: id,
         );
+
+  CourseProgress copyWithPercentage(double percentage) => CourseProgress(
+      id: id, courseId: courseId, userId: userId, percentage: percentage);
 
   String get courseId => _courseId;
   String get userId => _userId;
   String get id => _id;
+  double get percentage => _percentage;
 
   @override
   bool operator ==(Object other) =>
@@ -37,10 +49,11 @@ class CourseProgress extends MapView<String, dynamic> {
           runtimeType == other.runtimeType &&
           _courseId == other.courseId &&
           _userId == other.userId &&
-          _id == other.id;
+          _id == other.id &&
+          _percentage == other.percentage;
 
   @override
   int get hashCode => Object.hashAll(
-        [courseId, userId, id],
+        [courseId, userId, id, percentage],
       );
 }

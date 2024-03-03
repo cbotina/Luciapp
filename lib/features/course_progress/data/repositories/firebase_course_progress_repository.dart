@@ -12,6 +12,7 @@ class FirebaseCourseProgressRepository implements ICourseProgressRepository {
         .add({
       FirebaseFieldName.courseUserId: userId,
       FirebaseFieldName.courseId: courseId,
+      FirebaseFieldName.percentage: 0.0,
     });
 
     final created = await FirebaseFirestore.instance
@@ -48,5 +49,28 @@ class FirebaseCourseProgressRepository implements ICourseProgressRepository {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<bool> update(CourseProgress courseProgress) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(FirebaseCollectionName.courseProgress)
+          .doc(courseProgress.id)
+          .update(courseProgress);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<List<CourseProgress>> getAll() {
+    return FirebaseFirestore.instance
+        .collection(FirebaseCollectionName.courseProgress)
+        .get()
+        .then((value) => value.docs
+            .map((e) => CourseProgress.fromJson(e.data(), e.id))
+            .toList());
   }
 }
