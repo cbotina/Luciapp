@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/header_container.dart';
 import 'package:luciapp/common/components/text_divider.dart';
+import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
 import 'package:luciapp/features/courses/domain/models/course.dart';
 import 'package:luciapp/features/courses/presentation/widgets/course_content_list.dart';
+import 'package:luciapp/features/multimedia/presentation/youtube_video.dart';
+import 'package:luciapp/main.dart';
+import 'package:luciapp/pages/game_page.dart';
 
 class CoursePage extends ConsumerWidget {
   final Course course;
@@ -17,6 +21,13 @@ class CoursePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = ref.read(courseColorsControllerProvider);
+
+    ref.listen(
+      completeContentControllerProvider,
+      (previous, next) {
+        showScoreDialog(context, ref);
+      },
+    );
 
     return Scaffold(
       backgroundColor: colors.backgroundColor,

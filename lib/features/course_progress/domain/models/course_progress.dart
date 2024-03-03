@@ -6,28 +6,28 @@ import 'package:luciapp/common/constants/firebase_field_name.dart';
 @immutable
 class CourseProgress extends MapView<String, dynamic> {
   final String _id;
-  final String _contentId;
-  final bool _completed;
+  final String _courseId;
+  final String _userId;
 
-  CourseProgress({required completed, required contentId, required id})
-      : _completed = completed,
-        _contentId = contentId,
+  CourseProgress({required id, required courseId, required userId})
+      : _userId = userId,
+        _courseId = courseId,
         _id = id,
         super({
-          FirebaseFieldName.contentId: contentId,
-          FirebaseFieldName.completed: completed,
+          FirebaseFieldName.courseId: courseId,
+          FirebaseFieldName.courseUserId: userId,
           'id': id,
         });
 
-  CourseProgress.fromJson(Map<String, dynamic> json)
+  CourseProgress.fromJson(Map<String, dynamic> json, String id)
       : this(
-          completed: json[FirebaseFieldName.completed],
-          contentId: json[FirebaseFieldName.contentId],
-          id: json['id'],
+          courseId: json[FirebaseFieldName.courseId],
+          userId: json[FirebaseFieldName.courseUserId],
+          id: id,
         );
 
-  String get contentId => _contentId;
-  bool get completed => _completed;
+  String get courseId => _courseId;
+  String get userId => _userId;
   String get id => _id;
 
   @override
@@ -35,12 +35,12 @@ class CourseProgress extends MapView<String, dynamic> {
       identical(this, other) ||
       other is CourseProgress &&
           runtimeType == other.runtimeType &&
-          _contentId == other.contentId &&
-          _completed == other.completed &&
+          _courseId == other.courseId &&
+          _userId == other.userId &&
           _id == other.id;
 
   @override
   int get hashCode => Object.hashAll(
-        [_contentId, completed, id],
+        [courseId, userId, id],
       );
 }

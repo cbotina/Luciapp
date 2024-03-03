@@ -7,7 +7,7 @@ import 'package:luciapp/features/course_progress/domain/models/course_progress.d
 class FirebaseCourseProgressRepository implements ICourseProgressRepository {
   @override
   Future<CourseProgress> create(String courseId, String userId) async {
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection(FirebaseCollectionName.courseProgress)
         .add({
       FirebaseFieldName.courseUserId: userId,
@@ -21,7 +21,10 @@ class FirebaseCourseProgressRepository implements ICourseProgressRepository {
         .limit(1)
         .get();
 
-    return CourseProgress.fromJson(created.docs.first.data());
+    return CourseProgress.fromJson(
+      created.docs.first.data(),
+      created.docs.first.id,
+    );
   }
 
   @override
@@ -40,7 +43,8 @@ class FirebaseCourseProgressRepository implements ICourseProgressRepository {
         .get();
 
     if (courseProgress.docs.isNotEmpty) {
-      return CourseProgress.fromJson(courseProgress.docs.first.data());
+      return CourseProgress.fromJson(
+          courseProgress.docs.first.data(), courseProgress.docs.first.id);
     } else {
       return null;
     }

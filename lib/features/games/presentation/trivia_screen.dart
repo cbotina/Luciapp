@@ -5,12 +5,19 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/features/course_progress/presentation/controllers/active_content_controller.dart';
+import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
+import 'package:luciapp/features/courses/data/providers/course_contents_provider.dart';
+import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
+import 'package:luciapp/features/courses/presentation/widgets/course_content_list.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
 import 'package:luciapp/features/games/domain/models/game_level.dart';
 import 'package:luciapp/features/games/domain/models/trivia_level.dart';
+import 'package:luciapp/main.dart';
+import 'package:luciapp/pages/game_page.dart';
 
 class TriviaPage extends ConsumerWidget {
   final String gameId;
@@ -302,9 +309,13 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
       } else {
         _levelIndex++;
         if (_levelIndex >= widget.levels.length) {
+          ref
+              .read(completeContentControllerProvider.notifier)
+              .completeContent();
+
+          // ref.invalidate(courseContentsRepositoryProvider);
+
           showScoreDialog();
-          // TODO: use set course progress to completed using provider
-          // ref.read(authControllerProvider);
         } else {
           _level = widget.levels[_levelIndex] as TriviaLevel;
         }
@@ -330,6 +341,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
       dialogType: DialogType.noHeader,
       showCloseIcon: false,
       btnOkOnPress: () {
+        ref.invalidate(courseContentsRepositoryProvider);
         Navigator.of(context).pop();
       },
       btnOkText: 'Continuar',

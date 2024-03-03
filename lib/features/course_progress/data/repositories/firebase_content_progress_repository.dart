@@ -30,15 +30,19 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
 // ! OJITOOO
   @override
   Future<ContentProgress?> get(String contentId, String cpId) async {
-    final contentProgress = await FirebaseFirestore.instance
-        .collection(FirebaseCollectionName.courseProgress)
-        .doc(cpId)
-        .collection(FirebaseCollectionName.contentProgress)
-        .where(FirebaseFieldName.contentId, isEqualTo: contentId)
-        .get()
-        .then((json) => ContentProgress.fromSnapshot(json.docs.first));
+    try {
+      final contentProgress = await FirebaseFirestore.instance
+          .collection(FirebaseCollectionName.courseProgress)
+          .doc(cpId)
+          .collection(FirebaseCollectionName.contentProgress)
+          .where(FirebaseFieldName.contentId, isEqualTo: contentId)
+          .get()
+          .then((json) => ContentProgress.fromSnapshot(json.docs.first));
 
-    return contentProgress;
+      return contentProgress;
+    } catch (e) {
+      return null;
+    }
   }
 
   /// Returns the list of all the contentprogress of a courseprogress\

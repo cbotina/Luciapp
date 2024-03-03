@@ -11,9 +11,11 @@ import 'package:luciapp/pages/game_page.dart';
 
 class CourseContentWidget extends ConsumerWidget {
   final CourseContent content;
+  final bool completed;
   const CourseContentWidget({
     super.key,
     required this.content,
+    this.completed = false,
   });
 
   @override
@@ -29,11 +31,27 @@ class CourseContentWidget extends ConsumerWidget {
       }
     }
 
+    Icon getCompletedIcon(completed) {
+      if (completed) {
+        return Icon(
+          Icons.check_circle,
+          color: colors.icons,
+          size: 35,
+        );
+      } else {
+        return Icon(
+          Icons.circle_outlined,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+          size: 35,
+        );
+      }
+    }
+
     return TappableContainer(
       onPressed: () {
         ref
             .read(activeContentControllerProvider.notifier)
-            .setCourseId(content.id);
+            .setContentId(content.id);
 
         if (content.type == ContentTypes.game) {
           Navigator.of(context).push(
@@ -71,7 +89,7 @@ class CourseContentWidget extends ConsumerWidget {
           content.description,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
-        trailing: const Icon(Icons.arrow_forward_ios),
+        trailing: getCompletedIcon(completed),
       ),
     );
   }
