@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:luciapp/common/extensions/int_to_duration.dart';
+import 'package:luciapp/features/auth/data/providers/user_id_provider.dart';
+import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/course_progress/domain/models/course_progress.dart';
-import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
+import 'package:luciapp/features/course_progress/presentation/controllers/active_content_controller.dart';
 import 'package:luciapp/features/courses/domain/models/course.dart';
 import 'package:luciapp/features/courses/domain/typedefs/course_id.dart';
 import 'package:luciapp/features/courses/presentation/widgets/components/course_widget.dart';
@@ -105,9 +106,12 @@ final coursesWithPercentagesProvider =
   final coursesProgress =
       await ref.watch(courseProgressRepositoryProvider).getAll();
 
+  final userId = ref.watch(activeContentControllerProvider).userId;
+
   return courses.then((list) {
     return list.map((course) {
-      final courseProgress = coursesProgress.findByCourseId(course.id);
+      final courseProgress =
+          coursesProgress.findByCourseIdAndUserId(course.id, userId!);
       if (courseProgress != null) {
         return CourseWithPercentage(
           course: course,
@@ -124,9 +128,9 @@ final coursesWithPercentagesProvider =
 });
 
 extension Find on List<CourseProgress> {
-  CourseProgress? findByCourseId(CourseId courseId) {
+  CourseProgress? findByCourseIdAndUserId(CourseId courseId, UserId userId) {
     for (CourseProgress cp in this) {
-      if (cp.courseId == courseId) return cp;
+      if (cp.courseId == courseId && cp.userId == userId) return cp;
     }
     return null;
   }

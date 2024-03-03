@@ -49,9 +49,7 @@ class CompleteContentService {
       UserId userId, String courseId) async {
     final courseProgress = await courseProgressRepository.get(courseId, userId);
 
-    // print(courseId);
     if (courseProgress == null) {
-      // TODO: Create courseProgress with percentage 0
       return await courseProgressRepository.create(courseId, userId);
     }
 

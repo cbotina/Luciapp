@@ -297,7 +297,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
   }
 
   setNextLevel() {
-    setState(() {
+    setState(() async {
       if (widget.mode == GameMode.random) {
         _level = widget.levels[_random.nextInt(
           widget.levels.length,
@@ -305,9 +305,13 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
       } else {
         _levelIndex++;
         if (_levelIndex >= widget.levels.length) {
-          ref
+          await ref
               .read(completeContentControllerProvider.notifier)
               .completeContent();
+
+          await _player.play(
+            AssetSource('audio/contentfinish.mp3'),
+          );
 
           // ref.invalidate(courseContentsRepositoryProvider);
 

@@ -1,5 +1,6 @@
 // ignore_for_file: unused_result, use_build_context_synchronously
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,9 +26,11 @@ class YtVideo extends ConsumerStatefulWidget {
 
 class _YtVideoState extends ConsumerState<YtVideo> {
   YoutubePlayerController? _controller;
+  late AudioPlayer player;
 
   @override
   void initState() {
+    player = AudioPlayer();
     _controller = YoutubePlayerController(
       initialVideoId: widget.video.url!,
       flags: const YoutubePlayerFlags(
@@ -39,6 +42,13 @@ class _YtVideoState extends ConsumerState<YtVideo> {
       ),
     );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    _controller!.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,16 +64,19 @@ class _YtVideoState extends ConsumerState<YtVideo> {
         ),
         width: 6,
         onEnded: (metaData) async {
-          ref.refresh(completedContentProvider);
           await ref
               .read(completeContentControllerProvider.notifier)
               .completeContent();
 
+          await player.play(
+            AssetSource('audio/contentfinish.mp3'),
+          );
+          const Duration(milliseconds: 500);
+
+          ref.refresh(completedContentProvider);
           ref
               .read(completedContentProvider.notifier)
               .setCompletedContentType(ContentTypes.video);
-
-          const Duration(milliseconds: 200);
 
           Navigator.of(context).pop();
         },

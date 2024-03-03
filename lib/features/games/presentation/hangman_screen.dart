@@ -1,4 +1,4 @@
-// ignore_for_file: unused_result
+// ignore_for_file: unused_result, use_build_context_synchronously
 
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -390,7 +390,7 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
           ? '¿Seguir Jugando?'
           : 'Siguiente Nivel',
       btnOkOnPress: () {
-        setState(() {
+        setState(() async {
           hits = 0;
           errors = 0;
           isHintVisible = false;
@@ -402,21 +402,28 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
           } else {
             levelIndex++;
             if (levelIndex >= widget.levels.length) {
-              ref.refresh(completedContentProvider);
-              ref
+              await ref
                   .read(completeContentControllerProvider.notifier)
                   .completeContent();
 
+              await player.play(
+                AssetSource('audio/contentfinish.mp3'),
+              );
+
+              ref.refresh(completedContentProvider);
               ref
                   .read(completedContentProvider.notifier)
                   .setCompletedContentType(ContentTypes.video);
 
+              const Duration(milliseconds: 500);
               Navigator.of(context).pop();
             } else {
               level = widget.levels[levelIndex] as HangmanLevel;
             }
           }
         });
+
+        print('hello');
       },
       btnOkIcon: Icons.check_circle,
       btnOkText: 'Si',

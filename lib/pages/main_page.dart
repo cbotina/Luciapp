@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
             controller: _controller,
             children: const [
               CoursesPage(),
-              GamesPage(),
+              // GamesPage(),
               AccessibilityPage(),
             ],
             onPageChanged: (index) {
@@ -62,10 +62,10 @@ class _MainPageState extends State<MainPage> {
                   icon: Icon(Icons.home),
                   label: 'Inicio',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.videogame_asset),
-                  label: 'Juegos',
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.videogame_asset),
+                //   label: 'Juegos',
+                // ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.accessibility),
                   label: 'Accesibilidad',
