@@ -8,10 +8,15 @@ class LogoutIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return IconButton(
-      icon: const Icon(Icons.logout),
-      // iconSize: 25,
-      onPressed: ref.read(authControllerProvider.notifier).logout,
+    return Semantics(
+      label: 'Cerrar sesión',
+      child: ExcludeSemantics(
+        child: IconButton(
+          icon: const Icon(Icons.logout),
+          // iconSize: 25,
+          onPressed: ref.read(authControllerProvider.notifier).logout,
+        ),
+      ),
     );
   }
 }

@@ -57,8 +57,7 @@ class CoursePageColors {
         progressBarBackground = courseColors.shadowColor,
         gradientColors = [
           courseColors.mainColor,
-          Color.alphaBlend(
-              Colors.black.withOpacity(.2), courseColors.mainColor),
+          courseColors.shadowColor,
         ],
         icons = courseColors.mainColor,
         borders = null,

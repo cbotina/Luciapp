@@ -153,10 +153,13 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: Text(
-                  "💡 Pista: ${level.hint}",
-                  style: const TextStyle(
-                    fontSize: 20,
+                child: Semantics(
+                  label: "Pista: ${level.hint}",
+                  child: Text(
+                    "💡 Pista: ${level.hint}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),
@@ -422,8 +425,6 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
             }
           }
         });
-
-        print('hello');
       },
       btnOkIcon: Icons.check_circle,
       btnOkText: 'Si',

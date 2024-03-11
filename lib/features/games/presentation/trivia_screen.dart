@@ -303,8 +303,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
           widget.levels.length,
         )] as TriviaLevel;
       } else {
-        _levelIndex++;
-        if (_levelIndex >= widget.levels.length) {
+        if (_levelIndex == widget.levels.length - 1) {
           await ref
               .read(completeContentControllerProvider.notifier)
               .completeContent();
@@ -317,6 +316,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
 
           showScoreDialog();
         } else {
+          _levelIndex++;
           _level = widget.levels[_levelIndex] as TriviaLevel;
         }
       }

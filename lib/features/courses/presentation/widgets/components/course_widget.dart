@@ -29,7 +29,7 @@ class CourseWidget extends ConsumerWidget {
     final dark = ref.watch(isDarkModeEnabledProvider);
 
     final borderColor = dark && hc
-        ? course.colors.mainColor
+        ? course.colors.highlightColor
         : hc
             ? Colors.black
             : null;

@@ -37,12 +37,15 @@ class CourseListWidget extends ConsumerWidget {
                 ),
               ),
             ),
-            IconButton(
-              onPressed: () {
-                ref.invalidate(coursesWithPercentagesProvider);
-              },
-              icon: const Icon(
-                Icons.refresh_sharp,
+            Semantics(
+              label: 'Refrescar',
+              child: IconButton(
+                onPressed: () {
+                  ref.invalidate(coursesWithPercentagesProvider);
+                },
+                icon: const Icon(
+                  Icons.refresh_sharp,
+                ),
               ),
             ),
           ],

@@ -9,6 +9,10 @@ import 'package:sqflite/sqflite.dart';
 
 class SqLiteThemeSettingsRepository implements IThemeSettingsReposiroty {
   final DbFacade facade = DbFacade();
+  @override
+  Future<void> close() async {
+    await facade.close();
+  }
 
   @override
   Future<UserThemeSettings?> get(UserId userId) async {
