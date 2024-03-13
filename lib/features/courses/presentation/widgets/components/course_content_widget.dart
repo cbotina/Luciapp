@@ -57,14 +57,14 @@ class CourseContentWidget extends ConsumerWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return PageWrapper(GamePage(gameId: content.gameId!));
+                return AccessibilityWrapper(GamePage(gameId: content.gameId!));
               },
             ),
           );
         } else if (content.type == ContentTypes.video) {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
-              return PageWrapper(YtVideo(video: content));
+              return AccessibilityWrapper(YtVideo(video: content));
             },
           ));
         }

@@ -64,7 +64,7 @@ class CourseWidget extends ConsumerWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return PageWrapper(CoursePage(course: course));
+                    return AccessibilityWrapper(CoursePage(course: course));
                   },
                 ),
               );

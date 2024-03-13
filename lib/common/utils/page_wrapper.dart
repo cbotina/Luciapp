@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 
-class PageWrapper extends ConsumerWidget {
+class AccessibilityWrapper extends ConsumerWidget {
   final Widget page;
-  const PageWrapper(this.page, {super.key});
+  const AccessibilityWrapper(this.page, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

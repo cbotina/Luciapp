@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
+import 'package:luciapp/common/constants/strings.dart';
+import 'package:luciapp/features/attributions/data/providers/attributions_provider.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-class GamesPage extends StatelessWidget {
-  const GamesPage({super.key});
+class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +16,7 @@ class GamesPage extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,13 +38,38 @@ class GamesPage extends StatelessWidget {
       // backgroundColor: Colors.amber,
       body: Consumer(
         builder: (context, ref, child) {
-          return Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                //
-              },
-              child: const Text("hola"),
-            ),
+          final attributions = ref.watch(attributionsProvider);
+
+          return attributions.when(
+            data: (data) {
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      Strings.about,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 15),
+                    const Text(Strings.appDeveloped),
+                    const SizedBox(height: 15),
+                    const Text(Strings.attributions),
+                    const SizedBox(height: 15),
+                    ...data.map(
+                      (e) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: HtmlWidget(e.html),
+                        );
+                      },
+                    )
+                  ],
+                ),
+              );
+            },
+            loading: () => const CircularProgressIndicator(),
+            error: (error, stackTrace) => Text(error.toString()),
           );
         },
       ),

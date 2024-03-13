@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
+import 'package:luciapp/features/attributions/data/abstract_repositories/attributions_repository.dart';
+import 'package:luciapp/features/attributions/data/repositories/firebase_attributions_repository.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/content_progress_repository.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/course_progress_repository.dart';
 import 'package:luciapp/features/course_progress/data/repositories/firebase_content_progress_repository.dart';
@@ -141,4 +143,8 @@ final courseProgressRepositoryProvider =
 final contentProgressRepositoryProvider =
     Provider<IContentProgressRepository>((ref) {
   return FirebaseContentProgressRepository();
+});
+
+final attributionsRepositoryProvider = Provider<IAttributionsRepository>((ref) {
+  return FirebaseAttributionsRepository();
 });
