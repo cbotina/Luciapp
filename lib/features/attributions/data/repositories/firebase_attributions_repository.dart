@@ -10,4 +10,13 @@ class FirebaseAttributionsRepository implements IAttributionsRepository {
 
     return snapshot.docs.map((doc) => Attribution.fromSnapshot(doc)).toList();
   }
+
+  @override
+  Future<String> getAttributionText() async {
+    return FirebaseFirestore.instance
+        .collection("texts")
+        .where("tag", isEqualTo: "about")
+        .get()
+        .then((value) => value.docs.first['content']);
+  }
 }

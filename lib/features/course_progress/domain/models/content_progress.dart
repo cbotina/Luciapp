@@ -3,10 +3,11 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:luciapp/common/constants/firebase_field_name.dart';
+import 'package:luciapp/features/course_progress/domain/typedefs/content_id.dart';
 
 @immutable
 class ContentProgress extends MapView<String, dynamic> {
-  final String _contentId;
+  final ContentId _contentId;
   final bool _completed;
 
   ContentProgress({

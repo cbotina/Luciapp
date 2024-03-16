@@ -5,37 +5,38 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/content_progress_repository.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/course_progress_repository.dart';
+import 'package:luciapp/features/course_progress/data/dto/complete_content_dto.dart';
 import 'package:luciapp/features/course_progress/domain/models/content_progress.dart';
 import 'package:luciapp/features/course_progress/domain/models/course_progress.dart';
 import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
 import 'package:luciapp/main.dart';
 
 class CompleteContentService {
-  final ICourseProgressRepository courseProgressRepository;
-  final IContentProgressRepository contentProgressRepository;
+  final ICourseProgressRepository _courseProgressRepository;
+  final IContentProgressRepository _contentProgressRepository;
 
   CompleteContentService({
-    required this.courseProgressRepository,
-    required this.contentProgressRepository,
-  });
+    required ICourseProgressRepository courseProgressRepository,
+    required IContentProgressRepository contentProgressRepository,
+  })  : _contentProgressRepository = contentProgressRepository,
+        _courseProgressRepository = courseProgressRepository;
 
-  Future<bool> completeContent(CompleteContentPayload payload) async {
+  Future<bool> completeContent(CompleteContentDto dto) async {
     try {
       final courseProgress =
-          await getOrCreateCourseProgress(payload.userId, payload.courseId);
+          await getOrCreateCourseProgress(dto.userId, dto.courseId);
 
-      final existingContentProgress = await contentProgressRepository.get(
-          payload.contentId, courseProgress.id);
+      final existingContentProgress = await _contentProgressRepository.get(
+          dto.contentId, courseProgress.id);
 
       if (existingContentProgress == null) {
-        await contentProgressRepository.create(
-            ContentProgress(completed: true, contentId: payload.contentId),
+        await _contentProgressRepository.create(
+            ContentProgress(completed: true, contentId: dto.contentId),
             courseProgress.id);
 
-        final newPercentage =
-            (100 / payload.nContents) + courseProgress.percentage;
+        final newPercentage = (100 / dto.nContents) + courseProgress.percentage;
 
-        await courseProgressRepository
+        await _courseProgressRepository
             .update(courseProgress.copyWithPercentage(newPercentage.clank()));
       }
 
@@ -47,10 +48,11 @@ class CompleteContentService {
 
   Future<CourseProgress> getOrCreateCourseProgress(
       UserId userId, String courseId) async {
-    final courseProgress = await courseProgressRepository.get(courseId, userId);
+    final courseProgress =
+        await _courseProgressRepository.get(courseId, userId);
 
     if (courseProgress == null) {
-      return await courseProgressRepository.create(courseId, userId);
+      return await _courseProgressRepository.create(courseId, userId);
     }
 
     return courseProgress;

@@ -4,10 +4,11 @@ import 'package:luciapp/features/games/domain/enums/game_type.dart';
 import 'package:luciapp/features/games/domain/models/game_level.dart';
 import 'package:luciapp/features/games/domain/models/hangman_level.dart';
 import 'package:luciapp/features/games/domain/models/trivia_level.dart';
+import 'package:luciapp/features/games/domain/typedefs/game_id.dart';
 
 class FirebaseGameLevelsRepository implements IGameLevelsRepository {
   @override
-  Future<List<GameLevel>> getAll(String gameId, GameType type) async {
+  Future<List<GameLevel>> getAll(GameId gameId, GameType type) async {
     final contents = FirebaseFirestore.instance
         .collection('games')
         .doc(gameId)

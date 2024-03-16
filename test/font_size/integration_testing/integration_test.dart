@@ -1,8 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/features/attributions/data/providers/about_text_provider.dart';
 import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
+import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
+import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
 import 'package:luciapp/features/font_size/domain/models/user_font_settings.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
@@ -20,7 +23,6 @@ void main() {
   late final MockAuthRepository mockAuthRepository;
   late final MockAuthService mockAuthService;
   late final MockThemeService mockThemeService;
-
   late final MockFontSettingsRepository mockFontSettingsRepository;
 
   setUpAll(() async {
@@ -52,6 +54,9 @@ void main() {
     authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
     fontSettingsRepositoryProvider
         .overrideWith((ref) => mockFontSettingsRepository),
+    coursesProvider.overrideWith((ref) => []),
+    aboutTextProvider.overrideWith((ref) => ''),
+    coursesWithPercentagesProvider.overrideWith((ref) => [])
   ];
 
   group(TestNames.integrationTest, () {

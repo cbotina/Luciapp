@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:luciapp/features/attributions/data/providers/about_text_provider.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/course_progress/domain/models/course_progress.dart';
 import 'package:luciapp/features/course_progress/presentation/controllers/active_content_controller.dart';
@@ -42,6 +43,7 @@ class CourseListWidget extends ConsumerWidget {
               child: IconButton(
                 onPressed: () {
                   ref.invalidate(coursesWithPercentagesProvider);
+                  ref.invalidate(aboutTextProvider);
                 },
                 icon: const Icon(
                   Icons.refresh_sharp,

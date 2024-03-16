@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:luciapp/features/courses/presentation/widgets/colors/course_colors.dart';
 
@@ -183,4 +184,61 @@ class CoursePageColors {
         trueForeground = Colors.white,
         trueBackground = const Color(0xff1863FF),
         trueBorder = Colors.transparent;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is CoursePageColors &&
+        other.progressBar == progressBar &&
+        other.progressBarBackground == progressBarBackground &&
+        other.icons == icons &&
+        other.borders == borders &&
+        other.contentBackground == contentBackground &&
+        other.appBarBackground == appBarBackground &&
+        other.backgroundColor == backgroundColor &&
+        other.appBarForeground == appBarForeground &&
+        other.appBarIcons == appBarIcons &&
+        other.main == main &&
+        other.shadow == shadow &&
+        other.accent == accent &&
+        other.letterDisabledBackground == letterDisabledBackground &&
+        other.letterBagkround == letterBagkround &&
+        other.letterForeground == letterForeground &&
+        other.alphabetContainer == alphabetContainer &&
+        other.falseForeground == falseForeground &&
+        other.falseBackground == falseBackground &&
+        other.trueForeground == trueForeground &&
+        other.trueBackground == trueBackground &&
+        other.falseBorder == falseBorder &&
+        other.trueBorder == trueBorder &&
+        listEquals(other.gradientColors, gradientColors);
+  }
+
+  @override
+  int get hashCode {
+    return progressBar.hashCode ^
+        progressBarBackground.hashCode ^
+        icons.hashCode ^
+        borders.hashCode ^
+        contentBackground.hashCode ^
+        appBarBackground.hashCode ^
+        backgroundColor.hashCode ^
+        appBarForeground.hashCode ^
+        appBarIcons.hashCode ^
+        main.hashCode ^
+        shadow.hashCode ^
+        accent.hashCode ^
+        letterDisabledBackground.hashCode ^
+        letterBagkround.hashCode ^
+        letterForeground.hashCode ^
+        alphabetContainer.hashCode ^
+        falseForeground.hashCode ^
+        falseBackground.hashCode ^
+        trueForeground.hashCode ^
+        trueBackground.hashCode ^
+        falseBorder.hashCode ^
+        trueBorder.hashCode ^
+        gradientColors.hashCode;
+  }
 }

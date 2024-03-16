@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
 import 'package:luciapp/common/constants/strings.dart';
 import 'package:luciapp/common/utils/page_wrapper.dart';
+import 'package:luciapp/features/attributions/data/providers/about_text_provider.dart';
 import 'package:luciapp/features/attributions/data/providers/attributions_provider.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
@@ -14,6 +15,7 @@ class AboutPage extends StatelessWidget {
     return Consumer(
       builder: (context, ref, child) {
         final attributions = ref.watch(attributionsProvider);
+        final aboutText = ref.watch(aboutTextProvider);
 
         return attributions.when(
           data: (data) {
@@ -34,7 +36,11 @@ class AboutPage extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 15),
-                        const Text(Strings.appDeveloped),
+                        aboutText.when(
+                          data: (text) => Text(text.replaceAll(r'\n', '\n')),
+                          error: (error, stackTrace) => Text(error.toString()),
+                          loading: () => const CircularProgressIndicator(),
+                        ),
                         const SizedBox(height: 15),
                         const Text(Strings.attributions),
                         const SizedBox(height: 15),

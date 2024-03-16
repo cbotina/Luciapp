@@ -1,7 +1,10 @@
 import 'package:luciapp/common/constants/widget_keys.dart';
+import 'package:luciapp/features/attributions/data/providers/about_text_provider.dart';
 import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
+import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
+import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
@@ -66,6 +69,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -101,6 +107,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -135,6 +144,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -166,6 +178,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -198,6 +213,9 @@ void main() {
               userDisplayNameProvider.overrideWith((ref) => null),
               userIdProvider.overrideWith((ref) => testUser.userId),
               isLoadingProvider.overrideWith((ref) => true),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -231,6 +249,9 @@ void main() {
               userDisplayNameProvider.overrideWith((ref) => null),
               userIdProvider.overrideWith((ref) => testUser.userId),
               isLoadingProvider.overrideWith((ref) => true),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -288,6 +309,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),

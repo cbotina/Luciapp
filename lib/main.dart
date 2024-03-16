@@ -53,6 +53,7 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp(
       title: Strings.appName,
+      debugShowCheckedModeBanner: false,
       theme: appThemeMode.when(
         data: (data) {
           ref.read(themeControllerProvider.notifier).refresh();
@@ -118,6 +119,7 @@ final fontSettingsRepositoryProvider = Provider<IFontSettingsRepository>((ref) {
   return SqLiteFontSettingsRepository();
 });
 
+/// Mock
 final coursesRepositoryProvider = Provider<CoursesRepository>((ref) {
   return FirebaseCourseRepository();
 });

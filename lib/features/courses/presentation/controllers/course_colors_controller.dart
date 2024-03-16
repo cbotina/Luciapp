@@ -5,12 +5,13 @@ import 'package:luciapp/features/themes/data/providers/theme_mode_provider.dart'
 import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
 
 class CourseController extends StateNotifier<CoursePageColors> {
-  AppThemeMode themeMode;
-  CourseController({required this.themeMode})
-      : super(CoursePageColors.defaultColors());
+  final AppThemeMode _themeMode;
+  CourseController({required AppThemeMode themeMode})
+      : _themeMode = themeMode,
+        super(CoursePageColors.defaultColors());
 
   void setCourseColors(Course course) {
-    switch (themeMode) {
+    switch (_themeMode) {
       case AppThemeMode.light:
         state = CoursePageColors.light(course.colors);
         break;

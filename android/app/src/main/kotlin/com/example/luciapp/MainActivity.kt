@@ -1,4 +1,4 @@
-package com.example.luciapp
+package co.edu.umariana
 
 import io.flutter.embedding.android.FlutterActivity
 
