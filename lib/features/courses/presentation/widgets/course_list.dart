@@ -57,6 +57,9 @@ class CourseListWidget extends ConsumerWidget {
         ),
         coursesAsync.when(
           data: (courses) {
+            if (courses.isEmpty) {
+              return const Text("No se han publicado cursos aún");
+            }
             return ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -77,7 +80,8 @@ class CourseListWidget extends ConsumerWidget {
                 itemCount: courses.length);
           },
           error: (e, _) {
-            return Text(e.toString());
+            return const Text(
+                'Es necesario estar conectado a internet para acceder a los cursos');
           },
           loading: () {
             return Center(
