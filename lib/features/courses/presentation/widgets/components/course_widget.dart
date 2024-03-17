@@ -102,10 +102,14 @@ class CourseWidget extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    Image(
-                      image: Image.network(course.imagePath).image,
+                    SizedBox(
                       width: 110,
                       height: 110,
+                      child: Image(
+                        image: Image.network(course.imagePath).image,
+                        width: 110,
+                        height: 110,
+                      ),
                     ),
                   ],
                 ),
