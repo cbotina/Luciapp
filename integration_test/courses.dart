@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,13 +16,14 @@ import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
 import 'package:mocktail/mocktail.dart';
-import '../../common/robot/testing_robot.dart';
-import '../../auth/mocks/mock_auth_service.dart';
-import '../../common/mocks/mock_auth_repository.dart';
-import '../../themes/mocks/mock_theme_service.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+
+import '../test/auth/mocks/mock_auth_service.dart';
+import '../test/common/mocks/mock_auth_repository.dart';
+import '../test/common/robot/testing_robot.dart';
+import '../test/courses/constants/strings.dart';
+import '../test/themes/mocks/mock_theme_service.dart';
 import 'package:mockito/mockito.dart' as mockito;
-import '../constants/strings.dart';
 
 class MockClient extends mockito.Mock implements HttpClient {}
 

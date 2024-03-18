@@ -8,8 +8,10 @@ import 'package:luciapp/features/courses/presentation/widgets/colors/course_colo
 import 'package:luciapp/features/themes/data/providers/theme_mode_provider.dart';
 import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
 
+import '../constants/strings.dart';
+
 void main() {
-  group("Unit Test", () {
+  group(TestNames.unitTest, () {
     late ProviderContainer container;
     late Course course;
 
@@ -38,7 +40,7 @@ void main() {
       return container;
     }
 
-    test("[CP-064] Set course colors for light theme", () {
+    test(TestNames.cp064, () {
       const themeMode = AppThemeMode.light;
       container = makeProviderContainer(themeMode);
       final controller =
@@ -49,7 +51,7 @@ void main() {
       expect(controller.state, CoursePageColors.light(course.colors));
     });
 
-    test("[CP-065] Set course colors for dark theme", () {
+    test(TestNames.cp065, () {
       const themeMode = AppThemeMode.dark;
       container = makeProviderContainer(themeMode);
       final controller =
@@ -60,7 +62,7 @@ void main() {
       expect(controller.state, CoursePageColors.dark(course.colors));
     });
 
-    test("[CP-066] Set course colors for high contrast light theme", () {
+    test(TestNames.cp066, () {
       const themeMode = AppThemeMode.hcLight;
       container = makeProviderContainer(themeMode);
       final controller =
@@ -71,7 +73,7 @@ void main() {
       expect(controller.state, CoursePageColors.hcLight(course.colors));
     });
 
-    test("[CP-067] Set course colors for high contrast dark theme", () {
+    test(TestNames.cp067, () {
       const themeMode = AppThemeMode.hcDark;
       container = makeProviderContainer(themeMode);
       final controller =
