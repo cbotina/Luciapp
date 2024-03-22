@@ -16,15 +16,15 @@ import 'package:luciapp/main.dart';
 import 'package:luciapp/pages/course_page.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class YtVideo extends ConsumerStatefulWidget {
+class VideoScreen extends ConsumerStatefulWidget {
   final CourseContent video;
-  const YtVideo({super.key, required this.video});
+  const VideoScreen({super.key, required this.video});
 
   @override
-  ConsumerState<YtVideo> createState() => _YtVideoState();
+  ConsumerState<VideoScreen> createState() => _YtVideoState();
 }
 
-class _YtVideoState extends ConsumerState<YtVideo> {
+class _YtVideoState extends ConsumerState<VideoScreen> {
   YoutubePlayerController? _controller;
   late AudioPlayer player;
 

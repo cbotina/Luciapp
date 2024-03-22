@@ -9,14 +9,13 @@ import 'package:luciapp/features/course_progress/data/dto/complete_content_dto.d
 import 'package:luciapp/features/course_progress/presentation/controllers/active_content_controller.dart';
 import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
 
-class CompleteContentNotifier extends AsyncNotifier<void> {
+class CompleteContentController extends AsyncNotifier<void> {
   late final CompleteContentService _service =
       ref.watch(completeContentServiceProvider);
   @override
   FutureOr<void> build() {}
 
   Future<void> completeContent() async {
-    // ref.refresh(completeContentServiceProvider);
     ref.invalidate(userIdProvider);
 
     state = const AsyncLoading();
@@ -28,11 +27,10 @@ class CompleteContentNotifier extends AsyncNotifier<void> {
           nContents: ref.read(activeContentControllerProvider).nContents ?? 0,
         )));
     ref.refresh(coursesProvider);
-    // ref.refresh(courseProgressProvider(''));
   }
 }
 
 final completeContentControllerProvider =
-    AsyncNotifierProvider<CompleteContentNotifier, void>(() {
-  return CompleteContentNotifier();
+    AsyncNotifierProvider<CompleteContentController, void>(() {
+  return CompleteContentController();
 });

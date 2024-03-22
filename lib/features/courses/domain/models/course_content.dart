@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:luciapp/features/courses/domain/enums/content_types.dart';
-// ignore: unused_import
-import 'package:luciapp/features/courses/domain/typedefs/course_id.dart';
 
 class CourseContent {
   final String id;

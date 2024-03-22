@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:luciapp/common/constants/firebase_collection_name.dart';
 import 'package:luciapp/common/constants/firebase_field_name.dart';
+import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/course_progress_repository.dart';
 import 'package:luciapp/features/course_progress/domain/models/course_progress.dart';
+import 'package:luciapp/features/courses/domain/typedefs/course_id.dart';
 
 class FirebaseCourseProgressRepository implements ICourseProgressRepository {
   @override
-  Future<CourseProgress> create(String courseId, String userId) async {
+  Future<CourseProgress> create(CourseId courseId, UserId userId) async {
     await FirebaseFirestore.instance
         .collection(FirebaseCollectionName.courseProgress)
         .add({
@@ -35,7 +37,7 @@ class FirebaseCourseProgressRepository implements ICourseProgressRepository {
   }
 
   @override
-  Future<CourseProgress?> get(String courseId, String userId) async {
+  Future<CourseProgress?> get(CourseId courseId, UserId userId) async {
     final courseProgress = await FirebaseFirestore.instance
         .collection(FirebaseCollectionName.courseProgress)
         .where(FirebaseFieldName.courseUserId, isEqualTo: userId)

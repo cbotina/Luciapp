@@ -41,7 +41,7 @@ class HangmanGame extends ConsumerStatefulWidget {
   final GameMode mode;
 
   const HangmanGame({
-    super.key,
+    super.key = const ValueKey('hangmangame'),
     required this.levels,
     required this.mode,
   });
@@ -180,6 +180,7 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
                       ),
                     ),
                     Visibility(
+                      key: const ValueKey('hangman-head'),
                       visible: errors >= 1,
                       child: Image.asset(
                         'assets/images/hangman/head.png',
@@ -221,6 +222,7 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
                     ),
                     Visibility(
                       visible: errors >= 6,
+                      key: const ValueKey('hangman-ll'),
                       child: Image.asset(
                         'assets/images/hangman/ll.png',
                         width: MediaQuery.of(context).size.width / 1.8,
@@ -277,6 +279,7 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
                 height: 80,
                 width: MediaQuery.of(context).size.width - 30,
                 child: Semantics(
+                  key: const ValueKey('letter-list'),
                   slider: true,
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -284,6 +287,8 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return InkWell(
+                        key:
+                            ValueKey('letter-${alphabet[index].toLowerCase()}'),
                         onTap: () async {
                           HapticFeedback.selectionClick();
                           if (selectedLetters.contains(alphabet[index])) {

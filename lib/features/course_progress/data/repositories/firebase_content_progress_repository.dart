@@ -3,6 +3,7 @@ import 'package:luciapp/common/constants/firebase_collection_name.dart';
 import 'package:luciapp/common/constants/firebase_field_name.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/content_progress_repository.dart';
 import 'package:luciapp/features/course_progress/domain/models/content_progress.dart';
+import 'package:luciapp/features/course_progress/domain/typedefs/content_id.dart';
 
 class FirebaseContentProgressRepository implements IContentProgressRepository {
   @override
@@ -22,14 +23,14 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
   }
 
   @override
-  Future<void> delete(String contentId) {
+  Future<void> delete(ContentId contentId) {
     // TODO: implement delete
     throw UnimplementedError();
   }
 
 // ! OJITOOO
   @override
-  Future<ContentProgress?> get(String contentId, String cpId) async {
+  Future<ContentProgress?> get(ContentId contentId, String cpId) async {
     try {
       final contentProgress = await FirebaseFirestore.instance
           .collection(FirebaseCollectionName.courseProgress)
@@ -62,7 +63,7 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
   }
 
   @override
-  Future<bool> update(String contentId, bool completed, String cpId) async {
+  Future<bool> update(ContentId contentId, bool completed, String cpId) async {
     try {
       final contentProgressId = await FirebaseFirestore.instance
           .collection(FirebaseCollectionName.courseProgress)

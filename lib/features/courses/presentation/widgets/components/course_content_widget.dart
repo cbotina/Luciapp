@@ -64,7 +64,7 @@ class CourseContentWidget extends ConsumerWidget {
         } else if (content.type == ContentTypes.video) {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
-              return AccessibilityWrapper(YtVideo(video: content));
+              return AccessibilityWrapper(VideoScreen(video: content));
             },
           ));
         }
