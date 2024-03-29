@@ -9,11 +9,16 @@ class DarkModeIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkModeEnabled = ref.watch(isDarkModeEnabledProvider);
+    final bool isDarkModeEnabled = ref.watch(isDarkModeEnabledProvider);
 
-    return IconButton(
-      icon: Icon(isDarkModeEnabled ? Icons.sunny : Icons.nightlight_round),
-      onPressed: ref.read(themeControllerProvider.notifier).toggleDarkMode,
+    return Semantics(
+      label: '${isDarkModeEnabled ? 'Desactivar' : 'Activar'} modo oscuro',
+      child: ExcludeSemantics(
+        child: IconButton(
+          icon: Icon(isDarkModeEnabled ? Icons.sunny : Icons.nightlight_round),
+          onPressed: ref.read(themeControllerProvider.notifier).toggleDarkMode,
+        ),
+      ),
     );
   }
 }

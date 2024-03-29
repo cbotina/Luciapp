@@ -45,6 +45,14 @@ dependencies:
   mocktail: ^1.0.2
   sqflite: ^2.3.0
   path: ^1.8.3
+  ribbon_widget: ^1.0.5
+  awesome_dialog: ^3.2.0
+  audioplayers: ^5.2.1
+  confetti: ^0.7.0
+  video_player: ^2.8.2
+  chewie: ^1.7.5
+  youtube_player_flutter: ^9.0.0
+  flutter_widget_from_html: ^0.14.11
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +68,8 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
+  network_image_mock: ^2.1.1
+  mockito: ^5.4.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -78,6 +88,9 @@ flutter:
     - assets/images/dark/
     - assets/images/hc_light/
     - assets/images/hc_dark/
+    - assets/audio/
+    - assets/images/hangman/
+    - assets/images/games/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

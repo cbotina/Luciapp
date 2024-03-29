@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
+import 'package:luciapp/features/attributions/data/abstract_repositories/attributions_repository.dart';
+import 'package:luciapp/features/attributions/data/repositories/firebase_attributions_repository.dart';
+import 'package:luciapp/features/course_progress/data/abstract_repositories/content_progress_repository.dart';
+import 'package:luciapp/features/course_progress/data/abstract_repositories/course_progress_repository.dart';
+import 'package:luciapp/features/course_progress/data/repositories/firebase_content_progress_repository.dart';
+import 'package:luciapp/features/course_progress/data/repositories/firebase_course_progress_repository.dart';
+import 'package:luciapp/features/courses/data/abstract_repositories/course_content_repository.dart';
+import 'package:luciapp/features/courses/data/abstract_repositories/courses_repository.dart';
+import 'package:luciapp/features/courses/data/repositories/firebase_course_content_reposiroty.dart';
+import 'package:luciapp/features/courses/data/repositories/firebase_course_repository.dart';
 import 'package:luciapp/features/font_size/data/abstract_repositories/font_settings_repository.dart';
 import 'package:luciapp/features/font_size/data/repositories/sqlite_font_settings_repository.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
+import 'package:luciapp/features/games/data/abstract_repositories/game_levels_repositoryl.dart';
+import 'package:luciapp/features/games/data/abstract_repositories/games_repository.dart';
+import 'package:luciapp/features/games/data/repositories/firebase_game_levels_repository.dart';
+import 'package:luciapp/features/games/data/repositories/firebase_games_repository.dart';
 import 'package:luciapp/features/themes/data/abstract_repositories/theme_settings_repository.dart';
 import 'package:luciapp/features/themes/data/repositories/sqlite_theme_settings_repository.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
@@ -39,6 +53,8 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp(
       title: Strings.appName,
+      debugShowCheckedModeBanner: false,
+      showSemanticsDebugger: false,
       theme: appThemeMode.when(
         data: (data) {
           ref.read(themeControllerProvider.notifier).refresh();
@@ -102,4 +118,36 @@ final themeRepositoryProvider = Provider<IThemeSettingsReposiroty>((ref) {
 
 final fontSettingsRepositoryProvider = Provider<IFontSettingsRepository>((ref) {
   return SqLiteFontSettingsRepository();
+});
+
+/// Mock
+final coursesRepositoryProvider = Provider<CoursesRepository>((ref) {
+  return FirebaseCourseRepository();
+});
+
+final courseContentsRepositoryProvider =
+    Provider<CourseContentsRepository>((ref) {
+  return FirebaseCourseContentsRepository();
+});
+
+final gamesRepositoryProvider = Provider<IGamesRepository>((ref) {
+  return FirebaseGamesRepository();
+});
+
+final gameLevelsRepositoryProvider = Provider<IGameLevelsRepository>((ref) {
+  return FirebaseGameLevelsRepository();
+});
+
+final courseProgressRepositoryProvider =
+    Provider<ICourseProgressRepository>((ref) {
+  return FirebaseCourseProgressRepository();
+});
+
+final contentProgressRepositoryProvider =
+    Provider<IContentProgressRepository>((ref) {
+  return FirebaseContentProgressRepository();
+});
+
+final attributionsRepositoryProvider = Provider<IAttributionsRepository>((ref) {
+  return FirebaseAttributionsRepository();
 });

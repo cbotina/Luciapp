@@ -1,7 +1,11 @@
 import 'package:luciapp/common/constants/widget_keys.dart';
+import 'package:luciapp/features/attributions/data/providers/about_text_provider.dart';
 import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
+import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
+import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
+import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
@@ -53,11 +57,12 @@ void main() {
         when(mockThemeService.getCurrentThemeState)
             .thenAnswer((_) => Future.value(const ThemeState.light()));
 
-        when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+        when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
           (_) => Future.value(AuthResult.success),
         );
 
         when(() => mockAuthService.getUserId()).thenReturn('1234');
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await tester.pumpWidget(
           ProviderScope(
@@ -65,6 +70,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -74,19 +82,21 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final mainPage = find.byKey(Keys.mainPage);
 
         expect(container.read(isLoggedInProvider), true);
         expect(mainPage, findsOne);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp026, (WidgetTester tester) async {
         when(mockThemeService.getCurrentThemeState)
             .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
-        when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+        when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
           (_) => Future.value(AuthResult.registering),
         );
 
@@ -100,6 +110,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -110,7 +123,7 @@ void main() {
         final robot = TestingRobot(tester: tester);
 
         // robot login with facebook
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final registerForm = find.byKey(auth.Keys.registerForm);
 
@@ -122,7 +135,7 @@ void main() {
         when(mockThemeService.getCurrentThemeState)
             .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
-        when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+        when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
           (_) => Future.value(AuthResult.failure),
         );
 
@@ -134,6 +147,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -143,7 +159,7 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final authPage = find.byKey(auth.Keys.authPage);
 
@@ -155,7 +171,7 @@ void main() {
         when(mockThemeService.getCurrentThemeState)
             .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
-        when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+        when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
           (_) => Future.value(AuthResult.aborted),
         );
 
@@ -165,6 +181,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -174,7 +193,7 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final authPage = find.byKey(auth.Keys.authPage);
 
@@ -197,6 +216,9 @@ void main() {
               userDisplayNameProvider.overrideWith((ref) => null),
               userIdProvider.overrideWith((ref) => testUser.userId),
               isLoadingProvider.overrideWith((ref) => true),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => []),
             ],
             child: const MyApp(),
           ),
@@ -230,6 +252,9 @@ void main() {
               userDisplayNameProvider.overrideWith((ref) => null),
               userIdProvider.overrideWith((ref) => testUser.userId),
               isLoadingProvider.overrideWith((ref) => true),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -271,7 +296,7 @@ void main() {
         when(mockThemeService.getCurrentThemeState)
             .thenAnswer((invocation) => Future.value(const ThemeState.light()));
 
-        when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+        when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
           (_) => Future.value(AuthResult.success),
         );
 
@@ -287,6 +312,9 @@ void main() {
               authServiceProvider.overrideWith((ref) => mockAuthService),
               themeServiceProvider.overrideWith((ref) => mockThemeService),
               authRepositoryProvider.overrideWith((ref) => mockAuthRepository),
+              coursesProvider.overrideWith((ref) => []),
+              aboutTextProvider.overrideWith((ref) => ''),
+              coursesWithPercentagesProvider.overrideWith((ref) => [])
             ],
             child: const MyApp(),
           ),
@@ -296,7 +324,7 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final mainPage = find.byKey(Keys.mainPage);
 

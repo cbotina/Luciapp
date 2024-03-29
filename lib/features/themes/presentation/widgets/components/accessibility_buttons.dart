@@ -14,22 +14,30 @@ class AccessibilityButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const [
+      children: [
         Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(15.0),
           child: Wrap(
             runSpacing: 15,
             children: [
-              TextDivider(Strings.fontSize),
-              Row(
+              // font size section
+              Semantics(
+                header: true,
+                child: const TextDivider(Strings.fontSize),
+              ),
+              const Row(
                 children: [
                   Expanded(child: DecreaseTextSizeButton()),
                   SizedBox(width: 15),
                   Expanded(child: IncreaseTextSizeButton()),
                 ],
               ),
-              TextDivider(Strings.colorThemes),
-              Row(
+              // text theme section
+              Semantics(
+                header: true,
+                child: const TextDivider(Strings.colorThemes),
+              ),
+              const Row(
                 children: [
                   DarkModeButton(),
                   SizedBox(width: 15),

@@ -17,12 +17,13 @@ const lightColorScheme = ColorScheme(
   onSecondaryContainer: Color.fromARGB(255, 18, 18, 18),
   tertiaryContainer: Color(0xff486CB4), //facebook
   onTertiaryContainer: Colors.white,
+
   surfaceTint: null,
   surface: Colors.white,
   onSurface: Color(0xff0e0e0e), // en containers
   background: Color(0xffF2F5FC), // dialog background
   onBackground: Color(0xff0e0e0e),
-  surfaceVariant: Color(0xffF2F5FC),
+  surfaceVariant: Color.fromARGB(255, 176, 176, 176),
   outline: Colors.transparent,
   scrim: Colors.transparent,
 );
