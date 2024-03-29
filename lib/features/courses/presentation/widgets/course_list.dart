@@ -40,13 +40,15 @@ class CourseListWidget extends ConsumerWidget {
             ),
             Semantics(
               label: 'Refrescar',
-              child: IconButton(
-                onPressed: () {
-                  ref.invalidate(coursesWithPercentagesProvider);
-                  ref.invalidate(aboutTextProvider);
-                },
-                icon: const Icon(
-                  Icons.refresh_sharp,
+              child: ExcludeSemantics(
+                child: IconButton(
+                  onPressed: () {
+                    ref.invalidate(coursesWithPercentagesProvider);
+                    ref.invalidate(aboutTextProvider);
+                  },
+                  icon: const Icon(
+                    Icons.refresh_sharp,
+                  ),
                 ),
               ),
             ),

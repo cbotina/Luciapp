@@ -179,6 +179,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
+                  key: const ValueKey('false-button'),
                   onTap: () async {
                     if (_level.answer == false) {
                       await _player.play(
@@ -234,6 +235,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
                   ),
                 ),
                 InkWell(
+                  key: const ValueKey('true-button'),
                   onTap: () async {
                     if (_level.answer == true) {
                       await _player.play(

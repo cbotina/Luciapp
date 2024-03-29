@@ -76,7 +76,7 @@ void main() {
     mockThemeService = MockThemeService();
     mockAuthRepository = MockAuthRepository();
 
-    when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+    when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
       (_) => Future.value(AuthResult.success),
     );
 
@@ -116,6 +116,7 @@ void main() {
   HttpOverrides.runZoned(() async {
     group(TestNames.integrationTest, () {
       testWidgets(TestNames.cp068, (tester) async {
+        // final SemanticsHandle handle = tester.ensureSemantics();
         darkmode = false;
         hcmode = true;
 
@@ -128,13 +129,16 @@ void main() {
           );
         });
 
+        // await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
-        await tester.pump(const Duration(seconds: 2));
+        await tester.pump(const Duration(milliseconds: 200));
 
         expect(find.byType(CourseWidget), findsNWidgets(2));
+        // handle.dispose();
       });
 
       testWidgets(TestNames.cp069, (tester) async {
@@ -157,7 +161,7 @@ void main() {
 
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         await tester.pump(const Duration(seconds: 2));
 
@@ -185,7 +189,7 @@ void main() {
 
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         await tester.pump(const Duration(seconds: 2));
 

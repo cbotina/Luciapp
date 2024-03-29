@@ -54,6 +54,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: Strings.appName,
       debugShowCheckedModeBanner: false,
+      showSemanticsDebugger: false,
       theme: appThemeMode.when(
         data: (data) {
           ref.read(themeControllerProvider.notifier).refresh();

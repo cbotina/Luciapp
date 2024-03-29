@@ -81,7 +81,7 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final mainPage = find.byKey(Keys.mainPage);
 
@@ -120,7 +120,7 @@ void main() {
         final robot = TestingRobot(tester: tester);
 
         // robot login with facebook
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final registerForm = find.byKey(auth.Keys.registerForm);
 
@@ -156,7 +156,7 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final authPage = find.byKey(auth.Keys.authPage);
 
@@ -190,7 +190,7 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final authPage = find.byKey(auth.Keys.authPage);
 
@@ -321,7 +321,7 @@ void main() {
         final container = ProviderScope.containerOf(element);
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         final mainPage = find.byKey(Keys.mainPage);
 

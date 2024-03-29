@@ -76,7 +76,7 @@ void main() {
 
       final robot = TestingRobot(tester: tester);
 
-      await robot.loginWithFacebook();
+      await robot.login();
 
       await robot.goToAccessibilityPage();
 
@@ -106,7 +106,7 @@ void main() {
 
       final robot = TestingRobot(tester: tester);
 
-      await robot.loginWithFacebook();
+      await robot.login();
 
       await robot.goToAccessibilityPage();
 
@@ -135,7 +135,7 @@ void main() {
 
       final robot = TestingRobot(tester: tester);
 
-      await robot.loginWithFacebook();
+      await robot.login();
 
       await robot.goToAccessibilityPage();
 
@@ -164,7 +164,7 @@ void main() {
 
       final robot = TestingRobot(tester: tester);
 
-      await robot.loginWithFacebook();
+      await robot.login();
 
       await robot.goToAccessibilityPage();
 

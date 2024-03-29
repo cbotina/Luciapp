@@ -132,7 +132,7 @@ void main() {
 
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         await tester.pump(const Duration(seconds: 2));
 
@@ -159,7 +159,7 @@ void main() {
 
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         await tester.pump(const Duration(seconds: 2));
 
@@ -187,7 +187,7 @@ void main() {
 
         final robot = TestingRobot(tester: tester);
 
-        await robot.loginWithFacebook();
+        await robot.login();
 
         await tester.pump(const Duration(seconds: 2));
 

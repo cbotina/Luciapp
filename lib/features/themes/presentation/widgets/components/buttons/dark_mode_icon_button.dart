@@ -9,7 +9,7 @@ class DarkModeIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkModeEnabled = ref.watch(isDarkModeEnabledProvider);
+    final bool isDarkModeEnabled = ref.watch(isDarkModeEnabledProvider);
 
     return Semantics(
       label: '${isDarkModeEnabled ? 'Desactivar' : 'Activar'} modo oscuro',

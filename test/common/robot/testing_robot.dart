@@ -10,7 +10,7 @@ class TestingRobot {
   final nameFormField = find.byKey(auth.Keys.nameTextFormField);
   final ageFormField = find.byKey(auth.Keys.ageTextFormField);
   final registerButton = find.byKey(auth.Keys.registerButton);
-  final facebookButton = find.byKey(auth.Keys.facebookButton);
+  final googleButton = find.byKey(auth.Keys.googleButton);
   final logoutIconButton = find.byKey(auth.Keys.logoutIconButton);
   final mainPage = find.byKey(Keys.mainPage);
   final accessibilityPage = find.byKey(Keys.accessibilityPage);
@@ -40,8 +40,8 @@ class TestingRobot {
     await tester.pump(const Duration(milliseconds: 100));
   }
 
-  Future<void> loginWithFacebook() async {
-    await tester.tap(facebookButton);
+  Future<void> login() async {
+    await tester.tap(googleButton);
     await tester.pump(const Duration(milliseconds: 100));
   }
 
