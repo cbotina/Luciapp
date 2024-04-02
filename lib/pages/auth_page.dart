@@ -5,12 +5,16 @@ import 'package:luciapp/features/auth/data/providers/is_registering_provider.dar
 import 'package:luciapp/features/auth/presentation/widgets/login_buttons_widget.dart';
 import 'package:luciapp/features/auth/presentation/widgets/register_form_widget.dart';
 import 'package:luciapp/features/auth/presentation/widgets/constants/widget_keys.dart';
+import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
+import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 
-class AuthPage extends StatelessWidget {
+class AuthPage extends ConsumerWidget {
   const AuthPage({super.key = Keys.authPage});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(themeControllerProvider.notifier).refresh();
+    ref.read(fontSizeControllerProvider.notifier).refresh();
     return Stack(
       alignment: Alignment.center,
       children: [

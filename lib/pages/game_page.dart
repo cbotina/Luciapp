@@ -4,6 +4,7 @@ import 'package:luciapp/features/games/data/providers/games_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_type.dart';
 import 'package:luciapp/features/games/presentation/hangman_screen.dart';
 import 'package:luciapp/features/games/presentation/trivia_screen.dart';
+import 'package:luciapp/pages/game_not_found_page.dart';
 
 // class GamePage extends ConsumerWidget {
 //   final String gameId;
@@ -62,11 +63,15 @@ class _GamePageState extends ConsumerState<GamePage> {
 
     return gameAsync.when(
       data: (data) {
-        switch (data!.type) {
-          case GameType.hangman:
-            return HangmanPage(gameId: widget.gameId);
-          case GameType.trivia:
-            return TriviaPage(gameId: widget.gameId);
+        if (data == null) {
+          return const GameNotFoundPage();
+        } else {
+          switch (data.type) {
+            case GameType.hangman:
+              return HangmanPage(gameId: widget.gameId);
+            case GameType.trivia:
+              return TriviaPage(gameId: widget.gameId);
+          }
         }
       },
       error: (error, stackTrace) => Text(error.toString()),

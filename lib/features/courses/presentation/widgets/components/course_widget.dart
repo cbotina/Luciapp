@@ -37,8 +37,8 @@ class CourseWidget extends ConsumerWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Ribbon(
-          nearLength: isNew ? 80 : 0,
-          farLength: isNew ? 30 : 0,
+          nearLength: isNew ? 80 : 0.1,
+          farLength: isNew ? 30 : 0.1,
           title: 'Nuevo!',
           titleStyle: TextStyle(
             color: Theme.of(context).colorScheme.onTertiary,

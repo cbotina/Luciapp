@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
 import 'package:luciapp/features/attributions/data/abstract_repositories/attributions_repository.dart';
@@ -48,56 +50,65 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appThemeMode = ref.watch(themeControllerProvider);
-    final fontSizeState = ref.watch(fontSizeControllerProvider);
+    // final appThemeMode = ref.watch(themeControllerProvider);
+    // final fontSizeState = ref.watch(fontSizeControllerProvider);
+    // ref.read(themeControllerProvider.notifier).refresh();
+    // ref.read(fontSizeControllerProvider.notifier).refresh();
+    log('building');
 
-    return MaterialApp(
-      title: Strings.appName,
-      debugShowCheckedModeBanner: false,
-      showSemanticsDebugger: false,
-      theme: appThemeMode.when(
-        data: (data) {
-          ref.read(themeControllerProvider.notifier).refresh();
-          return themes[data.appThemeMode];
-        },
-        error: (error, stackTrace) => lightTheme,
-        loading: () => lightTheme,
-      ),
-      // home: Test(),
-      home: Consumer(
-        builder: (context, ref, child) {
-          final query = MediaQuery.of(context);
-          final isLoggedIn = ref.watch(isLoggedInProvider);
+    return Consumer(
+      builder: (context, ref, child) {
+        final appThemeMode = ref.watch(themeControllerProvider);
+        final fontSizeState = ref.watch(fontSizeControllerProvider);
+        return MaterialApp(
+          title: Strings.appName,
+          debugShowCheckedModeBanner: false,
+          showSemanticsDebugger: false,
+          theme: appThemeMode.when(
+            data: (data) {
+              // ref.read(themeControllerProvider.notifier).refresh();
+              return themes[data.appThemeMode];
+            },
+            error: (error, stackTrace) => lightTheme,
+            loading: () => lightTheme,
+          ),
+          // home: Test(),
+          home: Consumer(
+            builder: (context, ref, child) {
+              final query = MediaQuery.of(context);
+              final isLoggedIn = ref.watch(isLoggedInProvider);
 
-          ref.listen<bool>(isLoadingProvider, (_, isLoading) {
-            if (isLoading) {
-              LoadingScreen.instance().show(context: context);
-            } else {
-              LoadingScreen.instance().hide();
-            }
-          });
+              ref.listen<bool>(isLoadingProvider, (_, isLoading) {
+                if (isLoading) {
+                  LoadingScreen.instance().show(context: context);
+                } else {
+                  LoadingScreen.instance().hide();
+                }
+              });
 
-          return MediaQuery(
-            data: query.copyWith(
-              textScaler: TextScaler.linear(
-                fontSizeState.when(
-                  data: (data) {
-                    ref.read(fontSizeControllerProvider.notifier).refresh();
-                    return data.scaleFactor;
-                  },
-                  error: (error, stackTrace) {
-                    return 1;
-                  },
-                  loading: () {
-                    return 1;
-                  },
+              return MediaQuery(
+                data: query.copyWith(
+                  textScaler: TextScaler.linear(
+                    fontSizeState.when(
+                      data: (data) {
+                        //ref.read(fontSizeControllerProvider.notifier).refresh();
+                        return data.scaleFactor;
+                      },
+                      error: (error, stackTrace) {
+                        return 1;
+                      },
+                      loading: () {
+                        return 1;
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            child: isLoggedIn ? const MainPage() : const AuthPage(),
-          );
-        },
-      ),
+                child: isLoggedIn ? const MainPage() : const AuthPage(),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -15,6 +15,8 @@ import 'package:luciapp/main.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
+import '../test/games/constants/strings.dart';
+
 class MockLevelsRepository extends Mock implements IGameLevelsRepository {}
 
 const imageUrl =
@@ -43,8 +45,8 @@ void main() {
   HttpOverrides.runZoned(() async {
     ///
     ///
-    group('Integration Test', () {
-      testWidgets('Game starts', (tester) async {
+    group(TestNames.integrationTest, () {
+      testWidgets(TestNames.cp076, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
 
@@ -71,7 +73,7 @@ void main() {
         expect(find.text(levels.first.question), findsOne);
       });
 
-      testWidgets('User succeed', (tester) async {
+      testWidgets(TestNames.cp077, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
 
@@ -102,7 +104,7 @@ void main() {
         });
         await tester.pumpAndSettle();
       });
-      testWidgets('User fails', (tester) async {
+      testWidgets(TestNames.cp078, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
 

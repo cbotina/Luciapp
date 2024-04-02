@@ -2,24 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/constants/widget_keys.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
+import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/pages/tabs/accessibility_page.dart';
 import 'package:luciapp/pages/tabs/courses_page.dart';
 import 'package:luciapp/pages/tabs/info_tab.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key = Keys.mainPage});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  ConsumerState<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends ConsumerState<MainPage> {
   late PageController _controller;
   int _selectedPage = 0;
 
   @override
   void initState() {
     _controller = PageController();
+    ref.read(themeControllerProvider.notifier).refresh();
+    ref.read(fontSizeControllerProvider.notifier).refresh();
     super.initState();
   }
 

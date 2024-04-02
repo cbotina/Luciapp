@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/font_size/application/font_size_service.dart';
@@ -10,10 +11,12 @@ class FontSizeController extends AsyncNotifier<FontSizeState> {
 
   @override
   FutureOr<FontSizeState> build() {
+    log('build controller font');
     return _fontSizeService.getCurrentFontSizeState();
   }
 
   Future<void> refresh() async {
+    log('refresh is used');
     state = await AsyncValue.guard(
         () => _fontSizeService.getCurrentFontSizeState());
   }

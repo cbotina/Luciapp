@@ -11,6 +11,7 @@ import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
 import 'package:luciapp/main.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../test/games/constants/strings.dart' show TestNames;
 import '../test/games/integration_testing/hangman_test.dart';
 
 void main() {
@@ -29,8 +30,8 @@ void main() {
     themeModeProvider.overrideWithValue(AppThemeMode.light),
   ];
 
-  group('Integration Test', () {
-    testWidgets('Level begins', (tester) async {
+  group(TestNames.integrationTest, () {
+    testWidgets(TestNames.cp071, (tester) async {
       when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
           .thenAnswer((invocation) => Future.value(levels));
 
@@ -50,7 +51,7 @@ void main() {
       expect(find.byType(LetterField), findsNWidgets(levels.first.word.length));
     });
 
-    testWidgets('User hits', (tester) async {
+    testWidgets(TestNames.cp072, (tester) async {
       when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
           .thenAnswer((invocation) => Future.value(levels));
 
@@ -78,7 +79,7 @@ void main() {
       expect(hangmanHead.hitTestable(), findsNothing);
     });
 
-    testWidgets('User fails', (tester) async {
+    testWidgets(TestNames.cp073, (tester) async {
       when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
           .thenAnswer((invocation) => Future.value(levels));
 
@@ -105,7 +106,7 @@ void main() {
 
       expect(hangmanHead, findsOne);
     });
-    testWidgets('User reaches fail limit', (tester) async {
+    testWidgets(TestNames.cp074, (tester) async {
       when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
           .thenAnswer((invocation) => Future.value(levels));
 
@@ -136,7 +137,7 @@ void main() {
 
       expect(hangmanLl, findsOne);
     });
-    testWidgets('User wins', (tester) async {
+    testWidgets(TestNames.cp075, (tester) async {
       when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
           .thenAnswer((invocation) => Future.value(levels));
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/attributions/data/providers/about_text_provider.dart';
@@ -59,13 +61,15 @@ class CourseListWidget extends ConsumerWidget {
         ),
         coursesAsync.when(
           data: (courses) {
+            // log(courses.length.toString());
             if (courses.isEmpty) {
               return const Text("No se han publicado cursos aún");
-            }
-            return ListView.separated(
+            } else {
+              return ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  log(index.toString());
                   Course course = courses.elementAt(index).course;
                   return CourseWidget(
                     course: course,
@@ -79,7 +83,9 @@ class CourseListWidget extends ConsumerWidget {
                     height: 15,
                   );
                 },
-                itemCount: courses.length);
+                itemCount: courses.length,
+              );
+            }
           },
           error: (e, _) {
             return const Text(
