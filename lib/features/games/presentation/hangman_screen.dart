@@ -12,6 +12,7 @@ import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
+import 'package:luciapp/features/games/data/providers/games_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
 import 'package:luciapp/features/games/domain/models/game_level.dart';
 import 'package:luciapp/features/games/domain/models/hangman_level.dart';
@@ -25,13 +26,19 @@ class HangmanPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final levels = ref.read(hangmanLevelsProvider(gameId));
+    final levels = ref.watch(hangmanLevelsProvider(gameId));
+
     return levels.when(
       data: (data) {
         return HangmanGame(levels: data, mode: GameMode.custom);
       },
       error: (error, stackTrace) => Text(error.toString()),
-      loading: () => const LinearProgressIndicator(),
+      loading: () {
+        ref.invalidate(courseGameProvider);
+        return const Center(
+          child: LinearProgressIndicator(),
+        );
+      },
     );
   }
 }

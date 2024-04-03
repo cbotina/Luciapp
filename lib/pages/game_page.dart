@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/games/data/providers/games_provider.dart';
@@ -48,37 +50,72 @@ import 'package:luciapp/pages/game_not_found_page.dart';
 //   }
 // }
 
-class GamePage extends ConsumerStatefulWidget {
+class GamePage extends StatelessWidget {
   final String gameId;
   const GamePage({super.key, required this.gameId});
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _GamePageState();
-}
 
-class _GamePageState extends ConsumerState<GamePage> {
   @override
   Widget build(BuildContext context) {
-    ref.invalidate(courseGameProvider);
-    final gameAsync = ref.read(courseGameProvider(widget.gameId));
+    return Consumer(
+      builder: (context, ref, child) {
+        final gameAsync = ref.watch(courseGameProvider(gameId));
 
-    return gameAsync.when(
-      data: (data) {
-        if (data == null) {
-          return const GameNotFoundPage();
-        } else {
-          switch (data.type) {
-            case GameType.hangman:
-              return HangmanPage(gameId: widget.gameId);
-            case GameType.trivia:
-              return TriviaPage(gameId: widget.gameId);
-          }
-        }
+        return gameAsync.when(
+          data: (data) {
+            if (data == null) {
+              return const GameNotFoundPage();
+            } else {
+              switch (data.type) {
+                case GameType.hangman:
+                  return HangmanPage(gameId: gameId);
+                case GameType.trivia:
+                  return TriviaPage(gameId: gameId);
+              }
+            }
+          },
+          error: (error, stackTrace) => Text(error.toString()),
+          loading: () {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
       },
-      error: (error, stackTrace) => Text(error.toString()),
-      loading: () => const CircularProgressIndicator(),
     );
   }
 }
+
+// class GamePage extends ConsumerStatefulWidget {
+//   final String gameId;
+//   const GamePage({super.key, required this.gameId});
+//   @override
+//   ConsumerState<ConsumerStatefulWidget> createState() => _GamePageState();
+// }
+
+// class _GamePageState extends ConsumerState<GamePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     ref.invalidate(courseGameProvider);
+//     final gameAsync = ref.read(courseGameProvider(widget.gameId));
+
+//     return gameAsync.when(
+//       data: (data) {
+//         if (data == null) {
+//           return const GameNotFoundPage();
+//         } else {
+//           switch (data.type) {
+//             case GameType.hangman:
+//               return HangmanPage(gameId: widget.gameId);
+//             case GameType.trivia:
+//               return TriviaPage(gameId: widget.gameId);
+//           }
+//         }
+//       },
+//       error: (error, stackTrace) => Text(error.toString()),
+//       loading: () => const CircularProgressIndicator(),
+//     );
+//   }
+// }
 
 class NumberNotifier extends StateNotifier<int> {
   NumberNotifier() : super(0);

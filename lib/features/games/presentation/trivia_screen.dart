@@ -22,7 +22,7 @@ class TriviaPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.invalidate(triviaLevelsProvider);
-    final levels = ref.read(triviaLevelsProvider(gameId));
+    final levels = ref.watch(triviaLevelsProvider(gameId));
     return levels.when(
       data: (data) {
         return TriviaGame(levels: data, mode: GameMode.custom);

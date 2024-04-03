@@ -69,7 +69,6 @@ class CourseListWidget extends ConsumerWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  log(index.toString());
                   Course course = courses.elementAt(index).course;
                   return CourseWidget(
                     course: course,
