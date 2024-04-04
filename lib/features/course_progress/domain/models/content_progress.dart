@@ -40,11 +40,14 @@ class ContentProgress extends MapView<String, dynamic> {
       identical(this, other) ||
       other is ContentProgress &&
           runtimeType == other.runtimeType &&
-          _contentId == other.contentId &&
-          _completed == other.completed;
+          contentId == other.contentId &&
+          completed == other.completed;
 
   @override
   int get hashCode => Object.hashAll(
-        [_contentId, completed],
+        [
+          contentId,
+          completed,
+        ],
       );
 }

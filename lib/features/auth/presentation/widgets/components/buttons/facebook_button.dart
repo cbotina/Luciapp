@@ -15,7 +15,6 @@ class FacebookButton extends ConsumerWidget {
       onTap: ref.read(authControllerProvider.notifier).loginWithFacebook,
       child: Ink(
         decoration: BoxDecoration(
-          // color: const Color(0xff486CB4),
           color: Theme.of(context).colorScheme.tertiaryContainer,
           border: Border.all(
             color: Theme.of(context).colorScheme.outline, // transparente

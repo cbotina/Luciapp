@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/data/abstract_repositories/auth_repository.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
@@ -47,9 +45,6 @@ class FontSizeService {
       await _fontSettingsRepository.update(UserFontSettings(
           scaleFactor: updatedState.scaleFactor, userId: userId));
 
-      log("increased to: ");
-      log(updatedState.scaleFactor.toString());
-
       return updatedState;
     }
 
@@ -72,9 +67,6 @@ class FontSizeService {
 
       await _fontSettingsRepository.update(UserFontSettings(
           scaleFactor: updatedState.scaleFactor, userId: userId));
-
-      log("decreased to: ");
-      log(updatedState.scaleFactor.toString());
 
       return updatedState;
     }

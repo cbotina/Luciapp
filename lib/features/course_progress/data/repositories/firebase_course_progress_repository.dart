@@ -67,8 +67,8 @@ class FirebaseCourseProgressRepository implements ICourseProgressRepository {
   }
 
   @override
-  Future<List<CourseProgress>> getAll() {
-    return FirebaseFirestore.instance
+  Future<List<CourseProgress>> getAll() async {
+    return await FirebaseFirestore.instance
         .collection(FirebaseCollectionName.courseProgress)
         .get()
         .then((value) => value.docs

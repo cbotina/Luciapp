@@ -4,7 +4,7 @@ import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
+import 'package:luciapp/features/courses/data/providers/courses_with_percentages_provider.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';

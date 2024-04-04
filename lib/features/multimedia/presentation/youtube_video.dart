@@ -7,10 +7,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/components/tappable_container.dart';
 import 'package:luciapp/common/components/text_divider.dart';
 import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
+import 'package:luciapp/features/courses/data/providers/courses_with_percentages_provider.dart';
 import 'package:luciapp/features/courses/domain/enums/content_types.dart';
 import 'package:luciapp/features/courses/domain/models/course_content.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/main.dart';
 import 'package:luciapp/pages/course_page.dart';
@@ -105,7 +105,12 @@ class _YtVideoState extends ConsumerState<VideoScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: TappableContainer(
                   onPressed: () {},
-                  child: Text(widget.video.transcription ?? ""),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height / 2.2,
+                    child: SingleChildScrollView(
+                      child: Text(widget.video.transcription ?? ""),
+                    ),
+                  ),
                 ),
               )
             ],

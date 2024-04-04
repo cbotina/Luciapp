@@ -4,8 +4,7 @@ import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/data/providers/is_logged_in_provider.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
-import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
+import 'package:luciapp/features/courses/data/providers/courses_with_percentages_provider.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
@@ -62,6 +61,7 @@ void main() {
         );
 
         when(() => mockAuthService.getUserId()).thenReturn('1234');
+
         final SemanticsHandle handle = tester.ensureSemantics();
 
         await tester.pumpWidget(
@@ -89,6 +89,8 @@ void main() {
         expect(container.read(isLoggedInProvider), true);
         expect(mainPage, findsOne);
         await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+
         handle.dispose();
       });
 
@@ -103,6 +105,8 @@ void main() {
         when(() => mockAuthService.getUserId()).thenReturn('1234');
 
         when(() => mockAuthRepository.displayName).thenReturn('Carlos');
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await tester.pumpWidget(
           ProviderScope(
@@ -129,6 +133,9 @@ void main() {
 
         expect(container.read(isLoggedInProvider), false);
         expect(registerForm, findsOne);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp027, (WidgetTester tester) async {
@@ -141,6 +148,8 @@ void main() {
 
         when(() => mockAuthService.getUserId()).thenReturn('1234');
 
+        final SemanticsHandle handle = tester.ensureSemantics();
+
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
@@ -165,6 +174,9 @@ void main() {
 
         expect(container.read(isLoggedInProvider), false);
         expect(authPage, findsOne);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp028, (WidgetTester tester) async {
@@ -175,6 +187,8 @@ void main() {
           (_) => Future.value(AuthResult.aborted),
         );
 
+        final SemanticsHandle handle = tester.ensureSemantics();
+
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
@@ -199,6 +213,9 @@ void main() {
 
         expect(container.read(isLoggedInProvider), false);
         expect(authPage, findsOne);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp029, (WidgetTester tester) async {
@@ -206,6 +223,8 @@ void main() {
         reset(mockAuthController);
 
         final robot = TestingRobot(tester: tester);
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await tester.pumpWidget(
           ProviderScope(
@@ -235,6 +254,9 @@ void main() {
         await robot.pressRegisterButton();
 
         verify(() => mockAuthController.register(testUser)).called(1);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp030, (WidgetTester tester) async {
@@ -242,6 +264,8 @@ void main() {
         reset(mockAuthController);
 
         final robot = TestingRobot(tester: tester);
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await tester.pumpWidget(
           ProviderScope(
@@ -290,6 +314,9 @@ void main() {
         expect(find.text(Strings.ageIsRequired), findsNothing);
         expect(find.text(Strings.nameIsRequired), findsNothing);
         expect(find.text(Strings.genderIsRequired), findsNothing);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp031, (WidgetTester tester) async {
@@ -305,6 +332,8 @@ void main() {
         when(() => mockAuthService.logout()).thenAnswer(
           (_) => Future.value(),
         );
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await tester.pumpWidget(
           ProviderScope(
@@ -335,6 +364,9 @@ void main() {
 
         expect(container.read(isLoggedInProvider), false);
         expect(mainPage, findsNothing);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
     },
   );

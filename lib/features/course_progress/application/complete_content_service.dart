@@ -1,6 +1,3 @@
-// ignore: unused_import
-import 'dart:developer';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
 import 'package:luciapp/features/course_progress/data/abstract_repositories/content_progress_repository.dart';
@@ -8,7 +5,6 @@ import 'package:luciapp/features/course_progress/data/abstract_repositories/cour
 import 'package:luciapp/features/course_progress/data/dto/complete_content_dto.dart';
 import 'package:luciapp/features/course_progress/domain/models/content_progress.dart';
 import 'package:luciapp/features/course_progress/domain/models/course_progress.dart';
-import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
 import 'package:luciapp/main.dart';
 
 class CompleteContentService {

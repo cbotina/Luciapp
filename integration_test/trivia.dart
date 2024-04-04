@@ -50,6 +50,8 @@ void main() {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
 
+        final SemanticsHandle handle = tester.ensureSemantics();
+
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
             ProviderScope(
@@ -71,11 +73,16 @@ void main() {
         expect(falseButton, findsOne);
         expect(trueButton, findsOne);
         expect(find.text(levels.first.question), findsOne);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp077, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
@@ -103,10 +110,15 @@ void main() {
           await tester.tap(trueButton);
         });
         await tester.pumpAndSettle();
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
       testWidgets(TestNames.cp078, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
@@ -134,6 +146,9 @@ void main() {
           await tester.tap(falseButton);
         });
         await tester.pumpAndSettle();
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
     });
   }, createHttpClient: (c) => HttpClient(context: c));

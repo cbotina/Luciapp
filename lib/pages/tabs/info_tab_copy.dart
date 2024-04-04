@@ -35,7 +35,6 @@ class AboutPage extends StatelessWidget {
           ),
         ),
       ),
-      // backgroundColor: Colors.amber,
       body: Consumer(
         builder: (context, ref, child) {
           final attributions = ref.watch(attributionsProvider);

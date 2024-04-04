@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
@@ -11,7 +9,6 @@ class AccessibilityWrapper extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final query = MediaQuery.of(context);
-    // ref.read(fontSizeControllerProvider.notifier).refresh();
 
     return Consumer(
       builder: (context, ref, child) {
@@ -21,7 +18,6 @@ class AccessibilityWrapper extends ConsumerWidget {
             textScaler: TextScaler.linear(
               fontSizeState.when(
                 data: (data) {
-                  // ref.read(fontSizeControllerProvider.notifier).refresh();
                   return data.scaleFactor;
                 },
                 error: (error, stackTrace) {

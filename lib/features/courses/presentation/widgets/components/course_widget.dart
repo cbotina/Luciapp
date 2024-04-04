@@ -34,6 +34,9 @@ class CourseWidget extends ConsumerWidget {
             ? Colors.black
             : null;
 
+    final progressBarColor =
+        hc ? course.colors.highlightColor : course.colors.mainColor;
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Ribbon(
@@ -41,7 +44,9 @@ class CourseWidget extends ConsumerWidget {
           farLength: isNew ? 30 : 0.1,
           title: 'Nuevo!',
           titleStyle: TextStyle(
-            color: Theme.of(context).colorScheme.onTertiary,
+            color: isNew
+                ? Theme.of(context).colorScheme.onTertiary
+                : Colors.transparent,
             fontFamily: 'Lilita',
             fontSize: 18,
           ),
@@ -118,7 +123,7 @@ class CourseWidget extends ConsumerWidget {
                 ),
                 LinearProgressIndicator(
                   backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                  color: course.colors.mainColor,
+                  color: progressBarColor,
                   value: percentageCompleted,
                   borderRadius: BorderRadius.circular(20),
                   minHeight: 15,

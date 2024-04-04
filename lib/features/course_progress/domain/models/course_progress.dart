@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:luciapp/common/constants/firebase_field_name.dart';
+import 'package:luciapp/features/auth/domain/typedefs/user_id.dart';
+import 'package:luciapp/features/courses/domain/typedefs/course_id.dart';
 
 @immutable
 class CourseProgress extends MapView<String, dynamic> {
@@ -47,13 +49,27 @@ class CourseProgress extends MapView<String, dynamic> {
       identical(this, other) ||
       other is CourseProgress &&
           runtimeType == other.runtimeType &&
-          _courseId == other.courseId &&
-          _userId == other.userId &&
-          _id == other.id &&
-          _percentage == other.percentage;
+          courseId == other.courseId &&
+          userId == other.userId &&
+          id == other.id &&
+          percentage == other.percentage;
 
   @override
   int get hashCode => Object.hashAll(
-        [courseId, userId, id, percentage],
+        [
+          courseId,
+          userId,
+          id,
+          percentage,
+        ],
       );
+}
+
+extension Find on List<CourseProgress> {
+  CourseProgress? findByCourseIdAndUserId(CourseId courseId, UserId userId) {
+    for (CourseProgress cp in this) {
+      if (cp.courseId == courseId && cp.userId == userId) return cp;
+    }
+    return null;
+  }
 }

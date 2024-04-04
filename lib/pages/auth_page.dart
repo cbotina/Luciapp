@@ -29,7 +29,7 @@ class AuthPage extends ConsumerWidget {
           ),
         ),
         Container(
-          color: Theme.of(context).colorScheme.scrim, // hc filter
+          color: Theme.of(context).colorScheme.scrim,
         ),
         Card(
           child: ConstrainedBox(

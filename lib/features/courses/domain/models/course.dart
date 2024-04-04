@@ -48,4 +48,26 @@ class Course {
                 snapshot.data()['highlightColor'].replaceAll('#', '0xff'))),
           ),
         );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Course &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          description == other.description &&
+          imagePath == other.imagePath &&
+          nContents == other.nContents &&
+          colors == other.colors;
+
+  @override
+  int get hashCode => Object.hashAll([
+        id,
+        name,
+        description,
+        imagePath,
+        nContents,
+        colors,
+      ]);
 }

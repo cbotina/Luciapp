@@ -27,13 +27,6 @@ class CoursePage extends ConsumerWidget {
       },
     );
 
-    ///crear un listener para video terminado, juego terminado etc
-    /// dejar los propios
-    ///
-    /// * a trivia dejarlo solito
-    /// * a video ponerle su propio
-    /// * a hangman hacerle un propio
-
     return Scaffold(
       backgroundColor: colors.backgroundColor,
       appBar: AppBar(

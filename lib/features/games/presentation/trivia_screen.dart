@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/features/course_progress/presentation/controllers/complete_content_controller.dart';
+import 'package:luciapp/features/courses/data/providers/courses_with_percentages_provider.dart';
 import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
 import 'package:luciapp/features/font_size/presentation/controllers/font_size_controller.dart';
 import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
@@ -21,7 +21,6 @@ class TriviaPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.invalidate(triviaLevelsProvider);
     final levels = ref.watch(triviaLevelsProvider(gameId));
     return levels.when(
       data: (data) {
@@ -158,7 +157,6 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
                 ),
                 Text(
                   _level.question,
-                  // style: const TextStyle(fontSize: 17, color: Colors.black),
                   textAlign: TextAlign.left,
                 ),
                 const SizedBox(
@@ -313,8 +311,6 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
           await _player.play(
             AssetSource('audio/contentfinish.mp3'),
           );
-
-          // ref.invalidate(courseContentsRepositoryProvider);
 
           showScoreDialog();
         } else {

@@ -5,7 +5,6 @@ import 'package:luciapp/features/font_size/presentation/controllers/font_size_co
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
 import 'package:luciapp/pages/tabs/accessibility_page.dart';
 import 'package:luciapp/pages/tabs/courses_page.dart';
-import 'package:luciapp/pages/tabs/info_tab.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key = Keys.mainPage});
@@ -34,6 +33,8 @@ class _MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    // solo en caso de emergencia
+    // ref.invalidate(coursesWithPercentagesProvider);
     return Column(
       children: [
         Expanded(
@@ -41,7 +42,6 @@ class _MainPageState extends ConsumerState<MainPage> {
             controller: _controller,
             children: const [
               CoursesPage(),
-              // AboutPage(),
               AccessibilityPage(),
             ],
             onPageChanged: (index) {
@@ -65,10 +65,6 @@ class _MainPageState extends ConsumerState<MainPage> {
                   icon: Icon(Icons.home),
                   label: 'Inicio',
                 ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(Icons.info_outline),
-                //   label: 'Acerca de',
-                // ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.accessibility),
                   label: 'Accesibilidad',

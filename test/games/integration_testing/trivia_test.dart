@@ -1,18 +1,13 @@
 import 'dart:io';
 
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:luciapp/common/themes/themes.dart';
-import 'package:luciapp/features/courses/presentation/controllers/course_colors_controller.dart';
 import 'package:luciapp/features/games/data/abstract_repositories/game_levels_repositoryl.dart';
-import 'package:luciapp/features/games/data/providers/game_levels_provider.dart';
 import 'package:luciapp/features/games/domain/enums/game_mode.dart';
 import 'package:luciapp/features/games/domain/enums/game_type.dart';
-import 'package:luciapp/features/games/domain/models/hangman_level.dart';
 import 'package:luciapp/features/games/domain/models/trivia_level.dart';
-import 'package:luciapp/features/games/presentation/hangman_screen.dart';
 import 'package:luciapp/features/games/presentation/trivia_screen.dart';
 import 'package:luciapp/features/themes/data/providers/theme_mode_provider.dart';
 import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';

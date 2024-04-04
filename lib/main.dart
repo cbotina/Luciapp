@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/themes.dart';
 import 'package:luciapp/features/attributions/data/abstract_repositories/attributions_repository.dart';
@@ -50,12 +48,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final appThemeMode = ref.watch(themeControllerProvider);
-    // final fontSizeState = ref.watch(fontSizeControllerProvider);
-    // ref.read(themeControllerProvider.notifier).refresh();
-    // ref.read(fontSizeControllerProvider.notifier).refresh();
-    log('building');
-
     return Consumer(
       builder: (context, ref, child) {
         final appThemeMode = ref.watch(themeControllerProvider);
@@ -66,13 +58,11 @@ class MyApp extends ConsumerWidget {
           showSemanticsDebugger: false,
           theme: appThemeMode.when(
             data: (data) {
-              // ref.read(themeControllerProvider.notifier).refresh();
               return themes[data.appThemeMode];
             },
             error: (error, stackTrace) => lightTheme,
             loading: () => lightTheme,
           ),
-          // home: Test(),
           home: Consumer(
             builder: (context, ref, child) {
               final query = MediaQuery.of(context);
@@ -91,7 +81,6 @@ class MyApp extends ConsumerWidget {
                   textScaler: TextScaler.linear(
                     fontSizeState.when(
                       data: (data) {
-                        //ref.read(fontSizeControllerProvider.notifier).refresh();
                         return data.scaleFactor;
                       },
                       error: (error, stackTrace) {
@@ -131,7 +120,6 @@ final fontSettingsRepositoryProvider = Provider<IFontSettingsRepository>((ref) {
   return SqLiteFontSettingsRepository();
 });
 
-/// Mock
 final coursesRepositoryProvider = Provider<CoursesRepository>((ref) {
   return FirebaseCourseRepository();
 });

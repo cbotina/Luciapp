@@ -27,8 +27,6 @@ class _CourseContentsListState extends ConsumerState<CourseContentsList> {
 
   @override
   Widget build(BuildContext context) {
-    // ref.invalidate(contentsProgressProvider); //1
-
     final contents = ref.watch(contentsProgressProvider);
 
     return Padding(
@@ -57,7 +55,6 @@ final contentsProgressProvider =
     FutureProvider<List<ContentWithProgress>>((ref) async {
   final courseId = ref.read(activeContentControllerProvider).courseId;
 
-// cambia a read
   final contents = ref
       .watch(courseContentsRepositoryProvider)
       .getCourseContents(courseId ?? "");
