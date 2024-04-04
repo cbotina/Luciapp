@@ -8,10 +8,6 @@ class FirebaseGamesRepository implements IGamesRepository {
   Future<Game?> get(GameId gameId) async {
     final games = FirebaseFirestore.instance.collection('games');
 
-    // final game = await games.get().then((value) {
-    //   return value.docs.map((doc) => Course.fromSnapshot(doc));
-    // });
-
     final game = await games.doc(gameId).get().then((value) {
       if (value.exists) {
         return Game.fromSnapshot(value);

@@ -40,7 +40,6 @@ class UserContainer extends ConsumerWidget {
                     width:
                         MediaQuery.of(context).size.width - 30 - 30 - 30 - 30,
                     child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(

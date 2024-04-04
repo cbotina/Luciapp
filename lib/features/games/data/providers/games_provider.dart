@@ -4,5 +4,5 @@ import 'package:luciapp/main.dart';
 
 final courseGameProvider =
     FutureProvider.family<Game?, String>((ref, id) async {
-  return ref.watch(gamesRepositoryProvider).get(id);
+  return await ref.read(gamesRepositoryProvider).get(id);
 });

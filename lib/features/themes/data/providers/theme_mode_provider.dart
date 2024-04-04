@@ -7,5 +7,6 @@ import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 final themeModeProvider = Provider<AppThemeMode>((ref) {
   final dark = ref.watch(isDarkModeEnabledProvider);
   final hc = ref.watch(isHcModeEnabledProvider);
+
   return ThemeState(isDarkModeEnabled: dark, isHCModeEnabled: hc).appThemeMode;
 });

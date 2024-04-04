@@ -5,7 +5,7 @@ import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
+import 'package:luciapp/features/courses/data/providers/courses_with_percentages_provider.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/domain/enums/app_theme_mode.dart';
 import 'package:luciapp/features/themes/presentation/controllers/theme_controller.dart';
@@ -30,7 +30,7 @@ void main() {
     mockThemeService = MockThemeService();
     mockAuthRepository = MockAuthRepository();
 
-    when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+    when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
       (_) => Future.value(AuthResult.success),
     );
 
@@ -72,6 +72,8 @@ void main() {
       darkmode = false;
       hcmode = true;
 
+      final SemanticsHandle handle = tester.ensureSemantics();
+
       await tester.pumpWidget(
         ProviderScope(
           overrides: overrides,
@@ -102,12 +104,18 @@ void main() {
         container.read(themeControllerProvider).value!.appThemeMode,
         AppThemeMode.hcLight,
       );
+
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+      handle.dispose();
     });
 
     testWidgets(TestNames.cp042, (tester) async {
       darkmode = false;
       hcmode = false;
 
+      final SemanticsHandle handle = tester.ensureSemantics();
+
       await tester.pumpWidget(
         ProviderScope(
           overrides: overrides,
@@ -141,11 +149,17 @@ void main() {
         AppThemeMode.light,
       );
       await tester.pump(const Duration(milliseconds: 100));
+
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+      handle.dispose();
     });
 
     testWidgets(TestNames.cp043, (tester) async {
       darkmode = false;
       hcmode = false;
+
+      final SemanticsHandle handle = tester.ensureSemantics();
 
       await tester.pumpWidget(
         ProviderScope(
@@ -177,11 +191,17 @@ void main() {
         container.read(themeControllerProvider).value!.appThemeMode,
         AppThemeMode.light,
       );
+
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+      handle.dispose();
     });
 
     testWidgets(TestNames.cp044, (tester) async {
       darkmode = true;
       hcmode = false;
+
+      final SemanticsHandle handle = tester.ensureSemantics();
 
       await tester.pumpWidget(
         ProviderScope(
@@ -213,6 +233,10 @@ void main() {
         container.read(themeControllerProvider).value!.appThemeMode,
         AppThemeMode.dark,
       );
+
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+      handle.dispose();
     });
   });
 }

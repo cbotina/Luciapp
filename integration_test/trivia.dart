@@ -15,6 +15,8 @@ import 'package:luciapp/main.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
+import '../test/games/constants/strings.dart';
+
 class MockLevelsRepository extends Mock implements IGameLevelsRepository {}
 
 const imageUrl =
@@ -43,10 +45,12 @@ void main() {
   HttpOverrides.runZoned(() async {
     ///
     ///
-    group('Integration Test', () {
-      testWidgets('Game starts', (tester) async {
+    group(TestNames.integrationTest, () {
+      testWidgets(TestNames.cp076, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
@@ -69,11 +73,16 @@ void main() {
         expect(falseButton, findsOne);
         expect(trueButton, findsOne);
         expect(find.text(levels.first.question), findsOne);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
-      testWidgets('User succeed', (tester) async {
+      testWidgets(TestNames.cp077, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
@@ -101,10 +110,15 @@ void main() {
           await tester.tap(trueButton);
         });
         await tester.pumpAndSettle();
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
-      testWidgets('User fails', (tester) async {
+      testWidgets(TestNames.cp078, (tester) async {
         when(() => mocklevelsRepository.getAll(gameId, GameType.hangman))
             .thenAnswer((invocation) => Future.value(levels));
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
@@ -132,6 +146,9 @@ void main() {
           await tester.tap(falseButton);
         });
         await tester.pumpAndSettle();
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
     });
   }, createHttpClient: (c) => HttpClient(context: c));

@@ -20,7 +20,6 @@ class AccessibilityButtons extends StatelessWidget {
           child: Wrap(
             runSpacing: 15,
             children: [
-              // font size section
               Semantics(
                 header: true,
                 child: const TextDivider(Strings.fontSize),
@@ -32,7 +31,6 @@ class AccessibilityButtons extends StatelessWidget {
                   Expanded(child: IncreaseTextSizeButton()),
                 ],
               ),
-              // text theme section
               Semantics(
                 header: true,
                 child: const TextDivider(Strings.colorThemes),

@@ -25,13 +25,18 @@ class HangmanPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final levels = ref.read(hangmanLevelsProvider(gameId));
+    final levels = ref.watch(hangmanLevelsProvider(gameId));
+
     return levels.when(
       data: (data) {
         return HangmanGame(levels: data, mode: GameMode.custom);
       },
       error: (error, stackTrace) => Text(error.toString()),
-      loading: () => const LinearProgressIndicator(),
+      loading: () {
+        return const Center(
+          child: LinearProgressIndicator(),
+        );
+      },
     );
   }
 }
@@ -426,7 +431,9 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
               const Duration(milliseconds: 500);
               Navigator.of(context).pop();
             } else {
-              level = widget.levels[levelIndex] as HangmanLevel;
+              setState(() {
+                level = widget.levels[levelIndex] as HangmanLevel;
+              });
             }
           }
         });

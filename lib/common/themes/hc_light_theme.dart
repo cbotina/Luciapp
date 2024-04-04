@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:luciapp/common/themes/color_schemes/hc_light_color_scheme.dart';
 
 final hcLightTheme = ThemeData(
-  // useMaterial3: false,
   fontFamily: 'Nunito',
   colorScheme: hcLightColorScheme,
   textTheme: const TextTheme(

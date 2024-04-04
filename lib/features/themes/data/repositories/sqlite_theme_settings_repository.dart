@@ -26,8 +26,6 @@ class SqLiteThemeSettingsRepository implements IThemeSettingsReposiroty {
         ]).then((maps) =>
         maps.map((e) => UserThemeSettings.fromJson(e)).toList().firstOrNull);
 
-    // await facade.close();
-
     return themeSettings;
   }
 
@@ -40,7 +38,6 @@ class SqLiteThemeSettingsRepository implements IThemeSettingsReposiroty {
         where: '${SQLiteFieldName.userId} = ?',
         whereArgs: [themeSettings.userId]);
 
-    // await facade.close();
     return changes > 0;
   }
 
@@ -54,8 +51,6 @@ class SqLiteThemeSettingsRepository implements IThemeSettingsReposiroty {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-    // await facade.close();
-
     final createdUserThemeSettings = await get(themeSettings.userId);
 
     return createdUserThemeSettings!;
@@ -66,7 +61,6 @@ class SqLiteThemeSettingsRepository implements IThemeSettingsReposiroty {
     await facade.open();
     await facade.connection.delete(SQLiteTableName.themeSettings,
         where: '${SQLiteFieldName.userId} = ?', whereArgs: [userId]);
-    //await facade.close();
   }
 
   @override
@@ -75,7 +69,6 @@ class SqLiteThemeSettingsRepository implements IThemeSettingsReposiroty {
     final List<UserThemeSettings> allUsersThemeSettings =
         await facade.connection.query(SQLiteTableName.themeSettings).then(
             (maps) => maps.map((e) => UserThemeSettings.fromJson(e)).toList());
-    // await facade.close();
 
     return allUsersThemeSettings;
   }

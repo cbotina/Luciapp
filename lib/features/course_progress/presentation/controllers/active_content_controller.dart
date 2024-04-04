@@ -24,12 +24,6 @@ class ActiveContentController extends StateNotifier<ActiveContentState> {
   }
 }
 
-// final activeContentControllerProvider =
-//     Provider<ActiveContentController>((ref) {
-//   final userId = ref.watch(userIdProvider);
-//   return ActiveContentController(userId: userId);
-// });
-
 final activeContentControllerProvider =
     StateNotifierProvider<ActiveContentController, ActiveContentState>((ref) {
   final userId = ref.watch(userIdProvider);

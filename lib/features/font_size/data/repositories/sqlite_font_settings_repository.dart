@@ -19,8 +19,6 @@ class SqLiteFontSettingsRepository implements IFontSettingsRepository {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-    //await facade.close();
-
     final createdUserFontSettings = await get(fontSettings.userId);
 
     return createdUserFontSettings!;
@@ -31,7 +29,6 @@ class SqLiteFontSettingsRepository implements IFontSettingsRepository {
     await facade.open();
     await facade.connection.delete(SQLiteTableName.fontSettings,
         where: '${SQLiteFieldName.userId} = ?', whereArgs: [userId]);
-    //await facade.close();
   }
 
   @override
@@ -46,8 +43,6 @@ class SqLiteFontSettingsRepository implements IFontSettingsRepository {
         ]).then((maps) =>
         maps.map((e) => UserFontSettings.fromJson(e)).toList().firstOrNull);
 
-    //await facade.close();
-
     return fontSettings;
   }
 
@@ -58,8 +53,6 @@ class SqLiteFontSettingsRepository implements IFontSettingsRepository {
     final List<UserFontSettings> allUsersFontSettings = await facade.connection
         .query(SQLiteTableName.fontSettings)
         .then((maps) => maps.map((e) => UserFontSettings.fromJson(e)).toList());
-
-    //await facade.close();
 
     return allUsersFontSettings;
   }
@@ -73,7 +66,6 @@ class SqLiteFontSettingsRepository implements IFontSettingsRepository {
         where: '${SQLiteFieldName.userId} = ?',
         whereArgs: [fontSettings.userId]);
 
-    //await facade.close();
     return changes > 0;
   }
 }

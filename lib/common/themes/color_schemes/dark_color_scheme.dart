@@ -20,7 +20,6 @@ const darkColorScheme = ColorScheme(
 
   surface: Color(0xff26264E),
   onSurface: Color.fromARGB(255, 255, 255, 255), // en containers
-  // surfaceTint: Color.fromARGB(255, 255, 255, 255),
   background: Color(0xff141432), // dialog background
   onBackground: Color(0xff0e0e0e),
   surfaceVariant: Color(0xff1D1D42),

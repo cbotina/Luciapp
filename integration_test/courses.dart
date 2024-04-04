@@ -8,10 +8,11 @@ import 'package:luciapp/features/auth/application/auth_service.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_method.dart';
 import 'package:luciapp/features/auth/domain/enums/auth_result.dart';
 import 'package:luciapp/features/courses/data/providers/courses_provider.dart';
+import 'package:luciapp/features/courses/data/providers/courses_with_percentages_provider.dart';
 import 'package:luciapp/features/courses/domain/models/course.dart';
+import 'package:luciapp/features/courses/domain/models/course_with_percentage.dart';
 import 'package:luciapp/features/courses/presentation/widgets/colors/course_colors.dart';
 import 'package:luciapp/features/courses/presentation/widgets/components/course_widget.dart';
-import 'package:luciapp/features/courses/presentation/widgets/course_list.dart';
 import 'package:luciapp/features/themes/application/theme_service.dart';
 import 'package:luciapp/features/themes/presentation/state/theme_state.dart';
 import 'package:luciapp/main.dart';
@@ -78,7 +79,7 @@ void main() {
     mockThemeService = MockThemeService();
     mockAuthRepository = MockAuthRepository();
 
-    when(() => mockAuthService.login(AuthMethod.facebook)).thenAnswer(
+    when(() => mockAuthService.login(AuthMethod.google)).thenAnswer(
       (_) => Future.value(AuthResult.success),
     );
 
@@ -121,6 +122,8 @@ void main() {
         darkmode = false;
         hcmode = true;
 
+        final SemanticsHandle handle = tester.ensureSemantics();
+
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
             ProviderScope(
@@ -129,19 +132,26 @@ void main() {
             ),
           );
         });
+        await tester.pumpAndSettle();
 
         final robot = TestingRobot(tester: tester);
 
         await robot.login();
 
-        await tester.pump(const Duration(seconds: 2));
+        await tester.pump(const Duration(seconds: 1));
 
         expect(find.byType(CourseWidget), findsNWidgets(2));
+
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp069, (tester) async {
         darkmode = false;
         hcmode = true;
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
@@ -156,19 +166,25 @@ void main() {
             ),
           );
         });
+        await tester.pumpAndSettle();
 
         final robot = TestingRobot(tester: tester);
 
         await robot.login();
 
-        await tester.pump(const Duration(seconds: 2));
+        await tester.pump(const Duration(seconds: 1));
 
         expect(find.text('No se han publicado cursos aún'), findsOne);
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
 
       testWidgets(TestNames.cp070, (tester) async {
         darkmode = false;
         hcmode = true;
+
+        final SemanticsHandle handle = tester.ensureSemantics();
 
         await mockNetworkImagesFor(() async {
           await tester.pumpWidget(
@@ -184,17 +200,22 @@ void main() {
             ),
           );
         });
+        await tester.pumpAndSettle();
 
         final robot = TestingRobot(tester: tester);
 
         await robot.login();
 
-        await tester.pump(const Duration(seconds: 2));
+        await tester.pump(const Duration(seconds: 1));
 
         expect(
             find.text(
                 'Es necesario estar conectado a internet para acceder a los cursos'),
             findsOne);
+
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+        handle.dispose();
       });
     });
   }, createHttpClient: (c) => HttpClient(context: c));

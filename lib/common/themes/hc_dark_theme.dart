@@ -3,7 +3,6 @@ import 'package:luciapp/common/themes/color_schemes/hc_dark_color_scheme.dart';
 import 'package:luciapp/common/themes/color_schemes/light_color_scheme.dart';
 
 final hcDarkTheme = ThemeData(
-  // useMaterial3: false,
   fontFamily: 'Nunito',
   colorScheme: hcDarkColorScheme,
   textTheme: const TextTheme(

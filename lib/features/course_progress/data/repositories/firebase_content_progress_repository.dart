@@ -9,7 +9,7 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
   @override
   Future<bool> create(ContentProgress contentProgress, String cpId) async {
     try {
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection(FirebaseCollectionName.courseProgress)
           .doc(cpId)
           .collection(FirebaseCollectionName.contentProgress)
@@ -18,8 +18,6 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
     } catch (e) {
       return false;
     }
-
-    // ? colocar id?
   }
 
   @override
@@ -28,7 +26,6 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
     throw UnimplementedError();
   }
 
-// ! OJITOOO
   @override
   Future<ContentProgress?> get(ContentId contentId, String cpId) async {
     try {
@@ -46,8 +43,6 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
     }
   }
 
-  /// Returns the list of all the contentprogress of a courseprogress\
-  /// Example: [{"1234", true}, {"1234", true}]
   @override
   Future<List<ContentProgress>> getAll(String cpId) async {
     final query = FirebaseFirestore.instance
@@ -73,7 +68,7 @@ class FirebaseContentProgressRepository implements IContentProgressRepository {
           .get()
           .then((value) => value.docs.first.id);
 
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection(FirebaseCollectionName.courseProgress)
           .doc(cpId)
           .collection(FirebaseCollectionName.contentProgress)

@@ -40,7 +40,6 @@ class TappableContainer extends StatelessWidget {
             ),
             color: backgroundColor ?? Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(borderRadius),
-            // border: Border.all(color: Colors.black), para HC
           ),
           child: Container(
             constraints: BoxConstraints(

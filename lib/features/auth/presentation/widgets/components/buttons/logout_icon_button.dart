@@ -12,10 +12,10 @@ class LogoutIconButton extends ConsumerWidget {
       label: 'Cerrar sesión',
       child: ExcludeSemantics(
         child: IconButton(
-          icon: const Icon(Icons.logout),
-          // iconSize: 25,
-          onPressed: ref.read(authControllerProvider.notifier).logout,
-        ),
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              ref.read(authControllerProvider.notifier).logout();
+            }),
       ),
     );
   }

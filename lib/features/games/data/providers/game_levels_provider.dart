@@ -5,14 +5,14 @@ import 'package:luciapp/main.dart';
 
 final hangmanLevelsProvider =
     FutureProvider.family<List<GameLevel>, String>((ref, gameId) async {
-  return ref
+  return await ref
       .watch(gameLevelsRepositoryProvider)
       .getAll(gameId, GameType.hangman);
 });
 
 final triviaLevelsProvider =
     FutureProvider.family<List<GameLevel>, String>((ref, gameId) async {
-  return ref
+  return await ref
       .watch(gameLevelsRepositoryProvider)
       .getAll(gameId, GameType.trivia);
 });
