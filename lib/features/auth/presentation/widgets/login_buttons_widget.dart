@@ -17,8 +17,8 @@ class LoginButtons extends StatelessWidget {
         TextDivider(Strings.welcome),
         SizedBox(height: 30),
         GoogleButton(),
-        SizedBox(height: 10),
-        FacebookButton(),
+        // SizedBox(height: 10),
+        // FacebookButton(),
       ],
     );
   }

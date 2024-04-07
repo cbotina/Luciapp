@@ -47,6 +47,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
   late TriviaLevel _level;
   late AudioPlayer _player;
   late ConfettiController _confettiController;
+  late bool _buttonsEnabled;
 
   late int _hits;
 
@@ -54,6 +55,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
 
   @override
   void initState() {
+    _buttonsEnabled = true;
     if (widget.levels.isNotEmpty) {
       switch (widget.mode) {
         case GameMode.custom:
@@ -178,23 +180,25 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
               children: [
                 InkWell(
                   key: const ValueKey('false-button'),
-                  onTap: () async {
-                    if (_level.answer == false) {
-                      await _player.play(
-                        AssetSource('audio/success.mp3'),
-                      );
-                      setState(() {
-                        _hits++;
-                      });
-                      showSuccessDialog();
-                    } else {
-                      await _player.play(
-                        AssetSource('audio/fail.mp3'),
-                      );
-                      setState(() {});
-                      showFailureDialog();
-                    }
-                  },
+                  onTap: _buttonsEnabled
+                      ? () async {
+                          if (_level.answer == false) {
+                            await _player.play(
+                              AssetSource('audio/success.mp3'),
+                            );
+                            setState(() {
+                              _hits++;
+                            });
+                            showSuccessDialog();
+                          } else {
+                            await _player.play(
+                              AssetSource('audio/fail.mp3'),
+                            );
+                            setState(() {});
+                            showFailureDialog();
+                          }
+                        }
+                      : null,
                   splashColor: Colors.pinkAccent.shade100,
                   highlightColor: Colors.pinkAccent.shade100,
                   borderRadius: const BorderRadius.only(
@@ -234,23 +238,25 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
                 ),
                 InkWell(
                   key: const ValueKey('true-button'),
-                  onTap: () async {
-                    if (_level.answer == true) {
-                      await _player.play(
-                        AssetSource('audio/success.mp3'),
-                      );
-                      setState(() {
-                        _hits++;
-                      });
-                      showSuccessDialog();
-                    } else {
-                      await _player.play(
-                        AssetSource('audio/fail.mp3'),
-                      );
-                      setState(() {});
-                      showFailureDialog();
-                    }
-                  },
+                  onTap: _buttonsEnabled
+                      ? () async {
+                          if (_level.answer == true) {
+                            await _player.play(
+                              AssetSource('audio/success.mp3'),
+                            );
+                            setState(() {
+                              _hits++;
+                            });
+                            showSuccessDialog();
+                          } else {
+                            await _player.play(
+                              AssetSource('audio/fail.mp3'),
+                            );
+                            setState(() {});
+                            showFailureDialog();
+                          }
+                        }
+                      : null,
                   splashColor: Colors.blue.shade300,
                   highlightColor: Colors.blue.shade300,
                   borderRadius: const BorderRadius.only(
@@ -304,22 +310,32 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
         )] as TriviaLevel;
       } else {
         if (_levelIndex == widget.levels.length - 1) {
-          await ref
-              .read(completeContentControllerProvider.notifier)
-              .completeContent();
+          setState(() {
+            _buttonsEnabled = false;
+          });
 
-          await _player.play(
-            AssetSource('audio/contentfinish.mp3'),
-          );
+          if (_hits == widget.levels.length) {
+            await ref
+                .read(completeContentControllerProvider.notifier)
+                .completeContent();
+
+            await _player.play(
+              AssetSource('audio/contentfinish.mp3'),
+            );
+          }
 
           showScoreDialog();
         } else {
-          _levelIndex++;
-          _level = widget.levels[_levelIndex] as TriviaLevel;
+          setState(() {
+            _levelIndex++;
+            _level = widget.levels[_levelIndex] as TriviaLevel;
+          });
         }
       }
     });
   }
+
+// aqui
 
   showScoreDialog() {
     final scaleFactor =
@@ -356,7 +372,7 @@ class _TrueOrFalseGameState extends ConsumerState<TriviaGame> {
         children: [
           Confetti(confettiController: _confettiController, widget: widget),
           Text(
-            'Bien hecho!',
+            _hits == widget.levels.length ? excellent : tryagain,
             style: TextStyle(
               fontSize: titleSize * scaleFactor,
               fontWeight: FontWeight.bold,
@@ -486,3 +502,9 @@ class Confetti extends ConsumerWidget {
     );
   }
 }
+
+const excellent = 'Muy Bien!';
+
+const good = 'Bien hecho';
+
+const tryagain = 'Inténtalo de nuevo';
