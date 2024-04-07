@@ -283,6 +283,7 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
                 margin: const EdgeInsets.only(bottom: 15),
                 height: 80,
                 width: MediaQuery.of(context).size.width - 30,
+                // LETTER LIST
                 child: Semantics(
                   key: const ValueKey('letter-list'),
                   slider: true,
@@ -402,41 +403,45 @@ class _HangmanScreenState extends ConsumerState<HangmanGame> {
       desc: widget.mode == GameMode.random
           ? '¿Seguir Jugando?'
           : 'Siguiente Nivel',
-      btnOkOnPress: () {
-        setState(() async {
+      btnOkOnPress: () async {
+        setState(() {
           hits = 0;
           errors = 0;
           isHintVisible = false;
           selectedLetters = [];
-          if (widget.mode == GameMode.random) {
+        });
+        if (widget.mode == GameMode.random) {
+          setState(() {
             level = widget.levels[_random.nextInt(
               widget.levels.length,
             )] as HangmanLevel;
-          } else {
+          });
+        } else {
+          setState(() {
             levelIndex++;
-            if (levelIndex >= widget.levels.length) {
-              await ref
-                  .read(completeContentControllerProvider.notifier)
-                  .completeContent();
+          });
+          if (levelIndex >= widget.levels.length) {
+            await ref
+                .read(completeContentControllerProvider.notifier)
+                .completeContent();
 
-              await player.play(
-                AssetSource('audio/contentfinish.mp3'),
-              );
+            await player.play(
+              AssetSource('audio/contentfinish.mp3'),
+            );
 
-              ref.refresh(completedContentProvider);
-              ref
-                  .read(completedContentProvider.notifier)
-                  .setCompletedContentType(ContentTypes.video);
+            ref.refresh(completedContentProvider);
+            ref
+                .read(completedContentProvider.notifier)
+                .setCompletedContentType(ContentTypes.video);
 
-              const Duration(milliseconds: 500);
-              Navigator.of(context).pop();
-            } else {
-              setState(() {
-                level = widget.levels[levelIndex] as HangmanLevel;
-              });
-            }
+            // const Duration(milliseconds: 500);
+            Navigator.of(context).pop();
+          } else {
+            setState(() {
+              level = widget.levels[levelIndex] as HangmanLevel;
+            });
           }
-        });
+        }
       },
       btnOkIcon: Icons.check_circle,
       btnOkText: 'Si',
@@ -613,4 +618,13 @@ int countMatchingLetters(String text, String path) {
     }
   }
   return matches;
+}
+
+class Keyboard extends StatelessWidget {
+  const Keyboard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }
